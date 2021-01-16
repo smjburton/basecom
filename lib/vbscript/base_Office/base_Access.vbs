@@ -1,0 +1,15 @@
+Option Explicit
+
+Class v_Access
+	Private Sub Class_Initialize()
+
+	End Sub
+
+	Private Sub Class_Terminate()
+
+	End Sub
+End Class
+
+If WScript.ScriptName = "v_Access.vbs" Then
+
+End If

@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<title></title>
+		<script type="text/vbscript" language="vbscript">
+    			Sub Window_onLoad
+        			window.resizeTo 1400, 1000
+				window.moveTo (screen.width - 1400) / 2, (screen.height - 1100) / 2
+    			End Sub 
+		</script>
+		<HTA:APPLICATION
+   			ID=""
+      			APPLICATIONNAME=""
+      			BORDER="thick"
+      			BORDERSTYLE="normal"
+      			INNERBORDER="no"
+      			CONTEXTMENU="yes"
+      			CAPTION="yes"
+      			ICON="icon.ico"
+      			MAXIMIZEBUTTON="yes"
+      			MINIMIZEBUTTON="yes"
+      			SHOWINTASKBAR="yes"
+      			SINGLEINSTANCE="yes"
+      			NAVIGABLE="yes"
+      			SCROLL="yes"
+      			SCROLLFLAT="no"
+      			SYSMENU="yes"
+      			VERSION="1.0"
+      			WINDOWSTATE="normal"
+   		/>
+		<link rel="stylesheet" href="" type="text/css" />
+		<script type="text/vbscript" language="vbscript">
+			Option Explicit
+
+			Sub Include(ByVal strFile)
+				On Error Resume Next
+
+				ExecuteGlobal CreateObject("Scripting.FileSystemObject").OpenTextFile(file & ".vbs", 1).ReadAll()
+
+				If Err.Number <> 0 Then
+					If Err.Number = 1041 Then 
+						Err.Clear
+					Else
+						MsgBox Err.Number & ": " & Err.Description
+					End If
+				End If
+			End Sub
+		</script>
+	</head>
+	<body>
+
+	</body>
+</html>
