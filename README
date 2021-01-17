@@ -1,1 +1,1 @@
-
+basecom provides a standard library for VBScript and Javascript scripts written for Windows Script Host and VBA applications written in Microsoft Office. This library exposes a universal interface to COM objects included in Microsoft Windows and Microsoft Office to enable functionality to work with HTTP, HTML, JSON objects, among other modern technologies. 
