@@ -3,7 +3,7 @@ Option Explicit
 ' https://bytes.com/topic/access/answers/890865-how-properly-open-recordset-ado
 ' http://www.w3schools.com/asp/met_rs_open.asp
 
-Class v_DB_Recordset
+Class base_DB_Recordset
 	Private pRecordset
 
 	Private Sub Class_Initialize()
@@ -256,9 +256,9 @@ Class v_DB_Recordset
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_DB_Recordset.vbs" Then
+If WScript.ScriptName = "base_DB_Recordset.vbs" Then
 	Dim recordset
-	Set recordset = New v_DB_Recordset
+	Set recordset = New base_DB_Recordset
 
 	WScript.Echo TypeName(recordset.AbsolutePage)
 	WScript.Echo TypeName(recordset.AbsolutePosition)

@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Network
+Class base_Network
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_Network
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Network.vbs" Then
+If WScript.ScriptName = "base_Network.vbs" Then
 
 End If

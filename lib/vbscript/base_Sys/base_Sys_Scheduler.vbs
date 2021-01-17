@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Scheduler
+Class base_Scheduler
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_Scheduler
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Scheduler.vbs" Then
+If WScript.ScriptName = "base_Scheduler.vbs" Then
 
 End If

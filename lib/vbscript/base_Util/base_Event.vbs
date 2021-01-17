@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Event
+Class base_Event
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_Event
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Event.vbs" Then
+If WScript.ScriptName = "base_Event.vbs" Then
 
 End If

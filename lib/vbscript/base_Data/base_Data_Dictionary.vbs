@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Data_Dictionary
+Class base_Data_Dictionary
 	Private pDictionary
 
 	Private Sub Class_Initialize()
@@ -76,10 +76,10 @@ Class v_Data_Dictionary
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Data_Dictionary.vbs" Then
+If WScript.ScriptName = "base_Data_Dictionary.vbs" Then
 	Dim dictionary
 
-	Set dictionary = New v_Data_Dictionary
+	Set dictionary = New base_Data_Dictionary
 
 	dictionary.CompareMode = VBDataBaseCompare
 

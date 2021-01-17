@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Crypto_MACTripleDES
+Class base_Crypto_MACTripleDES
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_Crypto_MACTripleDES
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Crypto_MACTripleDES.vbs" Then
+If WScript.ScriptName = "base_Crypto_MACTripleDES.vbs" Then
 
 End If

@@ -1,10 +1,10 @@
 Option Explicit
 
-Include "v_HTTP_Client"
-Include "v_HTTP_Constants"
-Include "v_HTTP_Cookie"
-Include "v_HTTP_CookieJar"
-Include "v_HTTP_Header"
-Include "v_HTTP_Request"
-Include "v_HTTP_Response"
-Include "v_HTTP_Session"
+Include "base_HTTP_Client"
+Include "base_HTTP_Constants"
+Include "base_HTTP_Cookie"
+Include "base_HTTP_CookieJar"
+Include "base_HTTP_Header"
+Include "base_HTTP_Request"
+Include "base_HTTP_Response"
+Include "base_HTTP_Session"

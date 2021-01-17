@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Image
+Class base_Image
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_Image
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Image.vbs" Then
+If WScript.ScriptName = "base_Image.vbs" Then
 
 End If

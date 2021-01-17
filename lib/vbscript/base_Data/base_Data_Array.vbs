@@ -1,8 +1,8 @@
 Option Explicit
 
-Include "v_Util_Array"
+Include "base_Data_Array_Util"
 
-Class v_Data_Array
+Class base_Data_Array
 	Private pArray
 
 	Private Sub Class_Initialize()
@@ -235,11 +235,11 @@ Class v_Data_Array
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Data_Array.vbs" Then
+If WScript.ScriptName = "base_Data_Array.vbs" Then
 	Dim objArray, _
 		i
 
-	Set objArray = New v_Data_Array
+	Set objArray = New base_Data_Array
 
 	' objArray.FromArray Array("Banana", "Orange", "Lemon", "Apple", "Mango")
 	' objArray.Append Array("Car", "Bus", "Train", "Boat")

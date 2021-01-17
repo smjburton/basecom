@@ -6,9 +6,9 @@ Sub Include(file)
 	Set FSO = Nothing
 End Sub
 
-Include "v_Data_Array"
+Include "base_Data_Array"
 
-Class v_HTML_Parser
+Class base_HTML_Parser
 	Private pSanitize
 
 	Private pHtmlParser, _
@@ -885,12 +885,15 @@ Class v_HTML_Parser
 	' function:
 
 	' The Cleaner class supports several keyword arguments to control exactly which content
-	' is removed:
+	' is removed:
 
-	' cleaner = Cleaner(page_structure=False, links=False)
+
+	' cleaner = Cleaner(page_structure=False, links=False)
+
 
 	' cleaner = Cleaner(style=True, links=True, add_nofollow=True,
-	' ... page_structure=False, safe_attrs_only=False)
+	' ... page_structure=False, safe_attrs_only=False)
+
 
 	Private Function SanitizeHTML(strHTML)
 		Dim meta_replace, _
@@ -1382,9 +1385,9 @@ Class v_HTML_Parser
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_HTML_Parser.vbs" Then
+If WScript.ScriptName = "base_HTML_Parser.vbs" Then
 	Dim parser
-	Set parser = New v_HTML_Parser
+	Set parser = New base_HTML_Parser
 
 	parser.Sanitize = True
 	parser.FromString "<html><head><title>This is the page's title.</title>" & _

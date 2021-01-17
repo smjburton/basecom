@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Log
+Class base_Log
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_Log
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Log.vbs" Then
+If WScript.ScriptName = "base_Log.vbs" Then
 
 End If

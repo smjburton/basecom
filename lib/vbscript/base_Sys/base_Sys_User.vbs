@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Sys_User
+Class base_Sys_User
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_Sys_User
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Sys_User.vbs" Then
+If WScript.ScriptName = "base_Sys_User.vbs" Then
 
 End If

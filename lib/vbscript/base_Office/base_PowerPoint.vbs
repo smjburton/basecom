@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_PowerPoint
+Class base_PowerPoint
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_PowerPoint
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_PowerPoint.vbs" Then
+If WScript.ScriptName = "base_PowerPoint.vbs" Then
 
 End If

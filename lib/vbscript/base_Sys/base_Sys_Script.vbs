@@ -1,6 +1,6 @@
 Option Explicit
 
-Class vbs_Script
+Class base_Sys_Script
 	Private pScriptHost, _
 		pScriptEngine, _
 		pScriptLanguage
@@ -134,9 +134,9 @@ Class vbs_Script
 	End Sub
 End Class
 
-If WScript.ScriptName = "vbs_Script.vbs" Then
+If WScript.ScriptName = "base_Sys_Script.vbs" Then
 	Dim script
-	Set script = New vbs_Script
+	Set script = New base_Sys_Script
 
 	With script
 		.Language = "JScript"

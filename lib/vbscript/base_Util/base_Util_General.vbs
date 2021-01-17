@@ -16,6 +16,6 @@ Function IIf(strExpression, varTrueResult, varFalseResult)
 	End If
 End Function
 
-If WScript.ScriptName = "v_Util_General.vbs" Then
+If WScript.ScriptName = "base_Util_General.vbs" Then
 
 End If

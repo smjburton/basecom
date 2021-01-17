@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Crypto
+Class base_Crypto
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_Crypto
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Crypto.vbs" Then
+If WScript.ScriptName = "base_Crypto.vbs" Then
 
 End If

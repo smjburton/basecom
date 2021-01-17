@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_UPnP
+Class base_UPnP
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_UPnP
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_UPnP.vbs" Then
+If WScript.ScriptName = "base_UPnP.vbs" Then
 
 End If

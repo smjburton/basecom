@@ -106,12 +106,12 @@ Sub Include(file)
 	Set FSO = Nothing
 End Sub
 
-Include("http_constants.vbs")
-Include("http_response.vbs")
-Include("http_cookiejar.vbs")
-' Include("url.vbs")
+Include("base_HTTP_Constants")
+Include("base_HTTP_Response")
+Include("base_HTTP_Cookie")
+Include("base_URI")
 
-Class v_HTTP_Request
+Class base_HTTP_Request
 	Private pHttpReq, _
 		pHttpResp
 
@@ -933,9 +933,9 @@ Class v_HTTP_Request
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_HTTP_Request.vbs" Then
+If WScript.ScriptName = "base_HTTP_Request.vbs" Then
 	Dim http
-	Set http = New clsHttpRequest
+	Set http = New base_HTTP_Request
 	
 	With http
 		.Auth "TheUser", "ThePass"

@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Config
+Class base_Config
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_Config
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Config.vbs" Then
+If WScript.ScriptName = "base_Config.vbs" Then
 
 End If

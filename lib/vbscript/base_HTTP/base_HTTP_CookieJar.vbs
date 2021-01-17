@@ -39,10 +39,10 @@ Sub Include(file)
 	Set FSO = Nothing
 End Sub
 
-Include("array_util.vbs")
-Include("http_cookie.vbs")
+Include("base_Data_Array_Util")
+Include("base_HTTP_Cookie")
 
-Class v_HTTP_CookieJar
+Class base_HTTP_CookieJar
 	Private pCookies, _
 		pCount, _
 		pFile
@@ -213,7 +213,7 @@ Class v_HTTP_CookieJar
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_HTTP_CookieJar.vbs" Then
+If WScript.ScriptName = "base_HTTP_CookieJar.vbs" Then
 	Dim cj, c1, c2, c3
 	Set cj = New clsCookieJar
 	Set c1 = New clsCookie

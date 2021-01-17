@@ -8,7 +8,7 @@ End Sub
 
 Include "v_Data_Array"
 
-Class v_HTML_Document
+Class base_HTML_Document
 	Private pHtmlDoc
 
 

@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Data_ArrayList
+Class base_Data_ArrayList
 	Private pArrayList
 
 	Private Sub Class_Initialize()
@@ -128,9 +128,9 @@ Class v_Data_ArrayList
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Data_ArrayList.vbs" Then
+If WScript.ScriptName = "base_Data_ArrayList.vbs" Then
 	Dim arraylist
-	Set arraylist = New v_Data_ArrayList
+	Set arraylist = New base_Data_ArrayList
 
 	arraylist.Add "Train"
 	arraylist.Add "Bus"

@@ -2,7 +2,7 @@ Option Explicit
 
 ' See: http://framework.zend.com/manual/current/en/modules/zend.http.headers.html
 
-Class v_HTTP_Header
+Class base_HTTP_Header
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -12,7 +12,7 @@ Class v_HTTP_Header
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_HTTP_Header.vbs" Then
+If WScript.ScriptName = "base_HTTP_Header.vbs" Then
 	Dim httpHeader
-	Set httpHeader = New clsHttpHeader
+	Set httpHeader = New base_HTTP_Header
 End If

@@ -1,4 +1,4 @@
-Class v_Data_Queue
+Class base_Data_Queue
 	Private pQueue
 
 	Private Sub Class_Initialize()
@@ -90,9 +90,9 @@ Class v_Data_Queue
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Data_Queue.vbs" Then
+If WScript.ScriptName = "base_Data_Queue.vbs" Then
 	Dim queue
-	Set queue = New v_Data_Queue
+	Set queue = New base_Data_Queue
 
 	queue.Enqueue "Dog"
 	queue.Enqueue "Cat"

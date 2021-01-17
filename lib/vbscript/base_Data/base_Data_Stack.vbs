@@ -1,4 +1,4 @@
-Class v_Data_Stack
+Class base_Data_Stack
 	Private pStack
 
 	Private Sub Class_Initialize()
@@ -90,10 +90,10 @@ Class v_Data_Stack
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Data_Stack.vbs" Then
+If WScript.ScriptName = "base_Data_Stack.vbs" Then
 	Dim stack
 
-	Set stack = New v_Data_Stack
+	Set stack = New base_Data_Stack
 
 	stack.Push "Apple"
 	stack.Push "Orange"

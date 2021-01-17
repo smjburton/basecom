@@ -30,9 +30,9 @@ Sub Include(file)
 	Set FSO = Nothing
 End Sub
 
-Include "url.vbs"
+Include "base_URI"
 
-Class v_HTTP_Cookie
+Class base_HTTP_Cookie
 	Private pName, _
 		pValue, _
 		pDomain, _
@@ -255,7 +255,7 @@ Class v_HTTP_Cookie
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_HTTP_Cookie.vbs" Then
+If WScript.ScriptName = "base_HTTP_Cookie.vbs" Then
 	Dim cookieSub, requestSub
 
 	cookieSub = "sub.startech.com"

@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_VBE
+Class base_VBE
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_VBE
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_VBE.vbs" Then
+If WScript.ScriptName = "base_VBE.vbs" Then
 
 End If

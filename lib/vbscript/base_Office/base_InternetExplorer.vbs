@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_InternetExplorer
+Class base_InternetExplorer
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_InternetExplorer
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_InternetExplorer.vbs" Then
+If WScript.ScriptName = "base_InternetExplorer.vbs" Then
 
 End If

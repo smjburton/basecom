@@ -18,7 +18,7 @@ Option Explicit
 ' Is Mime Vendor Specific
 ' Is Mime Personal
 
-Class v_HTTP_Response
+Class base_HTTP_Response
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -103,7 +103,7 @@ Class v_HTTP_Response
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_HTTP_Response.vbs" Then
+If WScript.ScriptName = "base_HTTP_Response.vbs" Then
 	Dim httpResp
-	Set httpResp = New clsHttpResponse
+	Set httpResp = New base_HTTP_Response
 End If

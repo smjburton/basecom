@@ -20,7 +20,7 @@ Sub Include(file)
 	End If
 End Sub
 
-Class v_DB_MDX
+Class base_DB_MDX
 	Private pConnection
 	Private pCatalog
 	Private pCellset
@@ -186,6 +186,6 @@ Function GetBidPercMonthSales(strSKU, strMonth)
 	Set objMdx = Nothing
 End Function
 
-If WScript.ScriptName = "v_DB_MDX.vbs" Then
+If WScript.ScriptName = "base_DB_MDX.vbs" Then
 	WScript.Echo GetBidPercMonthSales("SAT32M225", "June 2016")
 End If

@@ -32,7 +32,7 @@ Function StdDev(arrValues)
 	End If
 End Function
 
-If WScript.ScriptName = "v_Math.vbs" Then
+If WScript.ScriptName = "base_Math.vbs" Then
 	WScript.Echo Mean(Array(2, 4, 6, 1, 10))
 	WScript.Echo StdDev(Array(2, 4, 6, 1, 10))
 End If

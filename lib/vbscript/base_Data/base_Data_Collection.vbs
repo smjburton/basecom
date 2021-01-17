@@ -6,9 +6,9 @@ Sub Include(file)
 	Set FSO = Nothing
 End Sub
 
-Include "v_Util_Array"
+Include "base_Data_Array_Util"
 
-Class v_Data_Collection
+Class base_Data_Collection
 	Private pCollection
 
 	Private Sub Class_Initialize()
@@ -110,11 +110,11 @@ Class v_Data_Collection
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Data_Collection.vbs" Then
+If WScript.ScriptName = "base_Data_Collection.vbs" Then
 	Dim collection, _
 		objDict
 
-	Set collection = New v_Data_Collection
+	Set collection = New base_Data_Collection
 	Set objDict = CreateObject("Scripting.Dictionary")
 
 	collection.Add "Car"

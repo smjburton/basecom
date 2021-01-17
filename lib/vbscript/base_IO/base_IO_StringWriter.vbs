@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_IO_MemoryStream
+Class base_IO_MemoryStream
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_IO_MemoryStream
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_IO_StringWriter.vbs" Then
+If WScript.ScriptName = "base_IO_StringWriter.vbs" Then
 
 End If

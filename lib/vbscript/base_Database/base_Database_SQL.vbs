@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_DB_SQL
+Class base_DB_SQL
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_DB_SQL
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_DB_SQL.vbs" Then
+If WScript.ScriptName = "base_DB_SQL.vbs" Then
 
 End If

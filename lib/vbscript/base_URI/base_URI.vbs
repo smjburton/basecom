@@ -6,10 +6,10 @@ Sub Include(file)
 	Set FSO = Nothing
 End Sub
 
-Include("v_Util_General")
-Include("v_Script")
+Include("base_Util_General")
+Include("base_Sys_Script")
 
-Class v_URI
+Class base_URI
 	Private pScheme, _
 		pSchemeName, _
 		pHostname, _
@@ -591,9 +591,9 @@ Class v_URI
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_URI.vbs" Then
+If WScript.ScriptName = "base_URI.vbs" Then
 	Dim URL
-	Set URL = New v_URI
+	Set URL = New base_URI
 
 	URL.FromString("https://user:pass1234@www.sub.sub.example.co.uk/path/to thing/file.html?search=something&page=1#Header1")
 

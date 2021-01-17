@@ -81,7 +81,7 @@ Option Explicit
 
 
 
-Class v_HTTP_Session
+Class base_HTTP_Session
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -182,7 +182,7 @@ Class v_HTTP_Session
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_HTTP_Session.vbs" Then
+If WScript.ScriptName = "base_HTTP_Session.vbs" Then
 	Dim s
-	Set s = New v_HTTP_Session
+	Set s = New base_HTTP_Session
 End If

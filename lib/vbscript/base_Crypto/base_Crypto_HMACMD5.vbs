@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Crypto
+Class base_Crypto_HMACMD5
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_Crypto
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Crypto_HMACMD5.vbs" Then
+If WScript.ScriptName = "base_Crypto_HMACMD5.vbs" Then
 
 End If

@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Crypto_SHA512Managed
+Class base_Crypto_SHA512Managed
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_Crypto_SHA512Managed
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Crypto_SHA512Managed.vbs" Then
+If WScript.ScriptName = "base_Crypto_SHA512Managed.vbs" Then
 
 End If

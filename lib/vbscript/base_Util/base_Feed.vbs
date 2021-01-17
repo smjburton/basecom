@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Feed
+Class base_Feed
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_Feed
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Feed.vbs" Then
+If WScript.ScriptName = "base_Feed.vbs" Then
 
 End If

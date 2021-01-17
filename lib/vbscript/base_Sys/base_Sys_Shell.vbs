@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Shell
+Class base_Shell
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_Shell
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Shell.vbs" Then
+If WScript.ScriptName = "base_Shell.vbs" Then
 
 End If

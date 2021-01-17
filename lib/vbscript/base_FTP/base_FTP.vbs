@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_FTP
+Class base_FTP
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_FTP
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_FTP.vbs" Then
+If WScript.ScriptName = "base_FTP.vbs" Then
 
 End If

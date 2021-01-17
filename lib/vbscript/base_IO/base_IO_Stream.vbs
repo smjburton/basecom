@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_IO_Stream
+Class base_IO_Stream
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_IO_Stream
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_IO_Stream.vbs" Then
+If WScript.ScriptName = "base_IO_Stream.vbs" Then
 
 End If

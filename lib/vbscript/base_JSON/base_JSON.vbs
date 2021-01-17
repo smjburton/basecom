@@ -10,13 +10,13 @@ Sub Include(file)
 	Set FSO = Nothing
 End Sub
 
-Include "vbs_Script"
+Include "base_Sys_Script"
 
-Class vbs_JSON
+Class base_JSON
 	Private pScript
 
 	Private Sub Class_Initialize()
-		Set pScript = New vbs_Script
+		Set pScript = New base_Sys_Script
 
 		With pScript
 			.Language = "JScript"
@@ -208,9 +208,9 @@ Class vbs_JSON
 	End Sub 
 End Class
 
-If WScript.ScriptName = "vbs_JSON.vbs" Then
+If WScript.ScriptName = "base_JSON.vbs" Then
 	Dim json
-	Set json = New vbs_JSON
+	Set json = New base_JSON
 
 	json.FromString "{""key1"": null, ""key2"": { ""key3"": ""val3"" }, " & _
 			"""key4"": ""val4"", ""key5"": true, ""key6"": 7.8, " & _

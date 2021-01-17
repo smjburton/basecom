@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Data_HashTable
+Class base_Data_HashTable
 	Private pHashTable
 
 	Private Sub Class_Initialize()
@@ -112,9 +112,9 @@ Class v_Data_HashTable
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Data_HashTable.vbs" Then
+If WScript.ScriptName = "base_Data_HashTable.vbs" Then
 	Dim hash
-	Set hash = New v_Data_HashTable
+	Set hash = New base_Data_HashTable
 
 	hash.Add "FirstName", "Sam"
 	hash.Add "LastName", "Smith"

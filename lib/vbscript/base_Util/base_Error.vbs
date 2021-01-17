@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Error
+Class base_Error
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_Error
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Error.vbs" Then
+If WScript.ScriptName = "base_Error.vbs" Then
 
 End If

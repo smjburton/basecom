@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Data_List
+Class base_Data_List
 	Private pList
 
 	Private Sub Class_Initialize()
@@ -160,9 +160,9 @@ Class v_Data_List
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Data_List.vbs" Then
+If WScript.ScriptName = "base_Data_List.vbs" Then
 	Dim list
-	Set list = New v_Data_List
+	Set list = New base_Data_List
 
 	list.Add "Point", 1
 	list.Add "Point Cloud", 2

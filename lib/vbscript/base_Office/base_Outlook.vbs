@@ -1,6 +1,6 @@
 Option Explicit
 
-Class v_Outlook
+Class base_Outlook
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class v_Outlook
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_Outlook.vbs" Then
+If WScript.ScriptName = "base_Outlook.vbs" Then
 
 End If
