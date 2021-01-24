@@ -274,10 +274,10 @@ Class base_HTTP_Request
 	' parameter is considered to be a real file on disk, and Zend\Http\Client will try to read
 	' this file and upload it. If the data parameter is not NULL, the first file name parameter
 	' will be sent as the file name, but no actual file needs to exist on the disk. The second
-	' form name parameter is always required, and is equivalent to the “name” attribute of an
+	' form name parameter is always required, and is equivalent to the ?name? attribute of an
 	' <input> tag, if the file was to be uploaded through an HTML form. A fourth optional
-	' parameter provides the file’s content-type. If not specified, and Zend\Http\Client reads
-	' the file from the disk, the mime_content_type function will be used to guess the file’s
+	' parameter provides the file?s content-type. If not specified, and Zend\Http\Client reads
+	' the file from the disk, the mime_content_type function will be used to guess the file?s
 	' content type, if it is available. In any case, the default MIME type will be application/
 	' octet-stream.
 	' // Uploading arbitrary data as a file
@@ -325,7 +325,7 @@ Class base_HTTP_Request
 
 
 	' The HTTP version to be used for the request.
-	' HTTP protocol version (usually ‘1.1’ or ‘1.0’)
+	' HTTP protocol version (usually ?1.1? or ?1.0?)
 	Public Property Get HttpVersion()
 		If pHttpReq.Option(WinHttpRequestOption_EnableHttp1_1) Then
 			HttpVersion = "1.1"
@@ -510,7 +510,7 @@ Class base_HTTP_Request
 	End Property
 
 	' If true, URIs will automatically be percent-encoded.
-	' Whether to strictly adhere to RFC 3986 (in practice, this means replacing ‘+’ with ‘%20’)
+	' Whether to strictly adhere to RFC 3986 (in practice, this means replacing ?+? with ?%20?)
 	' *** Need to use WinHTTP tracing in order to verify the effect of changing these settings.
 	Public Property Get EncodeURI()
 		' WinHttpRequestOption_EscapePercentInURL	= True
@@ -897,14 +897,14 @@ Class base_HTTP_Request
 	' $client->setEncType('text/xml');
 	' $client->send();
 
-	' The data should be available on the server side through PHP‘s $HTTP_RAW_POST_DATA variable or
+	' The data should be available on the server side through PHP?s $HTTP_RAW_POST_DATA variable or
 	' through the php://input stream.
 
 	' Note
 	' Using raw POST data
 	' Setting raw POST data for a request will override any POST parameters or file uploads. You should not try to use both on the same request. Keep in mind that most servers will ignore the request body unless you send a POST request.
 
-	' Data Streaming¶
+	' Data Streaming?
 	' By default, Zend\Http\Client accepts and returns data as PHP strings. However, in many cases there are big files to be received, thus keeping them in memory might be unnecessary or too expensive. For these cases, Zend\Http\Client supports writing data to files (streams).
 
 	' In order to receive data from the server as stream, use setStream(). Optional argument specifies the filename where the data will be stored. If the argument is just TRUE (default), temporary file will be used and will be deleted once response object is destroyed. Setting argument to FALSE disables the streaming functionality.

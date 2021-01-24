@@ -1,6 +1,6 @@
 Option Explicit
 
-Include "base_Data_Array_Util"
+Include "base_Data.base_Data_Array_Util"
 
 Class base_Data_Array
 	Private pArray
@@ -221,7 +221,7 @@ Class base_Data_Array
 
 	Public Function Clone()
 		Dim objArray
-		Set objArray = New v_Data_Array
+		Set objArray = New base_Data_Array
 		objArray.FromArray Me.ToArray()
 		Set Clone = objArray
 	End Function

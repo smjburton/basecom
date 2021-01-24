@@ -32,8 +32,11 @@ Sub Include( _
     End If
 End Sub
 
+If InStr(1, WScript.FullName, "WScript", vbTextCompare) > 0 Then
+	CreateObject("WScript.Shell").Run "C:\Windows\SysWow64\CScript.exe" & " """ & WScript.ScriptFullName & """", 1, False
+	WScript.Quit
+End If
+
 If WScript.ScriptName = "main_template.vbs" Then
-	Include "v_Access"
-	Include "v_Access"
-	Include "v_VBA"
+	WScript.Echo "Hello"
 End If

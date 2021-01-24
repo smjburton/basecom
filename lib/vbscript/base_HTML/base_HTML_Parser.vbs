@@ -1,12 +1,6 @@
 Option Explicit
 
-Sub Include(file)
-	Dim FSO: Set FSO = CreateObject("Scripting.FileSystemObject")
-	ExecuteGlobal FSO.OpenTextFile(file & ".vbs", 1).ReadAll()
-	Set FSO = Nothing
-End Sub
-
-Include "base_Data_Array"
+Include "base_Data.base_Data_Array"
 
 Class base_HTML_Parser
 	Private pSanitize
@@ -17,7 +11,7 @@ Class base_HTML_Parser
 	Private Sub Class_Initialize()
 		pSanitize = True
 		Set pHtmlParser = CreateObject("HTMLFile")
-		Set pSelection = New v_Data_Array
+		Set pSelection = New base_Data_Array
 	End Sub
 
 
