@@ -15,14 +15,14 @@ Const xlFilterValues = 7
 Const xlCenter = -4108
 
 Class base_Excel
-	Private pExcel
+	Private p_Excel
 
 
 	' Initialization
 
 
 	Private Sub Class_Initialize()
-		Set pExcel = CreateObject("Excel.Application")
+		Set p_Excel = CreateObject("Excel.Application")
 	End Sub
 
 
@@ -30,835 +30,835 @@ Class base_Excel
 
 
 	Public Property Get ActiveCell()
-		ActiveCell = pExcel.ActiveCell
+		ActiveCell = p_Excel.ActiveCell
 	End Property
 
 	Public Property Get ActiveChart()
-		ActiveChart = pExcel.ActiveChart
+		ActiveChart = p_Excel.ActiveChart
 	End Property
 
 	Public Property Get ActiveEncryptionSession()
-		ActiveEncryptionSession = pExcel.ActiveEncryptionSession
+		ActiveEncryptionSession = p_Excel.ActiveEncryptionSession
 	End Property
 
 	Public Property Get ActivePrinter()
-		ActivePrinter = pExcel.ActivePrinter
+		ActivePrinter = p_Excel.ActivePrinter
 	End Property
 
 	Public Property Get ActiveProtectedViewWindow()
-		ActiveProtectedViewWindow = pExcel.ActiveProtectedViewWindow
+		ActiveProtectedViewWindow = p_Excel.ActiveProtectedViewWindow
 	End Property
 
 	Public Property Get ActiveSheet()
-		ActiveSheet = pExcel.ActiveSheet
+		ActiveSheet = p_Excel.ActiveSheet
 	End Property
 
 	Public Property Get ActiveWindow()
-		ActiveWindow = pExcel.ActiveWindow
+		ActiveWindow = p_Excel.ActiveWindow
 	End Property
 
 	Public Property Get ActiveWorkbook()
-		ActiveWorkbook = pExcel.ActiveWorkbook
+		ActiveWorkbook = p_Excel.ActiveWorkbook
 	End Property
 
 	Public Property Get AddIns()
-		AddIns = pExcel.AddIns
+		AddIns = p_Excel.AddIns
 	End Property
 
 	Public Property Get AddIns2()
-		AddIns2 = pExcel.AddIns2
+		AddIns2 = p_Excel.AddIns2
 	End Property
 
 	Public Property Get AlertBeforeOverwriting()
-		AlertBeforeOverwriting = pExcel.AlertBeforeOverwriting
+		AlertBeforeOverwriting = p_Excel.AlertBeforeOverwriting
 	End Property
 
 	Public Property Get AltStartupPath()
-		AltStartupPath = pExcel.AltStartupPath
+		AltStartupPath = p_Excel.AltStartupPath
 	End Property
 
 	Public Property Get AlwaysUseClearType()
-		AlwaysUseClearType = pExcel.AlwaysUseClearType
+		AlwaysUseClearType = p_Excel.AlwaysUseClearType
 	End Property
 
 	Public Property Get Application()
-		Application = pExcel.Application
+		Application = p_Excel.Application
 	End Property
 
 	Public Property Get ArbitraryXMLSupportAvailable()
-		ArbitraryXMLSupportAvailable = pExcel.ArbitraryXMLSupportAvailable
+		ArbitraryXMLSupportAvailable = p_Excel.ArbitraryXMLSupportAvailable
 	End Property
 
 	Public Property Get AskToUpdateLinks()
-		AskToUpdateLinks = pExcel.AskToUpdateLinks
+		AskToUpdateLinks = p_Excel.AskToUpdateLinks
 	End Property
 
 	Public Property Get Assistance()
-		Assistance = pExcel.Assistance
+		Assistance = p_Excel.Assistance
 	End Property
 
 	Public Property Get AutoCorrect()
-		AutoCorrect = pExcel.AutoCorrect
+		AutoCorrect = p_Excel.AutoCorrect
 	End Property
 
 	Public Property Get AutoFormatAsYouTypeReplaceHyperlinks()
-		AutoFormatAsYouTypeReplaceHyperlinks = pExcel.AutoFormatAsYouTypeReplaceHyperlinks
+		AutoFormatAsYouTypeReplaceHyperlinks = p_Excel.AutoFormatAsYouTypeReplaceHyperlinks
 	End Property
 
 	Public Property Get AutomationSecurity()
-		AutomationSecurity = pExcel.AutomationSecurity
+		AutomationSecurity = p_Excel.AutomationSecurity
 	End Property
 
 	Public Property Get AutoPercentEntry()
-		AutoPercentEntry = pExcel.AutoPercentEntry
+		AutoPercentEntry = p_Excel.AutoPercentEntry
 	End Property
 
 	Public Property Get AutoRecover()
-		AutoRecover = pExcel.AutoRecover
+		AutoRecover = p_Excel.AutoRecover
 	End Property
 
 	Public Property Get Build()
-		Build = pExcel.Build
+		Build = p_Excel.Build
 	End Property
 
 	Public Property Get CalculateBeforeSave()
-		CalculateBeforeSave = pExcel.CalculateBeforeSave
+		CalculateBeforeSave = p_Excel.CalculateBeforeSave
 	End Property
 
 	Public Property Get Calculation()
-		Calculation = pExcel.Calculation
+		Calculation = p_Excel.Calculation
 	End Property
 
 	Public Property Get CalculationInterruptKey()
-		CalculationInterruptKey = pExcel.CalculationInterruptKey
+		CalculationInterruptKey = p_Excel.CalculationInterruptKey
 	End Property
 
 	Public Property Get CalculationState()
-		CalculationState = pExcel.CalculationState
+		CalculationState = p_Excel.CalculationState
 	End Property
 
 	Public Property Get CalculationVersion()
-		CalculationVersion = pExcel.CalculationVersion
+		CalculationVersion = p_Excel.CalculationVersion
 	End Property
 
 	Public Property Get Caller()
-		Caller = pExcel.Caller
+		Caller = p_Excel.Caller
 	End Property
 
 	Public Property Get CanPlaySounds()
-		CanPlaySounds = pExcel.CanPlaySounds
+		CanPlaySounds = p_Excel.CanPlaySounds
 	End Property
 
 	Public Property Get CanRecordSounds()
-		CanRecordSounds = pExcel.CanRecordSounds
+		CanRecordSounds = p_Excel.CanRecordSounds
 	End Property
 
 	Public Property Get Caption()
-		Caption = pExcel.Caption
+		Caption = p_Excel.Caption
 	End Property
 
 	Public Property Get CellDragAndDrop()
-		CellDragAndDrop = pExcel.CellDragAndDrop
+		CellDragAndDrop = p_Excel.CellDragAndDrop
 	End Property
 
 	Public Property Get Cells()
-		Cells = pExcel.Cells
+		Cells = p_Excel.Cells
 	End Property
 
 	Public Property Get ChartDataPointTrack()
-		ChartDataPointTrack = pExcel.ChartDataPointTrack
+		ChartDataPointTrack = p_Excel.ChartDataPointTrack
 	End Property
 
 	Public Property Get Charts()
-		Charts = pExcel.Charts
+		Charts = p_Excel.Charts
 	End Property
 
 	Public Property Get ClipboardFormats()
-		ClipboardFormats = pExcel.ClipboardFormats
+		ClipboardFormats = p_Excel.ClipboardFormats
 	End Property
 
 	Public Property Get ClusterConnector()
-		ClusterConnector = pExcel.ClusterConnector
+		ClusterConnector = p_Excel.ClusterConnector
 	End Property
 
 	Public Property Get Columns()
-		Columns = pExcel.Columns
+		Columns = p_Excel.Columns
 	End Property
 
 	Public Property Get COMAddIns()
-		COMAddIns = pExcel.COMAddIns
+		COMAddIns = p_Excel.COMAddIns
 	End Property
 
 	Public Property Get CommandBars()
-		CommandBars = pExcel.CommandBars
+		CommandBars = p_Excel.CommandBars
 	End Property
 
 	Public Property Get CommandUnderlines()
-		CommandUnderlines = pExcel.CommandUnderlines
+		CommandUnderlines = p_Excel.CommandUnderlines
 	End Property
 
 	Public Property Get ConstrainNumeric()
-		ConstrainNumeric = pExcel.ConstrainNumeric
+		ConstrainNumeric = p_Excel.ConstrainNumeric
 	End Property
 
 	Public Property Get ControlCharacters()
-		ControlCharacters = pExcel.ControlCharacters
+		ControlCharacters = p_Excel.ControlCharacters
 	End Property
 
 	Public Property Get CopyObjectsWithCells()
-		CopyObjectsWithCells = pExcel.CopyObjectsWithCells
+		CopyObjectsWithCells = p_Excel.CopyObjectsWithCells
 	End Property
 
 	Public Property Get Creator()
-		Creator = pExcel.Creator
+		Creator = p_Excel.Creator
 	End Property
 
 	Public Property Get Cursor()
-		Cursor = pExcel.Cursor
+		Cursor = p_Excel.Cursor
 	End Property
 
 	Public Property Get CursorMovement()
-		CursorMovement = pExcel.CursorMovement
+		CursorMovement = p_Excel.CursorMovement
 	End Property
 
 	Public Property Get CustomListCount()
-		CustomListCount = pExcel.CustomListCount
+		CustomListCount = p_Excel.CustomListCount
 	End Property
 
 	Public Property Get CutCopyMode()
-		CutCopyMode = pExcel.CutCopyMode
+		CutCopyMode = p_Excel.CutCopyMode
 	End Property
 
 	Public Property Get DataEntryMode()
-		DataEntryMode = pExcel.DataEntryMode
+		DataEntryMode = p_Excel.DataEntryMode
 	End Property
 
 	Public Property Get DDEAppReturnCode()
-		DDEAppReturnCode = pExcel.DDEAppReturnCode
+		DDEAppReturnCode = p_Excel.DDEAppReturnCode
 	End Property
 
 	Public Property Get DecimalSeparator()
-		DecimalSeparator = pExcel.DecimalSeparator
+		DecimalSeparator = p_Excel.DecimalSeparator
 	End Property
 
 	Public Property Get DefaultFilePath()
-		DefaultFilePath = pExcel.DefaultFilePath
+		DefaultFilePath = p_Excel.DefaultFilePath
 	End Property
 
 	Public Property Get DefaultSaveFormat()
-		DefaultSaveFormat = pExcel.DefaultSaveFormat
+		DefaultSaveFormat = p_Excel.DefaultSaveFormat
 	End Property
 
 	Public Property Get DefaultSheetDirection()
-		DefaultSheetDirection = pExcel.DefaultSheetDirection
+		DefaultSheetDirection = p_Excel.DefaultSheetDirection
 	End Property
 
 	Public Property Get DefaultWebOptions()
-		DefaultWebOptions = pExcel.DefaultWebOptions
+		DefaultWebOptions = p_Excel.DefaultWebOptions
 	End Property
 
 	Public Property Get DeferAsyncQueries()
-		DeferAsyncQueries = pExcel.DeferAsyncQueries
+		DeferAsyncQueries = p_Excel.DeferAsyncQueries
 	End Property
 
 	Public Property Get Dialogs()
-		Dialogs = pExcel.Dialogs
+		Dialogs = p_Excel.Dialogs
 	End Property
 
 	Public Property Get DisplayAlerts()
-		DisplayAlerts = pExcel.DisplayAlerts
+		DisplayAlerts = p_Excel.DisplayAlerts
 	End Property
 
 	Public Property Get DisplayClipboardWindow()
-		DisplayClipboardWindow = pExcel.DisplayClipboardWindow
+		DisplayClipboardWindow = p_Excel.DisplayClipboardWindow
 	End Property
 
 	Public Property Get DisplayCommentIndicator()
-		DisplayCommentIndicator = pExcel.DisplayCommentIndicator
+		DisplayCommentIndicator = p_Excel.DisplayCommentIndicator
 	End Property
 
 	Public Property Get DisplayDocumentActionTaskPane()
-		DisplayDocumentActionTaskPane = pExcel.DisplayDocumentActionTaskPane
+		DisplayDocumentActionTaskPane = p_Excel.DisplayDocumentActionTaskPane
 	End Property
 
 	Public Property Get DisplayDocumentInformationPanel()
-		DisplayDocumentInformationPanel = pExcel.DisplayDocumentInformationPanel
+		DisplayDocumentInformationPanel = p_Excel.DisplayDocumentInformationPanel
 	End Property
 
 	Public Property Get DisplayExcel4Menus()
-		DisplayExcel4Menus = pExcel.DisplayExcel4Menus
+		DisplayExcel4Menus = p_Excel.DisplayExcel4Menus
 	End Property
 
 	Public Property Get DisplayFormulaAutoComplete()
-		DisplayFormulaAutoComplete = pExcel.DisplayFormulaAutoComplete
+		DisplayFormulaAutoComplete = p_Excel.DisplayFormulaAutoComplete
 	End Property
 
 	Public Property Get DisplayFormulaBar()
-		DisplayFormulaBar = pExcel.DisplayFormulaBar
+		DisplayFormulaBar = p_Excel.DisplayFormulaBar
 	End Property
 
 	Public Property Get DisplayFullScreen()
-		DisplayFullScreen = pExcel.DisplayFullScreen
+		DisplayFullScreen = p_Excel.DisplayFullScreen
 	End Property
 
 	Public Property Get DisplayFunctionToolTips()
-		DisplayFunctionToolTips = pExcel.DisplayFunctionToolTips
+		DisplayFunctionToolTips = p_Excel.DisplayFunctionToolTips
 	End Property
 
 	Public Property Get DisplayInsertOptions()
-		DisplayInsertOptions = pExcel.DisplayInsertOptions
+		DisplayInsertOptions = p_Excel.DisplayInsertOptions
 	End Property
 
 	Public Property Get DisplayNoteIndicator()
-		DisplayNoteIndicator = pExcel.DisplayNoteIndicator
+		DisplayNoteIndicator = p_Excel.DisplayNoteIndicator
 	End Property
 
 	Public Property Get DisplayPasteOptions()
-		DisplayPasteOptions = pExcel.DisplayPasteOptions
+		DisplayPasteOptions = p_Excel.DisplayPasteOptions
 	End Property
 
 	Public Property Get DisplayRecentFiles()
-		DisplayRecentFiles = pExcel.DisplayRecentFiles
+		DisplayRecentFiles = p_Excel.DisplayRecentFiles
 	End Property
 
 	Public Property Get DisplayScrollBars()
-		DisplayScrollBars = pExcel.DisplayScrollBars
+		DisplayScrollBars = p_Excel.DisplayScrollBars
 	End Property
 
 	Public Property Get DisplayStatusBar()
-		DisplayStatusBar = pExcel.DisplayStatusBar
+		DisplayStatusBar = p_Excel.DisplayStatusBar
 	End Property
 
 	Public Property Get EditDirectlyInCell()
-		EditDirectlyInCell = pExcel.EditDirectlyInCell
+		EditDirectlyInCell = p_Excel.EditDirectlyInCell
 	End Property
 
 	Public Property Get EnableAutoComplete()
-		EnableAutoComplete = pExcel.EnableAutoComplete
+		EnableAutoComplete = p_Excel.EnableAutoComplete
 	End Property
 
 	Public Property Get EnableCancelKey()
-		EnableCancelKey = pExcel.EnableCancelKey
+		EnableCancelKey = p_Excel.EnableCancelKey
 	End Property
 
 	Public Property Get EnableCheckFileExtensions()
-		EnableCheckFileExtensions = pExcel.EnableCheckFileExtensions
+		EnableCheckFileExtensions = p_Excel.EnableCheckFileExtensions
 	End Property
 
 	Public Property Get EnableEvents()
-		EnableEvents = pExcel.EnableEvents
+		EnableEvents = p_Excel.EnableEvents
 	End Property
 
 	Public Property Get EnableLargeOperationAlert()
-		EnableLargeOperationAlert = pExcel.EnableLargeOperationAlert
+		EnableLargeOperationAlert = p_Excel.EnableLargeOperationAlert
 	End Property
 
 	Public Property Get EnableLivePreview()
-		EnableLivePreview = pExcel.EnableLivePreview
+		EnableLivePreview = p_Excel.EnableLivePreview
 	End Property
 
 	Public Property Get EnableMacroAnimations()
-		EnableMacroAnimations = pExcel.EnableMacroAnimations
+		EnableMacroAnimations = p_Excel.EnableMacroAnimations
 	End Property
 
 	Public Property Get EnableSound()
-		EnableSound = pExcel.EnableSound
+		EnableSound = p_Excel.EnableSound
 	End Property
 
 	Public Property Get ErrorCheckingOptions()
-		ErrorCheckingOptions = pExcel.ErrorCheckingOptions
+		ErrorCheckingOptions = p_Excel.ErrorCheckingOptions
 	End Property
 
 	Public Property Get Excel4IntlMacroSheets()
-		Excel4IntlMacroSheets = pExcel.Excel4IntlMacroSheets
+		Excel4IntlMacroSheets = p_Excel.Excel4IntlMacroSheets
 	End Property
 
 	Public Property Get Excel4MacroSheets()
-		Excel4MacroSheets = pExcel.Excel4MacroSheets
+		Excel4MacroSheets = p_Excel.Excel4MacroSheets
 	End Property
 
 	Public Property Get ExtendList()
-		ExtendList = pExcel.ExtendList
+		ExtendList = p_Excel.ExtendList
 	End Property
 
 	Public Property Get FeatureInstall()
-		FeatureInstall = pExcel.FeatureInstall
+		FeatureInstall = p_Excel.FeatureInstall
 	End Property
 
 	Public Property Get FileConverters()
-		FileConverters = pExcel.FileConverters
+		FileConverters = p_Excel.FileConverters
 	End Property
 
 	Public Property Get FileDialog()
-		FileDialog = pExcel.FileDialog
+		FileDialog = p_Excel.FileDialog
 	End Property
 
 	Public Property Get FileExportConverters()
-		FileExportConverters = pExcel.FileExportConverters
+		FileExportConverters = p_Excel.FileExportConverters
 	End Property
 
 	Public Property Get FileValidation()
-		FileValidation = pExcel.FileValidation
+		FileValidation = p_Excel.FileValidation
 	End Property
 
 	Public Property Get FileValidationPivot()
-		FileValidationPivot = pExcel.FileValidationPivot
+		FileValidationPivot = p_Excel.FileValidationPivot
 	End Property
 
 	Public Property Get FindFormat()
-		FindFormat = pExcel.FindFormat
+		FindFormat = p_Excel.FindFormat
 	End Property
 
 	Public Property Get FixedDecimal()
-		FixedDecimal = pExcel.FixedDecimal
+		FixedDecimal = p_Excel.FixedDecimal
 	End Property
 
 	Public Property Get FixedDecimalPlaces()
-		FixedDecimalPlaces = pExcel.FixedDecimalPlaces
+		FixedDecimalPlaces = p_Excel.FixedDecimalPlaces
 	End Property
 
 	Public Property Get FlashFill()
-		FlashFill = pExcel.FlashFill
+		FlashFill = p_Excel.FlashFill
 	End Property
 
 	Public Property Get FlashFillMode()
-		FlashFillMode = pExcel.FlashFillMode
+		FlashFillMode = p_Excel.FlashFillMode
 	End Property
 
 	Public Property Get FormulaBarHeight()
-		FormulaBarHeight = pExcel.FormulaBarHeight
+		FormulaBarHeight = p_Excel.FormulaBarHeight
 	End Property
 
 	Public Property Get GenerateGetPivotData()
-		GenerateGetPivotData = pExcel.GenerateGetPivotData
+		GenerateGetPivotData = p_Excel.GenerateGetPivotData
 	End Property
 
 	Public Property Get GenerateTableRefs()
-		GenerateTableRefs = pExcel.GenerateTableRefs
+		GenerateTableRefs = p_Excel.GenerateTableRefs
 	End Property
 
 	Public Property Get Height()
-		Height = pExcel.Height
+		Height = p_Excel.Height
 	End Property
 
 	Public Property Get HighQualityModeForGraphics()
-		HighQualityModeForGraphics = pExcel.HighQualityModeForGraphics
+		HighQualityModeForGraphics = p_Excel.HighQualityModeForGraphics
 	End Property
 
 	Public Property Get Hinstance()
-		Hinstance = pExcel.Hinstance
+		Hinstance = p_Excel.Hinstance
 	End Property
 
 	Public Property Get HinstancePtr()
-		HinstancePtr = pExcel.HinstancePtr
+		HinstancePtr = p_Excel.HinstancePtr
 	End Property
 
 	Public Property Get Hwnd()
-		Hwnd = pExcel.Hwnd
+		Hwnd = p_Excel.Hwnd
 	End Property
 
 	Public Property Get IgnoreRemoteRequests()
-		IgnoreRemoteRequests = pExcel.IgnoreRemoteRequests
+		IgnoreRemoteRequests = p_Excel.IgnoreRemoteRequests
 	End Property
 
 	Public Property Get Interactive()
-		Interactive = pExcel.Interactive
+		Interactive = p_Excel.Interactive
 	End Property
 
 	Public Property Get International()
-		Interactive = pExcel.International
+		Interactive = p_Excel.International
 	End Property
 
 	Public Property Get IsSandboxed()
-		IsSandboxed = pExcel.IsSandboxed
+		IsSandboxed = p_Excel.IsSandboxed
 	End Property
 
 	Public Property Get Iteration()
-		Iteration = pExcel.Iteration
+		Iteration = p_Excel.Iteration
 	End Property
 
 	Public Property Get LanguageSettings()
-		LanguageSettings = pExcel.LanguageSettings
+		LanguageSettings = p_Excel.LanguageSettings
 	End Property
 
 	Public Property Get LargeOperationCellThousandCount()
-		LargeOperationCellThousandCount = pExcel.LargeOperationCellThousandCount
+		LargeOperationCellThousandCount = p_Excel.LargeOperationCellThousandCount
 	End Property
 
 	Public Property Get Left()
-		Left = pExcel.Left
+		Left = p_Excel.Left
 	End Property
 
 	Public Property Get LibraryPath()
-		LibraryPath = pExcel.LibraryPath
+		LibraryPath = p_Excel.LibraryPath
 	End Property
 
 	Public Property Get MailSession()
-		MailSession = pExcel.MailSession
+		MailSession = p_Excel.MailSession
 	End Property
 
 	Public Property Get MailSystem()
-		MailSystem = pExcel.MailSystem
+		MailSystem = p_Excel.MailSystem
 	End Property
 
 	Public Property Get MapPaperSize()
-		MapPaperSize = pExcel.MapPaperSize
+		MapPaperSize = p_Excel.MapPaperSize
 	End Property
 
 	Public Property Get MathCoprocessorAvailable()
-		MathCoprocessorAvailable = pExcel.MathCoprocessorAvailable
+		MathCoprocessorAvailable = p_Excel.MathCoprocessorAvailable
 	End Property
 
 	Public Property Get MaxChange()
-		MaxChange = pExcel.MaxChange
+		MaxChange = p_Excel.MaxChange
 	End Property
 
 	Public Property Get MaxIterations()
-		MaxIterations = pExcel.MaxIterations
+		MaxIterations = p_Excel.MaxIterations
 	End Property
 
 	Public Property Get MeasurementUnit()
-		MeasurementUnit = pExcel.MeasurementUnit
+		MeasurementUnit = p_Excel.MeasurementUnit
 	End Property
 
 	Public Property Get MergeInstances()
-		MergeInstances = pExcel.MergeInstances
+		MergeInstances = p_Excel.MergeInstances
 	End Property
 
 	Public Property Get MouseAvailable()
-		MouseAvailable = pExcel.MouseAvailable
+		MouseAvailable = p_Excel.MouseAvailable
 	End Property
 
 	Public Property Get MoveAfterReturn()
-		MoveAfterReturn = pExcel.MoveAfterReturn
+		MoveAfterReturn = p_Excel.MoveAfterReturn
 	End Property
 
 	Public Property Get MoveAfterReturnDirection()
-		MoveAfterReturnDirection = pExcel.MoveAfterReturnDirection
+		MoveAfterReturnDirection = p_Excel.MoveAfterReturnDirection
 	End Property
 
 	Public Property Get MultiThreadedCalculation()
-		MultiThreadedCalculation = pExcel.MultiThreadedCalculation
+		MultiThreadedCalculation = p_Excel.MultiThreadedCalculation
 	End Property
 
 	Public Property Get Name()
-		Name = pExcel.Name
+		Name = p_Excel.Name
 	End Property
 
 	Public Property Get Names()
-		Names = pExcel.Names
+		Names = p_Excel.Names
 	End Property
 
 	Public Property Get NetworkTemplatesPath()
-		NetworkTemplatesPath = pExcel.NetworkTemplatesPath
+		NetworkTemplatesPath = p_Excel.NetworkTemplatesPath
 	End Property
 
 	Public Property Get NewWorkbook()
-		NewWorkbook = pExcel.NewWorkbook
+		NewWorkbook = p_Excel.NewWorkbook
 	End Property
 
 	Public Property Get ODBCErrors()
-		ODBCErrors = pExcel.ODBCErrors
+		ODBCErrors = p_Excel.ODBCErrors
 	End Property
 
 	Public Property Get ODBCTimeout()
-		ODBCTimeout = pExcel.ODBCTimeout
+		ODBCTimeout = p_Excel.ODBCTimeout
 	End Property
 
 	Public Property Get OLEDBErrors()
-		OLEDBErrors = pExcel.OLEDBErrors
+		OLEDBErrors = p_Excel.OLEDBErrors
 	End Property
 
 	Public Property Get OnWindow()
-		OnWindow = pExcel.OnWindow
+		OnWindow = p_Excel.OnWindow
 	End Property
 
 	Public Property Get OperatingSystem()
-		OperatingSystem = pExcel.OperatingSystem
+		OperatingSystem = p_Excel.OperatingSystem
 	End Property
 
 	Public Property Get OrganizationName()
-		OrganizationName = pExcel.OrganizationName
+		OrganizationName = p_Excel.OrganizationName
 	End Property
 
 	Public Property Get Parent()
-		Parent = pExcel.Parent
+		Parent = p_Excel.Parent
 	End Property
 
 	Public Property Get Path()
-		Path = pExcel.Path
+		Path = p_Excel.Path
 	End Property
 
 	Public Property Get PathSeparator()
-		PathSeparator = pExcel.PathSeparator
+		PathSeparator = p_Excel.PathSeparator
 	End Property
 
 	Public Property Get PivotTableSelection()
-		PivotTableSelection = pExcel.PivotTableSelection
+		PivotTableSelection = p_Excel.PivotTableSelection
 	End Property
 
 	Public Property Get PreviousSelections()
-		PreviousSelections = pExcel.PreviousSelections
+		PreviousSelections = p_Excel.PreviousSelections
 	End Property
 
 	Public Property Get PrintCommunication()
-		PrintCommunication = pExcel.PrintCommunication
+		PrintCommunication = p_Excel.PrintCommunication
 	End Property
 
 	Public Property Get ProductCode()
-		ProductCode = pExcel.ProductCode
+		ProductCode = p_Excel.ProductCode
 	End Property
 
 	Public Property Get PromptForSummaryInfo()
-		PromptForSummaryInfo = pExcel.PromptForSummaryInfo
+		PromptForSummaryInfo = p_Excel.PromptForSummaryInfo
 	End Property
 
 	Public Property Get ProtectedViewWindows()
-		ProtectedViewWindows = pExcel.ProtectedViewWindows
+		ProtectedViewWindows = p_Excel.ProtectedViewWindows
 	End Property
 
 	Public Property Get QuickAnalysis()
-		QuickAnalysis = pExcel.QuickAnalysis
+		QuickAnalysis = p_Excel.QuickAnalysis
 	End Property
 
 	Public Property Get Range()
-		Range = pExcel.Range
+		Range = p_Excel.Range
 	End Property
 
 	Public Property Get Ready()
-		Ready = pExcel.Ready
+		Ready = p_Excel.Ready
 	End Property
 
 	Public Property Get RecentFiles()
-		RecentFiles = pExcel.RecentFiles
+		RecentFiles = p_Excel.RecentFiles
 	End Property
 
 	Public Property Get RecordRelative()
-		RecordRelative = pExcel.RecordRelative
+		RecordRelative = p_Excel.RecordRelative
 	End Property
 
 	Public Property Get ReferenceStyle()
-		ReferenceStyle = pExcel.ReferenceStyle
+		ReferenceStyle = p_Excel.ReferenceStyle
 	End Property
 
 	Public Property Get RegisteredFunctions()
-		RegisteredFunctions = pExcel.RegisteredFunctions
+		RegisteredFunctions = p_Excel.RegisteredFunctions
 	End Property
 
 	Public Property Get ReplaceFormat()
-		ReplaceFormat = pExcel.ReplaceFormat
+		ReplaceFormat = p_Excel.ReplaceFormat
 	End Property
 
 	Public Property Get RollZoom()
-		RollZoom = pExcel.RollZoom
+		RollZoom = p_Excel.RollZoom
 	End Property
 
 	Public Property Get Rows()
-		Rows = pExcel.Rows
+		Rows = p_Excel.Rows
 	End Property
 
 	Public Property Get RTD()
-		RTD = pExcel.RTD
+		RTD = p_Excel.RTD
 	End Property
 
 	Public Property Get ScreenUpdating()
-		ScreenUpdating = pExcel.ScreenUpdating
+		ScreenUpdating = p_Excel.ScreenUpdating
 	End Property
 
 	Public Property Get Selection()
-		Selection = pExcel.Selection
+		Selection = p_Excel.Selection
 	End Property
 
 	Public Property Get Sheets()
-		Sheets = pExcel.Sheets
+		Sheets = p_Excel.Sheets
 	End Property
 
 	Public Property Get SheetsInNewWorkbook()
-		SheetsInNewWorkbook = pExcel.SheetsInNewWorkbook
+		SheetsInNewWorkbook = p_Excel.SheetsInNewWorkbook
 	End Property
 
 	Public Property Get ShowChartTipNames()
-		ShowChartTipNames = pExcel.ShowChartTipNames
+		ShowChartTipNames = p_Excel.ShowChartTipNames
 	End Property
 
 	Public Property Get ShowChartTipValues()
-		ShowChartTipValues = pExcel.ShowChartTipValues
+		ShowChartTipValues = p_Excel.ShowChartTipValues
 	End Property
 
 	Public Property Get ShowDevTools()
-		ShowDevTools = pExcel.ShowDevTools
+		ShowDevTools = p_Excel.ShowDevTools
 	End Property
 
 	Public Property Get ShowMenuFloaties()
-		ShowMenuFloaties = pExcel.ShowMenuFloaties
+		ShowMenuFloaties = p_Excel.ShowMenuFloaties
 	End Property
 
 	Public Property Get ShowQuickAnalysis()
-		ShowQuickAnalysis = pExcel.ShowQuickAnalysis
+		ShowQuickAnalysis = p_Excel.ShowQuickAnalysis
 	End Property
 
 	Public Property Get ShowSelectionFloaties()
-		ShowSelectionFloaties = pExcel.ShowSelectionFloaties
+		ShowSelectionFloaties = p_Excel.ShowSelectionFloaties
 	End Property
 
 	Public Property Get ShowStartupDialog()
-		ShowStartupDialog = pExcel.ShowStartupDialog
+		ShowStartupDialog = p_Excel.ShowStartupDialog
 	End Property
 
 	Public Property Get ShowToolTips()
-		ShowToolTips = pExcel.ShowToolTips
+		ShowToolTips = p_Excel.ShowToolTips
 	End Property
 
 	Public Property Get SmartArtColors()
-		SmartArtColors = pExcel.SmartArtColors
+		SmartArtColors = p_Excel.SmartArtColors
 	End Property
 
 	Public Property Get SmartArtLayouts()
-		SmartArtLayouts = pExcel.SmartArtLayouts
+		SmartArtLayouts = p_Excel.SmartArtLayouts
 	End Property
 
 	Public Property Get SmartArtQuickStyles()
-		SmartArtQuickStyles = pExcel.SmartArtQuickStyles
+		SmartArtQuickStyles = p_Excel.SmartArtQuickStyles
 	End Property
 
 	Public Property Get Speech()
-		Speech = pExcel.Speech
+		Speech = p_Excel.Speech
 	End Property
 
 	Public Property Get SpellingOptions()
-		SpellingOptions = pExcel.SpellingOptions
+		SpellingOptions = p_Excel.SpellingOptions
 	End Property
 
 	Public Property Get StandardFont()
-		StandardFont = pExcel.StandardFont
+		StandardFont = p_Excel.StandardFont
 	End Property
 
 	Public Property Get StandardFontSize()
-		StandardFontSize = pExcel.StandardFontSize
+		StandardFontSize = p_Excel.StandardFontSize
 	End Property
 
 	Public Property Get StartupPath()
-		StartupPath = pExcel.StartupPath
+		StartupPath = p_Excel.StartupPath
 	End Property
 
 	Public Property Get StatusBar()
-		StatusBar = pExcel.StatusBar
+		StatusBar = p_Excel.StatusBar
 	End Property
 
 	Public Property Get TemplatesPath()
-		TemplatesPath = pExcel.TemplatesPath
+		TemplatesPath = p_Excel.TemplatesPath
 	End Property
 
 	Public Property Get ThisCell()
-		ThisCell = pExcel.ThisCell
+		ThisCell = p_Excel.ThisCell
 	End Property
 
 	Public Property Get ThisWorkbook()
-		ThisWorkbook = pExcel.ThisWorkbook
+		ThisWorkbook = p_Excel.ThisWorkbook
 	End Property
 
 	Public Property Get ThousandsSeparator()
-		ThousandsSeparator = pExcel.ThousandsSeparator
+		ThousandsSeparator = p_Excel.ThousandsSeparator
 	End Property
 
 	Public Property Get Top()
-		Top = pExcel.Top
+		Top = p_Excel.Top
 	End Property
 
 	Public Property Get TransitionMenuKey()
-		TransitionMenuKey = pExcel.TransitionMenuKey
+		TransitionMenuKey = p_Excel.TransitionMenuKey
 	End Property
 
 	Public Property Get TransitionMenuKeyAction()
-		TransitionMenuKeyAction = pExcel.TransitionMenuKeyAction
+		TransitionMenuKeyAction = p_Excel.TransitionMenuKeyAction
 	End Property
 
 	Public Property Get TransitionNavigKeys()
-		TransitionNavigKeys = pExcel.TransitionNavigKeys
+		TransitionNavigKeys = p_Excel.TransitionNavigKeys
 	End Property
 
 	Public Property Get UsableHeight()
-		UsableHeight = pExcel.UsableHeight
+		UsableHeight = p_Excel.UsableHeight
 	End Property
 
 	Public Property Get UsableWidth()
-		UsableWidth = pExcel.UsableWidth
+		UsableWidth = p_Excel.UsableWidth
 	End Property
 
 	Public Property Get UseClusterConnector()
-		UseClusterConnector = pExcel.UseClusterConnector
+		UseClusterConnector = p_Excel.UseClusterConnector
 	End Property
 
 	Public Property Get UsedObjects()
-		UsedObjects = pExcel.UsedObjects
+		UsedObjects = p_Excel.UsedObjects
 	End Property
 
 	Public Property Get UserControl()
-		UserControl = pExcel.UserControl
+		UserControl = p_Excel.UserControl
 	End Property
 
 	Public Property Get UserLibraryPath()
-		UserLibraryPath = pExcel.UserLibraryPath
+		UserLibraryPath = p_Excel.UserLibraryPath
 	End Property
 
 	Public Property Get UserName()
-		UserName = pExcel.UserName
+		UserName = p_Excel.UserName
 	End Property
 
 	Public Property Get UseSystemSeparators()
-		UseSystemSeparators = pExcel.UseSystemSeparators
+		UseSystemSeparators = p_Excel.UseSystemSeparators
 	End Property
 
 	Public Property Get Value()
-		Value = pExcel.Value
+		Value = p_Excel.Value
 	End Property
 
 	Public Property Get VBE()
-		VBE = pExcel.VBE
+		VBE = p_Excel.VBE
 	End Property
 
 	Public Property Get Version()
-		Version = pExcel.Version
+		Version = p_Excel.Version
 	End Property
 
 	Public Property Get Visible()
-		Visible = pExcel.Visible
+		Visible = p_Excel.Visible
 	End Property
 
 	Public Property Get WarnOnFunctionNameConflict()
-		WarnOnFunctionNameConflict = pExcel.WarnOnFunctionNameConflict
+		WarnOnFunctionNameConflict = p_Excel.WarnOnFunctionNameConflict
 	End Property
 
 	Public Property Get Watches()
-		Watches = pExcel.Watches
+		Watches = p_Excel.Watches
 	End Property
 
 	Public Property Get Width()
-		Width = pExcel.Width
+		Width = p_Excel.Width
 	End Property
 
 	Public Property Get Windows()
-		Windows = pExcel.Windows
+		Windows = p_Excel.Windows
 	End Property
 
 	Public Property Get WindowsForPens()
-		WindowsForPens = pExcel.WindowsForPens
+		WindowsForPens = p_Excel.WindowsForPens
 	End Property
 
 	Public Property Get WindowState()
-		WindowState = pExcel.WindowState
+		WindowState = p_Excel.WindowState
 	End Property
 
 	Public Property Get Workbooks()
-		Set Workbooks = pExcel.Workbooks
+		Set Workbooks = p_Excel.Workbooks
 	End Property
 
 	Public Property Get WorksheetFunction()
-		WorksheetFunction = pExcel.WorksheetFunction
+		WorksheetFunction = p_Excel.WorksheetFunction
 	End Property
 
 	Public Property Get Worksheets()
-		Set Worksheets = pExcel.Worksheets
+		Set Worksheets = p_Excel.Worksheets
 	End Property
 
 
@@ -1024,7 +1024,7 @@ Class base_Excel
 	End Sub
 
 	Public Sub Quit()
-		pExcel.Quit()
+		p_Excel.Quit()
 	End Sub
 
 	Public Sub RecordMacro() ' ([BasicCode], [XlmCode])
@@ -1072,7 +1072,7 @@ Class base_Excel
 
 
 	Private Sub Class_Terminate()
-		Set pExcel = Nothing
+		Set p_Excel = Nothing
 	End Sub
 End Class
 

@@ -75,6 +75,7 @@ exit /b
         ' Options:
         ' new
         ' run
+	' schedule
         ' version
         ' help
         ' credits
