@@ -38,7 +38,7 @@ exit /b
             			Err.Clear
         		Else
             			WScript.Echo Err.Number & ": " & Err.Description
-            			WScript.Quit 1
+            			' WScript.Quit 1
         		End If
     		End If
 	End Sub

@@ -652,7 +652,6 @@ Class base_Word
 	End Property
 
 
-
 	' Methods
 
 
