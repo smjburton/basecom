@@ -1,5 +1,7 @@
 Option Explicit
 
+Include "base_Sys.base_Sys_Error"
+
 Const STD_IN 	= 0
 Const STD_OUT 	= 1
 Const STD_ERR 	= 2
@@ -34,25 +36,6 @@ Sub PrintLn( _
         .WriteLine strText
         .Close
     End With
-End Sub
-
-Sub ErrorHandler()
-	If Err.Number = 0 Then Exit Sub
-
-        ' Handle specific error
-	' If not the error we were expecting, re-raise the error
-	' Err.Raise Err.Number, Err.Source, Err.Description, Err.HelpFile, Err.HelpContext
-
-	' Need filepath
-	' Boolean for quit
-        ' Boolean to log the erro
-
-        WScript.StdErr.WriteLine "Error " & Err.Number & ": " & Err.Description & " (Source: " & Err.Source & ")"
-	Err.Clear
-End Sub
-
-Sub Raise()
-    ' Err.Raise
 End Sub
 
 Sub Run( _
