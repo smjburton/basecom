@@ -1,6 +1,11 @@
 Option Explicit
 
-Function IIf(strExpression, varTrueResult, varFalseResult)
+Function IIf(
+	ByVal strExpression, _
+	ByVal varTrueResult, _
+	ByVal varFalseResult _
+	)
+
 	If strExpression Then
 		If IsObject(varTrueResult) Then
 			Set IIf = varTrueResult
@@ -16,6 +21,6 @@ Function IIf(strExpression, varTrueResult, varFalseResult)
 	End If
 End Function
 
-If WScript.ScriptName = "base_Util_General.vbs" Then
+If WScript.ScriptName = "base_Sys_Util.vbs" Then
 
 End If

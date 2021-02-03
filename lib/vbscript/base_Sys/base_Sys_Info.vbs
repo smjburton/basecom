@@ -1,6 +1,8 @@
 Option Explicit
 
-Class base_Speech
+Class base_Sys_Info
+	Private p_SysInfo
+
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +12,6 @@ Class base_Speech
 	End Sub
 End Class
 
-If WScript.ScriptName = "base_Speech.vbs" Then
+If WScript.ScriptName = "base_Sys_Info.vbs" Then
 
 End If

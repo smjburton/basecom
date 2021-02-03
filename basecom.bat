@@ -71,17 +71,8 @@ exit /b
 	End Sub
 
     	Include "base_Sys.base_Sys"
-
-        ' Options:
-        ' new
-	' open
-        ' run
-	' schedule
-        ' version
-        ' help
-        ' credits
-        ' license
-        ' copyright
+    	Include "base_Sys.base_Sys_Util"
+    	Include "base_Sys.base_Sys_Error"
 
 	If WScript.Arguments.Count > 0 Then
 		Include WScript.Arguments(0)

@@ -1,6 +1,8 @@
 Option Explicit
 
-Class base_Error
+Class base_Sys_Admin
+	Private p_Admin
+
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +12,6 @@ Class base_Error
 	End Sub
 End Class
 
-If WScript.ScriptName = "base_Error.vbs" Then
+If WScript.ScriptName = "base_Sys_Admin.vbs" Then
 
 End If
