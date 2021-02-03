@@ -74,6 +74,7 @@ exit /b
 
         ' Options:
         ' new
+	' open
         ' run
 	' schedule
         ' version

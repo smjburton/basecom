@@ -55,6 +55,20 @@ Sub Sleep( _
     WScript.Sleep Int(intTimeSeconds * 1000)
 End Sub
 
+' Function FunctionExists( func_name )'
+'     FunctionExists = False 
+' 
+'     On Error Resume Next
+' 
+'     Dim f : Set f = GetRef(func_name)
+' 
+'     If Err.number = 0 Then
+'         FunctionExists = True
+'     End If  
+'     On Error GoTo 0
+' 
+' End Function
+
 Sub Quit( _
     ByVal intExitCode _
     )
