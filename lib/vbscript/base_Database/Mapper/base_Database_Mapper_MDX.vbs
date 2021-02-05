@@ -149,43 +149,7 @@ Class base_DB_MDX
 	End Sub
 End Class
 
-' [Date].[Fiscal Calendar].[Fiscal Year].&[2015].&[3].&[ST 2015]&[9], " & _
-' "[Date].[Fiscal Calendar].[Fiscal Year].&[2015].&[4].&[ST 2015]&[10], " & _
-' "[Date].[Fiscal Calendar].[Fiscal Year].&[2015].&[4].&[ST 2015]&[11], " & _
-' "[Date].[Fiscal Calendar].[Fiscal Year].&[2015].&[4].&[ST 2015]&[12], " & _
-' "[Date].[Fiscal Calendar].[Fiscal Year].&[2016].&[1].&[ST 2016]&[1], " & _
-' "[Date].[Fiscal Calendar].[Fiscal Year].&[2016].&[1].&[ST 2016]&[2], " & _
-' "[Date].[Fiscal Calendar].[Fiscal Year].&[2016].&[1].&[ST 2016]&[3], " & _
-' "[Date].[Fiscal Calendar].[Fiscal Year].&[2016].&[2].&[ST 2016]&[4], " & _
-' "[Date].[Fiscal Calendar].[Fiscal Year].&[2016].&[2].&[ST 2016]&[5], " & _
-' "[Date].[Fiscal Calendar].[Fiscal Year].&[2016].&[2].&[ST 2016]&[6], " & _
-' "[Date].[Fiscal Calendar].[Fiscal Year].&[2016].&[3].&[ST 2016]&[7], " & _
-
-Function GetBidPercMonthSales(strSKU, strMonth)
-	Dim objMdx, _
-		strConnection, _
-		strQuery
-
-	Set objMdx = New v_DB_MDX
-
-	strConnection = "Provider=MSOLAP.4;Integrated Security=SSPI;Persist Security Info=True;Initial Catalog=Daily_SellThru;" & _
-			"Data Source=SQLBI\INST2;MDX Compatibility=1;Safety Options=2;MDX Missing Member Mode=Error"
-
-	objMdx.Connect strConnection
-	
-	strQuery = "SELECT NON EMPTY { [Date].[Fiscal Calendar].[Fiscal Year].&[2016].&[3].&[ST 2016]&[8] } ON COLUMNS, " & _
-			"NON EMPTY ORDER ( CROSSJOIN ( { [Item].[Short SKU].&[SAT32M225] }, " & _
-			"{ [Customer].[Group Name].Children } ), ( [Measures].[Qty Sold] ), DESC ) ON ROWS " & _
-			"FROM [SellThru] WHERE ( [Measures].[Qty Sold] ) CELL PROPERTIES VALUE, FORMATTED_VALUE," & _
-			" CELL_ORDINAL"
-
-	objMdx.Query strQuery
-
-	GetBidPercMonthSales = objMdx.RowCount
-
-	Set objMdx = Nothing
-End Function
 
 If WScript.ScriptName = "base_DB_MDX.vbs" Then
-	WScript.Echo GetBidPercMonthSales("SAT32M225", "June 2016")
+a
 End If

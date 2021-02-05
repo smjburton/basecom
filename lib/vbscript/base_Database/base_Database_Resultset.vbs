@@ -1,13 +1,10 @@
 Option Explicit
 
-' https://bytes.com/topic/access/answers/890865-how-properly-open-recordset-ado
-' http://www.w3schools.com/asp/met_rs_open.asp
-
 Class base_DB_Recordset
-	Private pRecordset
+	Private p_Resultset
 
 	Private Sub Class_Initialize()
-		Set pRecordset = CreateObject("ADODB.Recordset")
+		Set p_Resultset = CreateObject("ADODB.Recordset")
 	End Sub
 
 
@@ -15,135 +12,135 @@ Class base_DB_Recordset
 
 
 	Public Property Get AbsolutePage()
-		Set AbsolutePage = pRecordset.AbsolutePage
+		Set AbsolutePage = p_Resultset.AbsolutePage
 	End Property
 
 	Public Property Get AbsolutePosition()
-		Set AbsolutePosition = pRecordset.AbsolutePosition
+		Set AbsolutePosition = p_Resultset.AbsolutePosition
 	End Property
 
 	Public Property Get ActiveCommand()
-		Set ActiveCommand = pRecordset.ActiveCommand
+		Set ActiveCommand = p_Resultset.ActiveCommand
 	End Property
 
 	Public Property Get ActiveConnection()
-		If IsObject(pRecordset.ActiveConnection) Then
-			Set ActiveConnection = pRecordset.ActiveConnection
+		If IsObject(p_Resultset.ActiveConnection) Then
+			Set ActiveConnection = p_Resultset.ActiveConnection
 		Else
-			ActiveConnection = pRecordset.ActiveConnection
+			ActiveConnection = p_Resultset.ActiveConnection
 		End If
 	End Property
 
 	Public Property Get BOF()
-		BOF = pRecordset.BOF
+		BOF = p_Resultset.BOF
 	End Property
 
 	Public Property Get Bookmark()
-		If IsObject(pRecordset.Bookmark) Then
-			Set Bookmark = pRecordset.Bookmark
+		If IsObject(p_Resultset.Bookmark) Then
+			Set Bookmark = p_Resultset.Bookmark
 		Else
-			Bookmark = pRecordset.Bookmark
+			Bookmark = p_Resultset.Bookmark
 		End If 
 	End Property
 
 	Public Property Get CacheSize()
-		CacheSize = pRecordset.CacheSize
+		CacheSize = p_Resultset.CacheSize
 	End Property
 
 	Public Property Get CursorLocation()
-		Set CursorLocation = pRecordset.CursorLocation
+		Set CursorLocation = p_Resultset.CursorLocation
 	End Property
 
 	Public Property Get CursorType()
-		Set CursorType = pRecordset.CursorType
+		Set CursorType = p_Resultset.CursorType
 	End Property
 
 	Public Property Get DataMember()
-		DataMember = pRecordset.DataMember
+		DataMember = p_Resultset.DataMember
 	End Property
 
 	Public Property Get DataSource()
-		If IsObject(pRecordset.DataSource) Then
-			Set DataSource = pRecordset.DataSource
+		If IsObject(p_Resultset.DataSource) Then
+			Set DataSource = p_Resultset.DataSource
 		Else
-			DataSource = pRecordset.DataSource
+			DataSource = p_Resultset.DataSource
 		End If 
 	End Property
 
 	Public Property Get EditMode()
-		Set EditMode = pRecordset.EditMode
+		Set EditMode = p_Resultset.EditMode
 	End Property
 
 	Public Property Get EOF()
-		EOF = pRecordset.EOF
+		EOF = p_Resultset.EOF
 	End Property
 
 	Public Property Get Fields()
-		Set Fields = pRecordset.Fields
+		Set Fields = p_Resultset.Fields
 	End Property
 
 	Public Property Get Filter()
-		If IsObject(pRecordset.Filter) Then
-			Set Filter = pRecordset.Filter
+		If IsObject(p_Resultset.Filter) Then
+			Set Filter = p_Resultset.Filter
 		Else
-			Filter = pRecordset.Filter
+			Filter = p_Resultset.Filter
 		End If 
 	End Property
 
 	Public Property Get Index()
-		Index = pRecordset.Index
+		Index = p_Resultset.Index
 	End Property
 
 	Public Property Get LockType()
-		Set LockType = pRecordset.LockType
+		Set LockType = p_Resultset.LockType
 	End Property
 
 	Public Property Get MarshalOptions()
-		Set MarshalOptions = pRecordset.MarshalOptions
+		Set MarshalOptions = p_Resultset.MarshalOptions
 	End Property
 
 	Public Property Get MaxRecords()
-		MaxRecords = pRecordset.MaxRecords
+		MaxRecords = p_Resultset.MaxRecords
 	End Property
 
 	Public Property Get PageCount()
-		PageCount = pRecordset.PageCount
+		PageCount = p_Resultset.PageCount
 	End Property
 
 	Public Property Get PageSize()
-		PageSize = pRecordset.PageSize
+		PageSize = p_Resultset.PageSize
 	End Property
 
 	Public Property Get Properties()
-		Set Properties = pRecordset.Properties
+		Set Properties = p_Resultset.Properties
 	End Property
 
 	Public Property Get RecordCount()
-		RecordCount = pRecordset.RecordCount
+		RecordCount = p_Resultset.RecordCount
 	End Property
 
 	Public Property Get Sort()
-		Sort = pRecordset.Sort
+		Sort = p_Resultset.Sort
 	End Property
 
 	Public Property Get Source()
-		If IsObject(pRecordset.Source) Then
-			Set Source = pRecordset.Source
+		If IsObject(p_Resultset.Source) Then
+			Set Source = p_Resultset.Source
 		Else
-			Source = pRecordset.Source
+			Source = p_Resultset.Source
 		End If 
 	End Property
 
 	Public Property Get State()
-		State = pRecordset.State
+		State = p_Resultset.State
 	End Property
 
 	Public Property Get Status()
-		Status = pRecordset.Status
+		Status = p_Resultset.Status
 	End Property
 
 	Public Property Get StayInSync()
-		StayInSync = pRecordset.StayInSync
+		StayInSync = p_Resultset.StayInSync
 	End Property
 
 
@@ -155,7 +152,7 @@ Class base_DB_Recordset
 	' End Sub
 
 	Public Sub Cancel()
-		pRecordset.Cancel()
+		p_Resultset.Cancel()
 	End Sub
 
 	' Public Sub CancelBatch([AffectRecords As AffectEnum = adAffectAll])
@@ -163,7 +160,7 @@ Class base_DB_Recordset
 	' End Sub
 
 	Public Sub CancelUpdate()
-		pRecordset.CancelUpdate()
+		p_Resultset.CancelUpdate()
 	End Sub
 
 	' Public Function Clone([LockType As LockTypeEnum = adLockUnspecified]) 
@@ -171,7 +168,7 @@ Class base_DB_Recordset
 	' End Function
 
 	Public Sub Close()
-		pRecordset.Close()
+		p_Resultset.Close()
 	End Sub
 
 	' Public Function CompareBookmarks(Bookmark1, Bookmark2)
@@ -199,19 +196,19 @@ Class base_DB_Recordset
 	' End Sub
 
 	Public Sub MoveFirst()
-		pRecordset.MoveFirst()
+		p_Resultset.MoveFirst()
 	End Sub
 
 	Public Sub MoveLast()
-		pRecordset.MoveLast()
+		p_Resultset.MoveLast()
 	End Sub
 
 	Public Sub MoveNext()
-		pRecordset.MoveNext()
+		p_Resultset.MoveNext()
 	End Sub
 
 	Public Sub MovePrevious()
-		pRecordset.MovePrevious()
+		p_Resultset.MovePrevious()
 	End Sub
 
 	' Public Function NextRecordset([RecordsAffected])
@@ -252,40 +249,13 @@ Class base_DB_Recordset
 
 
 	Private Sub Class_Terminate()
-		Set pRecordset = Nothing
+		Set p_Resultset = Nothing
 	End Sub
 End Class
 
 If WScript.ScriptName = "base_DB_Recordset.vbs" Then
-	Dim recordset
-	Set recordset = New base_DB_Recordset
+	Dim resultset
+	Set resultset = New base_DB_Resultset
 
-	WScript.Echo TypeName(recordset.AbsolutePage)
-	WScript.Echo TypeName(recordset.AbsolutePosition)
-	WScript.Echo TypeName(recordset.ActiveCommand)
-	WScript.Echo TypeName(recordset.ActiveConnection)
-	WScript.Echo TypeName(recordset.BOF)
-	WScript.Echo TypeName(recordset.Bookmark)
-	WScript.Echo TypeName(recordset.CacheSize)
-	WScript.Echo TypeName(recordset.CursorLocation)
-	WScript.Echo TypeName(recordset.CursorType)
-	WScript.Echo TypeName(recordset.DataMember)
-	WScript.Echo TypeName(recordset.DataSource)
-	WScript.Echo TypeName(recordset.EditMode)
-	WScript.Echo TypeName(recordset.EOF)
-	WScript.Echo TypeName(recordset.Fields)
-	WScript.Echo TypeName(recordset.Filter)
-	WScript.Echo TypeName(recordset.Index)
-	WScript.Echo TypeName(recordset.LockType)
-	WScript.Echo TypeName(recordset.MarshalOptions)
-	WScript.Echo TypeName(recordset.MaxRecords)
-	WScript.Echo TypeName(recordset.PageCount)
-	WScript.Echo TypeName(recordset.PageSize)
-	WScript.Echo TypeName(recordset.Properties)
-	WScript.Echo TypeName(recordset.RecordCount)
-	WScript.Echo TypeName(recordset.Sort)
-	WScript.Echo TypeName(recordset.Source)
-	WScript.Echo TypeName(recordset.State)
-	WScript.Echo TypeName(recordset.Status)
-	WScript.Echo TypeName(recordset.StayInSync)
+
 End If
