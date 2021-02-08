@@ -43,6 +43,49 @@ exit /b
     		End If
 	End Sub
 
+	Sub RunDbShell()
+		Include "base_Database.base_Database_Connection"
+
+		Dim objStdInput, _
+             	strPrompt, _
+             	strInput
+
+		Dim objConnection, _
+			objCursor, _
+			strConnectionString
+
+		Set objStdInput = WScript.StdIn
+		strPrompt = "dbshell> "
+
+		Print strPrompt
+
+		' Commands:
+		' .open
+		' .help
+		' .logging
+		' .quit
+		' .exit
+		' .clone
+		' .databases
+		' .tables
+
+		strConnection = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\sburt\Desktop\Product Database.accdb;Persist Security Info=False;"
+
+		Do Until objStdInput.AtEndOfStream
+			strInput = objStdInput.ReadLine()
+
+			If LCase(strInput) = "exit" Or _
+                    		LCase(strInput) = "exit()" Or _
+                    		LCase(strInput) = "quit" Or _
+                    		LCase(strInput) = "quit()" Then
+					Exit Do
+			Else
+				Run strInput
+				Print strPrompt
+			End If
+		Loop
+	End Sub
+
 	Sub RunInteractiveInterpreter()
 		Dim objStdInput, _
              	strPrompt, _
@@ -72,10 +115,13 @@ exit /b
 
     	Include "base_Sys.base_Sys"
     	Include "base_Sys.base_Sys_Util"
-    	Include "base_Sys.base_Sys_Error"
 
 	If WScript.Arguments.Count > 0 Then
-		Include WScript.Arguments(0)
+		If LCase(WScript.Arguments(0)) = "dbshell" Then
+			RunDbShell
+		Else
+			Include WScript.Arguments(0)
+		End If
 	Else
 		RunInteractiveInterpreter
 	End If

@@ -1,6 +1,8 @@
 Option Explicit
 
-Class base_DB_Recordset
+' Include "base_Database.base_Database_Result"
+
+Class base_Database_Resultset
 	Private p_Resultset
 
 	Private Sub Class_Initialize()
@@ -147,53 +149,53 @@ Class base_DB_Recordset
 	' Methods
 
 
-	' Public Sub AddNew([FieldList], [Values])
-
-	' End Sub
+	Public Sub AddNew() ' Optional params: [FieldList], [Values])
+		p_Resultset.AddNew
+	End Sub
 
 	Public Sub Cancel()
-		p_Resultset.Cancel()
+		p_Resultset.Cancel
 	End Sub
 
-	' Public Sub CancelBatch([AffectRecords As AffectEnum = adAffectAll])
-
-	' End Sub
+	Public Sub CancelBatch() ' Optional params: [AffectRecords As AffectEnum = adAffectAll]
+		p_Resultset.CancelBatch
+	End Sub
 
 	Public Sub CancelUpdate()
-		p_Resultset.CancelUpdate()
+		p_Resultset.CancelUpdate
 	End Sub
 
-	' Public Function Clone([LockType As LockTypeEnum = adLockUnspecified]) 
-
-	' End Function
+	Public Function Clone() ' Optional params: [LockType As LockTypeEnum = adLockUnspecified]) 
+		Set Clone = p_Resultset.Clone()
+	End Function
 
 	Public Sub Close()
-		p_Resultset.Close()
+		p_Resultset.Close
 	End Sub
 
-	' Public Function CompareBookmarks(Bookmark1, Bookmark2)
+	Public Function CompareBookmarks(varBookmark1, varBookmark2)
+		CompareBookmarks = p_Resultset.CompareBookmarks(varBookmark1, varBookmark2)
+	End Function
 
-	' End Function
+	Public Sub Delete() ' Optional params: [AffectRecords As AffectEnum = adAffectCurrent])
+		p_Resultset.Delete
+	End Sub
 
-	' Public Sub Delete([AffectRecords As AffectEnum = adAffectCurrent])
+	Public Sub Find(strCriteria) ' Optional params: [SkipRecords As Long], [SearchDirection As SearchDirectionEnum = adSearchForward], [Start])
+		p_Resultset.Find strCriteria
+	End Sub
 
-	' End Sub
+	Public Function GetRows() ' Optional params: [Rows As Long = -1], [Start], [Fields])
+		Set GetRows = p_Resultset.GetRows()
+	End Function
 
-	' Public Sub Find(Criteria As String, [SkipRecords As Long], [SearchDirection As SearchDirectionEnum = adSearchForward], [Start])
-
-	' End Sub
-
-	' Public Function GetRows([Rows As Long = -1], [Start], [Fields])
-
-	' End Function
-
-	' Public Function GetString([StringFormat As StringFormatEnum = adClipString], [NumRows As Long = -1], [ColumnDelimeter As String], [RowDelimeter As String], [NullExpr As String])
-
-	' End Function
+	Public Function GetString() ' Optional params: [StringFormat As StringFormatEnum = adClipString], [NumRows As Long = -1], [ColumnDelimeter As String], [RowDelimeter As String], [NullExpr As String])
+		GetString = p_Resultset.GetString()
+	End Function
  
-	' Public Sub Move(NumRecords As Long, [Start])
-
-	' End Sub
+	Public Sub Move(lngNumberOfRecords) ' Optional params: [Start]
+		p_Resultset.Move lngNumberOfRecords
+	End Sub
 
 	Public Sub MoveFirst()
 		p_Resultset.MoveFirst()
@@ -211,51 +213,48 @@ Class base_DB_Recordset
 		p_Resultset.MovePrevious()
 	End Sub
 
-	' Public Function NextRecordset([RecordsAffected])
+	Public Function NextRecordset() ' Optional params: [RecordsAffected])
+		Set NextRecordset = p_Resultset.NextRecordset()
+	End Function
 
-	' End Function
+	Public Sub Open() ' Optional params: [Source], [ActiveConnection], [CursorType As CursorTypeEnum = adOpenUnspecified], [LockType As LockTypeEnum = adLockUnspecified], [Options As Long = -1])
+		p_Resultset.Open
+	End Sub
 
-	' Public Sub Open([Source], [ActiveConnection], [CursorType As CursorTypeEnum = adOpenUnspecified], [LockType As LockTypeEnum = adLockUnspecified], [Options As Long = -1])
+	Public Sub ReQuery() ' Optional params: [Options As Long = -1])
+		p_Resultset.ReQuery
+	End Sub
 
-	' End Sub
+	Public Sub ReSync() ' Optional params: [AffectRecords As AffectEnum = adAffectAll], [ResyncValues As ResyncEnum = adResyncAllValues])
+		p_Resultset.ReSync
+	End Sub
 
-	' Public Sub Requery([Options As Long = -1])
+	Public Sub Save() ' Optional params: [Destination], [PersistFormat As PersistFormatEnum = adPersistADTG])
+		p_Resultset.Save
+	End Sub
 
-	' End Sub
+	Public Sub Seek(varKeyValues) ' Optional params: [SeekOption As SeekEnum = adSeekFirstEQ])
+		p_Resultset.Seek varKeyValues
+	End Sub
 
-	' Public Sub Resync([AffectRecords As AffectEnum = adAffectAll], [ResyncValues As ResyncEnum = adResyncAllValues])
-
-	' End Sub
-
-	' Public Sub Save([Destination], [PersistFormat As PersistFormatEnum = adPersistADTG])
-
-	' End Sub
-
-	' Public Sub Seek(KeyValues, [SeekOption As SeekEnum = adSeekFirstEQ])
-
-	' End Sub
-
-	' Public Function Supports(CursorOptions As CursorOptionEnum)
-
-	' End Function
+	Public Function Supports(intCursorOptionEnum)
+		Supports = p_Resultset.Supports(intCursorOptionEnum)
+	End Function
  
-	' Public Sub Update([Fields], [Values])
+	Public Sub Update() ' Optional params: ' [Fields], [Values])
+		p_Resultset.Update
+	End Sub
 
-	' End Sub
-
-	' Public Sub UpdateBatch([AffectRecords As AffectEnum = adAffectAll])
-
-	' End Sub
-
+	Public Sub UpdateBatch() ' Optional params: ' [AffectRecords As AffectEnum = adAffectAll])
+		p_Resultset.UpdateBatch
+	End Sub
 
 	Private Sub Class_Terminate()
 		Set p_Resultset = Nothing
 	End Sub
 End Class
 
-If WScript.ScriptName = "base_DB_Recordset.vbs" Then
+If WScript.ScriptName = "base_Database_Resultset.vbs" Then
 	Dim resultset
-	Set resultset = New base_DB_Resultset
-
-
+	Set resultset = New base_Database_Resultset
 End If

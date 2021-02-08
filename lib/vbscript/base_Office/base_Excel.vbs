@@ -58,7 +58,7 @@ Class base_Excel
 	End Property
 
 	Public Property Get ActiveWorkbook()
-		ActiveWorkbook = p_Excel.ActiveWorkbook
+		Set ActiveWorkbook = p_Excel.ActiveWorkbook
 	End Property
 
 	Public Property Get AddIns()

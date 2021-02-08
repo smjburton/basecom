@@ -7,7 +7,7 @@ Option Explicit
 ' Msxml2.ServerXMLHTTP.4.0 = (?)
 ' Msxml2.ServerXMLHTTP.6.0 = IServerXMLHTTPRequest2 object
 
-Class v_XMLHTTP_Server_Request
+Class base_HTTP_XMLHTTP_ServerRequest
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -17,6 +17,6 @@ Class v_XMLHTTP_Server_Request
 	End Sub
 End Class
 
-If WScript.ScriptName = "v_XMLHTTP_Server_Request.vbs" Then
+If WScript.ScriptName = "base_HTTP_XMLHTTP_ServerRequest.vbs" Then
 
 End If

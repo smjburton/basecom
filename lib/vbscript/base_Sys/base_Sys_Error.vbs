@@ -61,7 +61,7 @@ Sub TestError()
 
 	intNum = 1/0
 	
-	If Err Then Call ErrorHandler("TestErrorHandlerMethod"), Array("TestError() Method"))
+	If Err Then Call ErrorHandler("TestErrorHandlerMethod", Array("TestError() Method"))
 End Sub
 
 If WScript.ScriptName = "base_Sys_Error.vbs" Then

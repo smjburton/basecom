@@ -1,6 +1,6 @@
 Option Explicit
 
-Function IIf(
+Function IIf( _
 	ByVal strExpression, _
 	ByVal varTrueResult, _
 	ByVal varFalseResult _

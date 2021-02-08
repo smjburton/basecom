@@ -19,44 +19,12 @@ Class base_Database_Cursor
 		Set p_Cursor.ActiveConnection = objConnection
 	End Property
 
-	Public Property Get CommandStream()
-		If IsObject(p_Cursor.CommandStream) Then
-			Set CommandStream = p_Cursor.CommandStream
-		Else
-			CommandStream = p_Cursor.CommandStream
-		End If
+	Public Property Get CursorType()
+		CursorType = p_Cursor.CommandType
 	End Property
 
-	Public Property Let CommandStream(varCommandStream)
-		p_Cursor.CommandStream = varCommandStream
-	End Property
-
-	Public Property Set CommandStream(varCommandStream)
-		Set p_Cursor.CommandStream = varCommandStream
-	End Property
-
-	Public Property Get CommandText()
-		CommandText = p_Cursor.CommandText
-	End Property
-
-	Public Property Let CommandText(strCommandText)
-		p_Cursor.CommandText = strCommandText
-	End Property
-
-	Public Property Get CommandTimeout()
-		CommandTimeout = p_Cursor.CommandTimeout
-	End Property
-
-	Public Property Let CommandTimeout(lngCommandTimeout)
-		p_Cursor.CommandTimeout = lngCommandTimeout
-	End Property
-
-	Public Property Get CommandType()
-		CommandType = p_Cursor.CommandType
-	End Property
-
-	Public Property Let CommandType(intCommandTypeEnum)
-		p_Cursor.CommandType = intCommandTypeEnum
+	Public Property Let CursorType(intCursorTypeEnum)
+		p_Cursor.CommandType = intCursorTypeEnum
 	End Property
 
 	Public Property Get Dialect()
@@ -103,6 +71,38 @@ Class base_Database_Cursor
 		State = p_Cursor.State
 	End Property
 
+	Public Property Get Stream()
+		If IsObject(p_Cursor.CommandStream) Then
+			Set Stream = p_Cursor.CommandStream
+		Else
+			Stream = p_Cursor.CommandStream
+		End If
+	End Property
+
+	Public Property Let Stream(varStream)
+		p_Cursor.CommandStream = varStream
+	End Property
+
+	Public Property Set Stream(varStream)
+		Set p_Cursor.CommandStream = varStream
+	End Property
+
+	Public Property Get Text()
+		Text = p_Cursor.CommandText
+	End Property
+
+	Public Property Let Text(strText)
+		p_Cursor.CommandText = strText
+	End Property
+
+	Public Property Get Timeout()
+		CommandTimeout = p_Cursor.CommandTimeout
+	End Property
+
+	Public Property Let Timeout(lngTimeout)
+		p_Cursor.CommandTimeout = lngCommandTimeout
+	End Property
+
 
 	' Methods
 
@@ -115,7 +115,8 @@ Class base_Database_Cursor
 		Set CreateParameter = p_Cursor.CreateParameter()
 	End Function
 
-	Public Function Execute() ' Optional params: [RecordsAffected], [Parameters], [Options As Long = -1]) As Recordset
+	Public Function Execute(strCursorText) ' Optional params: [RecordsAffected], [Parameters], [Options As Long = -1]) As Recordset
+		p_Cursor.CommandText = strCursorText
 		Set Execute = p_Cursor.Execute()
 	End Function
 

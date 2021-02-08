@@ -1,6 +1,6 @@
 Option Explicit
 
-' Include "base_Database_Cursor"
+Include "base_Database.base_Database_Cursor"
 
 Class base_Database_Connection
 	Private p_Connection
@@ -21,12 +21,12 @@ Class base_Database_Connection
 		p_Connection.Attributes = lngAttributes
 	End Property
 
-	Public Property Get CommandTimeout()
-		CommandTimeout = p_Connection.CommandTimeout
+	Public Property Get CursorTimeout()
+		CursorTimeout = p_Connection.CommandTimeout
 	End Property
 
-	Public Property Let CommandTimeout(lngCommandTimeout)
-		p_Connection.CommandTimeout = lngCommandTimeout
+	Public Property Let CursorTimeout(lngCursorTimeout)
+		p_Connection.CommandTimeout = lngCursorTimeout
 	End Property
 
 	Public Property Get ConnectionString()
@@ -105,8 +105,8 @@ Class base_Database_Connection
 	' Methods
 
 
-	Public Function BeginTrans()
-		BeginTrans  = p_Connection.BeginTrans()
+	Public Function Begin()
+		Begin  = p_Connection.BeginTrans()
 	End Function
 
 	Public Sub Cancel()
@@ -117,23 +117,30 @@ Class base_Database_Connection
 		p_Connection.Close
 	End Sub
 
-	Public Sub CommitTrans()
+	Public Sub Commit()
 		p_Connection.CommitTrans
 	End Sub
 
-	Public Function Execute(strCommandText) ' Optional params: [RecordsAffected], [Options As Long = -1]) As Recordset
-		Set Execute = p_Connection.Execute(strCommandText)
+	Public Function Cursor() ' Optional param: [CursorType]
+		Dim objCursor
+		Set objCursor = New base_Database_Cursor
+		Set objCursor.ActiveConnection = p_Connection 
+		Set Cursor = objCursor 
 	End Function
 
-	Public Sub Open() ' Optional params: [ConnectionString As String], [UserID As String], [Password As String], [Options As Long = -1])
-		p_Connection.Open
+	' Public Function Execute(strCommandText) ' Optional params: [RecordsAffected], [Options As Long = -1]) As Recordset
+	'	Set Execute = p_Connection.Execute(strCommandText)
+	' End Function
+
+	Public Sub Open(strConnectionString) ' Optional params: , [UserID As String], [Password As String], [Options As Long = -1])
+		p_Connection.Open strConnectionString
 	End Sub
 
 	Public Function OpenSchema(intSchema) ' Optional params: [Restrictions], [SchemaID]) As Recordset
 		Set OpenSchema = p_Connection.OpenSchema(intSchema)
 	End Function
 
-	Public Sub RollbackTrans()
+	Public Sub Rollback()
 		p_Connection.RollbackTrans
 	End Sub
 
