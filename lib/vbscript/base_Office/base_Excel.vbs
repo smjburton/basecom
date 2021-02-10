@@ -54,7 +54,7 @@ Class base_Excel
 	End Property
 
 	Public Property Get ActiveWindow()
-		ActiveWindow = p_Excel.ActiveWindow
+		Set ActiveWindow = p_Excel.ActiveWindow
 	End Property
 
 	Public Property Get ActiveWorkbook()
