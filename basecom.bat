@@ -1,6 +1,6 @@
 <!-- : Begin batch script
 @echo off
-cscript //nologo "%~f0?.wsf" %*
+C:\Windows\SysWOW64\cscript //nologo "%~f0?.wsf" %*
 exit /b
 
 ----- Begin wsf script --->
@@ -37,7 +37,7 @@ exit /b
         			If Err.Number = 1041 Then 
             			Err.Clear
         		Else
-            			WScript.Echo Err.Number & ": " & Err.Description
+            			WScript.Echo "Error " & Err.Number & ": " & Err.Description & " (Source: " & Err.Source & ")"
             			' WScript.Quit 1
         		End If
     		End If

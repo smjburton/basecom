@@ -1,15 +1,7 @@
-Option Explicit
-
-Sub Include(file)
-	Dim FSO: Set FSO = CreateObject("Scripting.FileSystemObject")
-	ExecuteGlobal FSO.OpenTextFile("F:\Programming\VBScript\vbase\" & file & ".vbs", 1).ReadAll()
-	Set FSO = Nothing
-End Sub
-
-Include "base_Data_Array_Util"
+Include "base_Data.base_Data_Array_Util"
 
 Class base_Data_Collection
-	Private pCollection
+	Private p_Collection
 
 	Private Sub Class_Initialize()
 
@@ -20,15 +12,15 @@ Class base_Data_Collection
 
 	
 	Public Property Get Count()
-		If IsArrayAllocated(pCollection) Then Count = UBound(pCollection) + 1
+		If IsArrayAllocated(p_Collection) Then Count = UBound(p_Collection) + 1
 	End Property
 
 	Public Default Property Get Item(intIndex)
-		If IsArrayAllocated(pCollection) Then
-    			If IsObject(pCollection(intIndex)) Then
-        			Set Item = pCollection(intIndex)
+		If IsArrayAllocated(p_Collection) Then
+    			If IsObject(p_Collection(intIndex)) Then
+        			Set Item = p_Collection(intIndex)
     			Else
-        			Item = pCollection(intIndex)
+        			Item = p_Collection(intIndex)
     			End If
 		End If
 	End Property
@@ -41,14 +33,14 @@ Class base_Data_Collection
 		Extend 1
 
 		If IsObject(varItem) Then
-			Set pCollection(UBound(pCollection)) = varItem
+			Set p_Collection(UBound(p_Collection)) = varItem
 		Else
-			pCollection(UBound(pCollection)) = varItem
+			p_Collection(UBound(p_Collection)) = varItem
 		End If
 	End Sub
 
 	Public Sub Clear()
-		If IsArrayAllocated(pCollection) Then Erase pCollection
+		If IsArrayAllocated(p_Collection) Then Erase p_Collection
 	End Sub
 
 	Public Function Contains(varItem)
@@ -57,11 +49,11 @@ Class base_Data_Collection
 
 		blnContains = False
 
-		For i = 0 To UBound(pCollection)
-			If IsObject(varItem) And IsObject(pCollection(i)) Then
-				If pCollection(i) Is varItem Then blnContains = True
-			ElseIf Not IsObject(pCollection(i)) And Not IsObject(varItem) Then
-				If pCollection(i) = varItem Then blnContains = True
+		For i = 0 To UBound(p_Collection)
+			If IsObject(varItem) And IsObject(p_Collection(i)) Then
+				If p_Collection(i) Is varItem Then blnContains = True
+			ElseIf Not IsObject(p_Collection(i)) And Not IsObject(varItem) Then
+				If p_Collection(i) = varItem Then blnContains = True
 			End If
 			If blnContains Then Exit For
 		Next
@@ -70,17 +62,17 @@ Class base_Data_Collection
 	End Function
 
 	Public Sub Remove(intIndex)
-		If IsArrayAllocated(pCollection) Then
+		If IsArrayAllocated(p_Collection) Then
 			Dim objCollection, _
 				i
 
 			Set objCollection = New v_Data_Collection
 
-			For i = 0 To UBound(pCollection)
+			For i = 0 To UBound(p_Collection)
   				Do
     					If i = intIndex Then Exit Do
         				
-					objCollection.Add pCollection(i)
+					objCollection.Add p_Collection(i)
   				Loop While False
 			Next
 
@@ -97,11 +89,11 @@ Class base_Data_Collection
 
 
 	Private Sub Extend(intSize)
-		If IsArrayAllocated(pCollection) Then
-			ReDim Preserve pCollection(UBound(pCollection) + intSize)
+		If IsArrayAllocated(p_Collection) Then
+			ReDim Preserve p_Collection(UBound(p_Collection) + intSize)
 		Else
-			pCollection = Array()
-			ReDim pCollection(intSize - 1)
+			p_Collection = Array()
+			ReDim p_Collection(intSize - 1)
 		End If
 	End Sub
 	

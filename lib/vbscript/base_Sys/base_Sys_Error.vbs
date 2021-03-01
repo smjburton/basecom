@@ -1,69 +1,62 @@
 Option Explicit
 
-Sub ErrorHandler( _
-	varHandlerMethod, _
-	varHandlerMethodParams() _
-	)
+Class base_Sys_Error
+	Private p_Number, _
+		p_Source, _
+		p_Description, _
+		p_HelpFile, _
+		p_HelpContext
 
-	WScript.Echo "Entered ErrorHandler()"
+	Private Sub Class_Initialize()
+		' Err.Number
+		' Err.Source
+		' Err.Description
+		' Err.HelpFile
+		' Err.HelpContext
+	End Sub
 
-	If Err.Number = 0 Then Exit Sub
+	Public Property Get Number()
+		Number = p_Number
+	End Property 
 
-	Dim strErrorMessage
+	Public Property Get Source()
+		Source = p_Source
+	End Property 
 
-	strErrorMessage = "Error " & Err.Number & ": " & Err.Description & " (Source: " & Err.Source & ")"
+	Public Property Get Description()
+		Description = p_Description
+	End Property 
 
-	' Need filepath
-	' Need stacktrace
+	Public Property Get HelpFile()
+		HelpFile = p_HelpFile
+	End Property 
 
-	WScript.Echo strErrorMessage
-        ' WScript.StdErr.WriteLine strErrorMessage
+	Public Property Get HelpContext()
+		HelpContext = p_HelpContext
+	End Property 
 
-	If IsMethod(varHandlerMethod) Then Call GetRef(varHandlerMethod)(varHandlerMethodParams)
-	
-	' Use a global error logger condition to determine whether to write to the error log
-	' If varErrorLogger Then varErrorLogger.WriteLine strErrorMessage
- 
-	Err.Clear
-End Sub
+	Public Default Function Init( _
+		intErrorNumber, _
+		strErrorSource, _
+		strErrorDescription, _
+		strErrorHelpFile, _
+		strErrorHelpContext _
+		)
 
-Sub RaiseError( _
-	intErrorNumber, _
-	strErrorSource, _
-	strErrorDescription, _
-	strErrorHelpFile, _
-	strErrorHelpContext _
-	)
+		p_Number = intErrorNumber
+		p_Source = strErrorSource
+		p_Description = strErrorDescription
+		p_HelpFile = strErrorHelpFile
+		p_HelpContext = strErrorHelpContext
 
-	Err.Raise intErrorNumber, strErrorSource, strErrorDescription, strErrorHelpFile, strErrorHelpContext
-End Sub
+		Set Init = Me
+	End Function
 
-Sub ReRaiseError()
-	Err.Raise Err.Number, Err.Source, Err.Description, Err.HelpFile, Err.HelpContext
-End Sub
+	Private Sub Class_Terminate()
 
-Sub TestErrorHandlerMethod( _
-	varHandlerMethodParams() _
-	)
-
-	' Test for expected error number
-	' If Err.Number <> intExpectedErrNum Then 
-	' re-raise error with additional context if not handled in the error handler method
-	' If blnQuitOnError Then WScript.Quit
-
-	WScript.Echo "Error received from: " & varHandlerMethodParams(0)
-End Sub
-
-Sub TestError()
-	On Error Resume Next
-
-	Dim intNum
-
-	intNum = 1/0
-	
-	If Err Then Call ErrorHandler("TestErrorHandlerMethod", Array("TestError() Method"))
-End Sub
+	End Sub
+End Class
 
 If WScript.ScriptName = "base_Sys_Error.vbs" Then
-	TestError()
+
 End If

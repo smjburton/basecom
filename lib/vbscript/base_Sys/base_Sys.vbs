@@ -1,6 +1,7 @@
 Option Explicit
 
-Include "base_Sys.base_Sys_Error"
+' Include "base_Sys.base_Sys_ErrorHandler"
+' Include "base_Sys.base_Sys_EventHandler"
 
 Const STD_IN 	= 0
 Const STD_OUT 	= 1
@@ -45,7 +46,7 @@ Sub Run( _
 
     ExecuteGlobal strScript
 
-    If Err Then Call ErrorHandler
+    If Err Then Call ErrorHandler()
 End Sub
 
 Sub Sleep( _

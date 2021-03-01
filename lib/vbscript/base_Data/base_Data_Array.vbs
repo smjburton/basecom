@@ -85,7 +85,7 @@ Class base_Data_Array
 			Dim objArray, _
 				i
 
-			Set objArray = New v_Data_Array
+			Set objArray = New base_Data_Array
 
 			For i = 0 To UBound(pArray)
   				Do
@@ -117,7 +117,7 @@ Class base_Data_Array
 		Dim objArr, _
 			i
 
-		Set objArr = New v_Data_Array
+		Set objArr = New base_Data_Array
 
 		For i = intStart To intEnd
 			objArr.Append Me(i)
@@ -186,7 +186,7 @@ Class base_Data_Array
 			Dim objArray, _
 				i
 
-			Set objArray = New v_Data_Array
+			Set objArray = New base_Data_Array
 
 			For i = UBound(pArray) To 0 Step -1
 				objArray.Append pArray(i)
