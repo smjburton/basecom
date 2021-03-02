@@ -3,11 +3,6 @@ Option Explicit
 Include "base_Data.base_Data_Dictionary"
 Include "base_Sys.base_Sys_Error"
 
-Sub DefaultErrorHandler()
-	PrintLn "Unhandled Error " & objError.Number & ": " & objError.Description & " (Source: " & objError.Source & ") (Procedure: " & strMethodCaller & ")" 
-	Me.ReRaise objError
-End Sub
-
 Class base_Sys_ErrorHandler
 	Private p_objHandlerDict
 
@@ -38,16 +33,14 @@ Class base_Sys_ErrorHandler
 		
 		On Error Resume Next
 
-		strErrorMsg = "Error " & objError.Number & ": " & objError.Description & " (Source: " & objError.Source & ") (Procedure: " & strMethodCaller & ")"
-
-		PrintLn strErrorMsg
-
-		' If strMethodCaller in p_objHandlerDict and the associated item is a method,
-		' call the error handler function	
 		If p_objHandlerDict.Exists(strMethodCaller) Then
+			strErrorMsg = "Error " & objError.Number & ": " & objError.Description & " (Source: " & objError.Source & ") (Procedure: " & strMethodCaller & ")"
+			PrintLn strErrorMsg
 			Set Handle = p_objHandlerDict(strMethodCaller)
 		Else
-			Set Handle = GetRef("DefaultErrorHandler")
+			strErrorMsg = "Unhandled Error " & objError.Number & ": " & objError.Description & " (Source: " & objError.Source & ") (Procedure: " & strMethodCaller & ")"
+			PrintLn strErrorMsg
+			Me.ReRaise objError
 		End If
 	End Function
 
@@ -77,6 +70,7 @@ Class base_Sys_ErrorHandler
 		strErrorHandlerName _
 		)
 
+		p_objHandlerDict.Remove strMethodCaller
 	End Sub
 
 	Private Sub Class_Terminate()

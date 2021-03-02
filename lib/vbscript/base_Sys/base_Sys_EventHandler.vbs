@@ -17,7 +17,15 @@ Class base_Sys_EventHandler
 
 		PrintLn "Registering event..."
 
-		p_objEventHandlerDict.Add objEvent, objEventHandler
+		If p_objEventHandlerDict.Exists(objEvent) Then
+			Dim arrEventHandlerArray
+			arrEventHandlerArray = p_objEventHandlerDict(objEvent)
+			ReDim Preserve arrEventHandlerArray(UBound(arrEventHandlerArray) + 1)
+			Set arrEventHandlerArray(UBound(arrEventHandlerArray)) = objEventHandler
+			p_objEventHandlerDict(objEvent) = arrEventHandlerArray
+		Else
+			p_objEventHandlerDict.Add objEvent, Array(objEventHandler) 
+		End If
 	End Sub
 
 	Public Default Function Handle( _
@@ -27,7 +35,11 @@ Class base_Sys_EventHandler
 		PrintLn "Handling event..."
 
 		If p_objEventHandlerDict.Exists(objEvent) Then
-			Set Handle = p_objEventHandlerDict(objEvent)
+			Dim objEventHandler
+
+			For Each objEventHandler In p_objEventHandlerDict(objEvent)
+				objEventHandler()
+			Next
 		End If
 	End Function
 

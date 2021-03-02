@@ -1,7 +1,13 @@
 Option Explicit
 
-' Include "base_Sys.base_Sys_ErrorHandler"
-' Include "base_Sys.base_Sys_EventHandler"
+Include "base_Sys.base_Sys_ErrorHandler"
+Include "base_Sys.base_Sys_EventHandler"
+
+Dim ErrorHandler, _
+	EventHandler
+
+Set ErrorHandler = New base_Sys_ErrorHandler
+Set EventHandler = New base_Sys_EventHandler
 
 Const STD_IN 	= 0
 Const STD_OUT 	= 1
