@@ -20,20 +20,8 @@ Class base_IO_File
 
 	Public Function CreateTempFile(strFolder)
 		Dim strTmpFileName
-		strTmpFileName = Me.strTmpFileName()
+		strTmpFileName = Me.GetTempName()
 		Set CreateTempFile = p_File.CreateTextFile(strFolder & "\\" & strTmpFileName)
-	End Function
-
-	Public Function FileExists(strFileSpec)
-		FileExists = p_File.FileExists(strFileSpec)
-	End Function
-
-	Public Function GetFile(strFilePath)
-		Set GetFile = p_File.GetFile(strFilePath)
-	End Function
-
-	Public Function GetFileVersion(strFileName)
-		GetFileVersion = p_File.GetFileVersion(strFileName)
 	End Function
   
 	Public Function GetTempName()
@@ -49,6 +37,6 @@ Class base_IO_File
 	End Sub
 End Class
 
-If WScript.ScriptName = "base_File.vbs" Then
+If WScript.ScriptName = "base_IO_File.vbs" Then
 
 End If

@@ -30,6 +30,7 @@ Class base_IO_Path
 	' Public Function GetExtensionName(Path As String) As String 
 	' Public Function GetFile(FilePath As String) As File
 	' Public Function GetFileName(Path As String) As String
+	' Public Function GetFileVersion(Path as String) As String
 	' Public Function GetFolder(FolderPath As String) As Folder 
 	' Public Function GetParentFolderName(Path As String) As String
 	' Public Function GetSpecialFolder(SpecialFolder As SpecialFolderConst) As Folder 
