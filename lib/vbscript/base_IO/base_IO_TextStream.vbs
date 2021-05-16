@@ -36,11 +36,11 @@ Class base_IO_TextStream
 		p_TextStream.Close
 	End Sub
 
-	Public Function CreateTextFile(strFileName) ' Optional params: [Overwrite As Boolean = True], [Unicode As Boolean = False]) As TextStream
+	Public Function Create(strFileName) ' Optional params: [Overwrite As Boolean = True], [Unicode As Boolean = False]) As TextStream
 		Set p_TextStream = p_FileSystemObject.CreateTextFile(strFileName) 
 	End Function
   
-	Function OpenTextFile(strFileName) ' Optional params: [IOMode As IOMode = ForReading], [Create As Boolean = False], [Format As Tristate = TristateFalse]) As TextStream
+	Function Open(strFileName) ' Optional params: [IOMode As IOMode = ForReading], [Create As Boolean = False], [Format As Tristate = TristateFalse]) As TextStream
 		Set p_TextStream = p_FileSystemObject.OpenTextFile(strFileName)
 	End Function
 
@@ -99,7 +99,7 @@ If WScript.ScriptName = "base_IO_TextStream.vbs" Then
 	Set objTextStream = New base_IO_TextStream
 
 	With objTextStream
-		.CreateTextFile "C:\Dev\Projects\basecom\lib\vbscript\base_IO\test.txt"
+		.Create "C:\Dev\Projects\basecom\lib\vbscript\base_IO\test.txt"
 		.WriteLine "Test, test, test"
 		.Close
 	End With
