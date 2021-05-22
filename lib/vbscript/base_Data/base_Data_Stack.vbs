@@ -1,3 +1,5 @@
+Option Explicit
+
 Class base_Data_Stack
 	Private pStack
 

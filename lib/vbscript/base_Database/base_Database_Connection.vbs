@@ -1,6 +1,6 @@
 Option Explicit
 
-Include "base_Database.base_Database_Cursor"
+Include "base_Database_Cursor"
 
 Class base_Database_Connection
 	Private p_Connection

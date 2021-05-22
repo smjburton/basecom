@@ -1,25 +1,5 @@
 Option Explicit
 
-If InStr(1, WScript.FullName, "system32", vbTextCompare) > 0 And CreateObject("Scripting.FileSystemObject").FileExists("C:\Windows\SysWow64\WScript.exe") = True Then
-	CreateObject("WScript.Shell").Run "C:\Windows\SysWow64\WScript.exe" & " """ & WScript.ScriptFullName & """", 1, False
-	WScript.Quit
-End If
-
-Sub Include(file)
-	On Error Resume Next
-
-	ExecuteGlobal CreateObject("Scripting.FileSystemObject").OpenTextFile(file & ".vbs", 1).ReadAll()
-
-	If Err.Number <> 0 Then
-		If Err.Number = 1041 Then 
-			Err.Clear
-		Else
-			WScript.Echo Err.Number & ": " & Err.Description
-			WScript.Quit 1
-		End If
-	End If
-End Sub
-
 Class base_DB_MDX
 	Private pConnection
 	Private pCatalog
@@ -151,5 +131,5 @@ End Class
 
 
 If WScript.ScriptName = "base_DB_MDX.vbs" Then
-a
+
 End If

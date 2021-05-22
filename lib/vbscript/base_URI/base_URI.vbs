@@ -1,13 +1,7 @@
 Option Explicit
 
-Sub Include(file)
-	Dim FSO: Set FSO = CreateObject("Scripting.FileSystemObject")
-	ExecuteGlobal FSO.OpenTextFile(file & ".vbs", 1).ReadAll()
-	Set FSO = Nothing
-End Sub
-
-Include("base_Util_General")
-Include("base_Sys_Script")
+Include "base_Sys_Util"
+Include "base_Sys_Script"
 
 ' Static functions for helping with URI operations.
 

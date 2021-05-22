@@ -1,6 +1,6 @@
 Option Explicit
 
-Class base_Fax_TIFF
+Class base_Peripheral_Fax_TIFF
 	Private p_FaxTiff
 
 	Private Sub Class_Initialize()
@@ -22,6 +22,6 @@ Class base_Fax_TIFF
 	End Sub
 End Class
 
-If WScript.ScriptName = "base_Fax_TIFF.vbs" Then
+If WScript.ScriptName = "base_Peripheral_Fax_TIFF.vbs" Then
 
 End If

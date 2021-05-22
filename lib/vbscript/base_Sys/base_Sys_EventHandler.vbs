@@ -1,7 +1,7 @@
 Option Explicit
 
-Include "base_Data.base_Data_Dictionary"
-Include "base_Sys.base_Sys_Event"
+Include "base_Data_Dictionary"
+Include "base_Sys_Event"
 
 Class base_Sys_EventHandler
 	Private p_objEventHandlerDict

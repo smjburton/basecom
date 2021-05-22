@@ -1,7 +1,7 @@
 Option Explicit
 
-Include "base_Sys.base_Sys_File"
-Include "base_Data.base_Data_Collection"
+Include "base_Sys_File"
+Include "base_Data_Collection"
 
 Class base_Sys_Files
 	Private p_Files

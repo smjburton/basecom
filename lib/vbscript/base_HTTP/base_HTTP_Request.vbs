@@ -100,16 +100,10 @@ Option Explicit
 ' Timeout
 ' RegisterHook
 
-Sub Include(file)
-	Dim FSO: Set FSO = CreateObject("Scripting.FileSystemObject")
-	ExecuteGlobal FSO.OpenTextFile(file, 1).ReadAll()
-	Set FSO = Nothing
-End Sub
-
-Include("base_HTTP_Constants")
-Include("base_HTTP_Response")
-Include("base_HTTP_Cookie")
-Include("base_URI")
+Include "base_HTTP_Constants"
+Include "base_HTTP_Response"
+Include "base_HTTP_Cookie"
+Include "base_URI"
 
 Class base_HTTP_Request
 	Private pHttpReq, _

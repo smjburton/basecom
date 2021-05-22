@@ -1,3 +1,5 @@
+Option Explicit
+
 Class base_Data_Queue
 	Private pQueue
 

@@ -1,6 +1,6 @@
 Option Explicit
 
-Include "base_IO.base_File"
+Include "base_IO_TextStream"
 
 Class base_Sys_Logger
 	Private p_Logger

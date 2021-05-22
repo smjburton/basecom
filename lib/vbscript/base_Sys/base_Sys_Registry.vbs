@@ -1,6 +1,6 @@
 Option Explicit
 
-Class base_Registry
+Class base_Sys_Registry
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class base_Registry
 	End Sub
 End Class
 
-If WScript.ScriptName = "base_Registry.vbs" Then
+If WScript.ScriptName = "base_Sys_Registry.vbs" Then
 
 End If

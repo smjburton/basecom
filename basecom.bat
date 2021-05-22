@@ -20,28 +20,42 @@ exit /b
 
     		Set objFSO = CreateObject("Scripting.FileSystemObject")
 
-		If InStr(strFile, ".") > 0 Then
+		If InStr(strFile, "_") > 0 Then
 			Dim arrLibrary
-			arrLibrary = Split(strFile, ".")
+			arrLibrary = Split(strFile, "_")
 			
+			' "base_Data_Array"
+
 			strBasecomDirectory = Mid(WScript.ScriptFullName, 1, InStrRev(WScript.ScriptFullName, "\"))
-    			strFilePath = strBasecomDirectory & "lib\vbscript\" & arrLibrary(0)			
-			strFile = arrLibrary(1)
+    			strFilePath = strBasecomDirectory & "lib\vbscript\" & arrLibrary(0) & "_" & arrLibrary(1)		
+			' strFile = strFile & ".vbs"
+
+			' WScript.Echo "basecom Directory: " & strBasecomDirectory 
+			' WScript.Echo "File path: " & strFilePath 
+			' WScript.Echo "File: " & strFile 
+
+			ExecuteGlobal CreateObject("Scripting.FileSystemObject").OpenTextFile(strFilePath & "\" & strFile & ".vbs", 1).ReadAll()
 		Else
-			strFilePath = objFSO.GetAbsolutePathName(".")
+			Err.Raise 1111, "Include(..)", "Unable to load basecom library file: " & strFile, "", ""
+			' Else
+			'	strFilePath = objFSO.GetAbsolutePathName(".")
  		End If   
 
-    		ExecuteGlobal CreateObject("Scripting.FileSystemObject").OpenTextFile(strFilePath & "\" & strFile & ".vbs", 1).ReadAll()
+    		' ExecuteGlobal CreateObject("Scripting.FileSystemObject").OpenTextFile(strFilePath & "\" & strFile & ".vbs", 1).ReadAll()
 
     		If Err.Number <> 0 Then
-        			If Err.Number = 1041 Then 
-            			Err.Clear
-        		Else
+			' Library has already been included (Error 1041: Name Redefined)
+        		If Err.Number = 1041 Then
+				Err.Clear
+			Else
             			WScript.Echo "Error " & Err.Number & ": " & Err.Description & " (Source: " & Err.Source & ")"
             			' WScript.Quit 1
-        		End If
+			End If
     		End If
 	End Sub
+
+    	Include "base_Sys"
+    	Include "base_Sys_Util"
 
 	Sub RunDbShell()
 		Include "base_Database.base_Database_Connection"
@@ -112,9 +126,6 @@ exit /b
 			End If
 		Loop
 	End Sub
-
-    	Include "base_Sys.base_Sys"
-    	Include "base_Sys.base_Sys_Util"
 
 	If WScript.Arguments.Count > 0 Then
 		If LCase(WScript.Arguments(0)) = "dbshell" Then

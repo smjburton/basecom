@@ -33,14 +33,8 @@ Option Explicit
 
 ' CookieJar objects support the iterator protocol for iterating over contained Cookie objects.
 
-Sub Include(file)
-	Dim FSO: Set FSO = CreateObject("Scripting.FileSystemObject")
-	ExecuteGlobal FSO.OpenTextFile(file, 1).ReadAll()
-	Set FSO = Nothing
-End Sub
-
-Include("base_Data_Array_Util")
-Include("base_HTTP_Cookie")
+Include "base_Data_Array_Util"
+Include "base_HTTP_Cookie"
 
 Class base_HTTP_CookieJar
 	Private pCookies, _

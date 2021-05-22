@@ -1,6 +1,6 @@
 Option Explicit
 
-Class base_Outlook_View_Control
+Class base_Outlook_ViewControl
 	Private p_OutlookViewControl
 
 	Private Sub Class_Initialize()
@@ -294,9 +294,9 @@ Class base_Outlook_View_Control
 	End Sub
 End Class
 
-If WScript.ScriptName = "base_Outlook_View_Control.vbs" Then
+If WScript.ScriptName = "base_Outlook_ViewControl.vbs" Then
 	Dim objOVC
-	Set objOVC = new base_Outlook_View_Control
+	Set objOVC = new base_Outlook_ViewControl
 
 	objOVC.AddressBook
 End If

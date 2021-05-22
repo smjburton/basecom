@@ -1,7 +1,7 @@
 Option Explicit
 
-Include "base_Sys.base_Sys_Files"
-Include "base_Sys.base_Sys_Folders"
+Include "base_Sys_Files"
+Include "base_Sys_Folders"
 
 ' Folder attributes can be set using a combination of the bit values below:
 ' Constant	Value	Description

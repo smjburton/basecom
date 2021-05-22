@@ -1,6 +1,6 @@
 Option Explicit
 
-Class base_Printer
+Class base_Peripheral_Printer
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -20,6 +20,6 @@ Class base_Printer
 	End Sub
 End Class
 
-If WScript.ScriptName = "base_Printer.vbs" Then
+If WScript.ScriptName = "base_Peripheral_Printer.vbs" Then
 
 End If

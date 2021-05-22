@@ -1,7 +1,7 @@
 Option Explicit
 
-Include "base_Data.base_Data_Dictionary"
-Include "base_Sys.base_Sys_Error"
+Include "base_Data_Dictionary"
+Include "base_Sys_Error"
 
 Class base_Sys_ErrorHandler
 	Private p_objHandlerDict
@@ -34,8 +34,10 @@ Class base_Sys_ErrorHandler
 		On Error Resume Next
 
 		If p_objHandlerDict.Exists(strMethodCaller) Then
+			PrintLn "Here."
 			strErrorMsg = "Error " & objError.Number & ": " & objError.Description & " (Source: " & objError.Source & ") (Procedure: " & strMethodCaller & ")"
 			PrintLn strErrorMsg
+			PrintLn "Now here."
 			Set Handle = p_objHandlerDict(strMethodCaller)
 		Else
 			strErrorMsg = "Unhandled Error " & objError.Number & ": " & objError.Description & " (Source: " & objError.Source & ") (Procedure: " & strMethodCaller & ")"

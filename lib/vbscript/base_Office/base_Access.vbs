@@ -1,6 +1,6 @@
 Option Explicit
 
-Class base_Access_Application
+Class base_Access
     Private p_Application
 
     Private Sub Class_Initialize()
@@ -528,6 +528,6 @@ Class base_Access_Application
     End Sub
 End Class
 
-If WScript.ScriptName = "base_Access_Application.vbs" Then
+If WScript.ScriptName = "base_Access.vbs" Then
 
 End If

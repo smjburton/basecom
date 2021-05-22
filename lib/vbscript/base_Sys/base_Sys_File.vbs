@@ -1,6 +1,6 @@
 Option Explicit
 
-Include "base_Sys.base_Sys_Folder"
+Include "base_Sys_Folder"
 
 ' File attributes can be set using any combination of the bit values below:
 ' Constant	Value	Description

@@ -1,6 +1,6 @@
 Option Explicit
 
-' Include "base_Database.base_Database_Result"
+' Include "base_Database_Result"
 
 Class base_Database_Resultset
 	Private p_Resultset

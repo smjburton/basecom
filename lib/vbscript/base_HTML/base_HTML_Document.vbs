@@ -1,22 +1,16 @@
 Option Explicit
 
-Sub Include(file)
-	Dim FSO: Set FSO = CreateObject("Scripting.FileSystemObject")
-	ExecuteGlobal FSO.OpenTextFile(file & ".vbs", 1).ReadAll()
-	Set FSO = Nothing
-End Sub
-
-Include "v_Data_Array"
+Include "base_Data_Array"
 
 Class base_HTML_Document
-	Private pHtmlDoc
+	Private p_HtmlDoc
 
 
 	' Constructor
 
 
 	Private Sub Class_Initialize()
-		Set pHtmlDoc = CreateObject("HTMLFile")
+		Set p_HtmlDoc = CreateObject("HTMLFile")
 	End Sub
 
 
@@ -24,273 +18,273 @@ Class base_HTML_Document
 
 
 	Public Property Get ActiveElement()
-		Set ActiveElement = pHtmlDoc.activeElement
+		Set ActiveElement = p_HtmlDoc.activeElement
 	End Property
 
 	Public Property Get ALinkColor()
-		Set ALinkColor = pHtmlDoc.alinkColor
+		Set ALinkColor = p_HtmlDoc.alinkColor
 	End Property
 
 	Public Property Get All()
-		Set All = pHtmlDoc.all
+		Set All = p_HtmlDoc.all
 	End Property
 
 	Public Property Get Anchors()
-		Set Anchors = pHtmlDoc.anchors
+		Set Anchors = p_HtmlDoc.anchors
 	End Property
 
 	Public Property Get Applets()
-		Set Applets = pHtmlDoc.applets
+		Set Applets = p_HtmlDoc.applets
 	End Property
 
 	Public Property Get Attributes()
-		Set Attributes = pHtmlDoc.attributes
+		Set Attributes = p_HtmlDoc.attributes
 	End Property
 
 	Public Property Get BgColor()
-		BgColor = pHtmlDoc.bgColor
+		BgColor = p_HtmlDoc.bgColor
 	End Property
 
 	Public Property Get Body()
-		Set Body = pHtmlDoc.body
+		Set Body = p_HtmlDoc.body
 	End Property
 
 	Public Property Get CharacterSet()
-		CharacterSet = pHtmlDoc.charset
+		CharacterSet = p_HtmlDoc.charset
 	End Property
 
 	Public Property Get ChildNodes()
-		Set ChildNodes = pHtmlDoc.childNodes
+		Set ChildNodes = p_HtmlDoc.childNodes
 	End Property
 
 	Public Property Get Compatible()
-		Set Compatible = pHtmlDoc.compatible
+		Set Compatible = p_HtmlDoc.compatible
 	End Property
 
 	Public Property Get CompatMode()
-		CompatMode = pHtmlDoc.compatMode
+		CompatMode = p_HtmlDoc.compatMode
 	End Property
 
 	Public Property Get ContentType()
 		On Error Resume Next
 		Dim strContentType
-		strContentType = pHtmlDoc.mimeType
+		strContentType = p_HtmlDoc.mimeType
 		If Err.Number = 0 Then ContentType = strContentType
 	End Property
 
 	Public Property Get Cookie()
-		Cookie = pHtmlDoc.cookie
+		Cookie = p_HtmlDoc.cookie
 	End Property
 
 	Public Property Get DefaultCharset()
-		DefaultCharset = pHtmlDoc.defaultCharset
+		DefaultCharset = p_HtmlDoc.defaultCharset
 	End Property
 
 	Public Property Get DefaultView()
-		Set DefaultView = pHtmlDoc.parentWindow
+		Set DefaultView = p_HtmlDoc.parentWindow
 	End Property
 
 	Public Property Get DesignMode()
-		DesignMode = pHtmlDoc.designMode
+		DesignMode = p_HtmlDoc.designMode
 	End Property
 
 	Public Property Get Dir()
-		Dir = pHtmlDoc.dir
+		Dir = p_HtmlDoc.dir
 	End Property
 
 	Public Property Get DocType()
-		Set DocType = pHtmlDoc.doctype
+		Set DocType = p_HtmlDoc.doctype
 	End Property
 
 	Public Property Get DocumentElement()
-		Set DocumentElement = pHtmlDoc.documentElement
+		Set DocumentElement = p_HtmlDoc.documentElement
 	End Property
 
 	Public Property Get DocumentMode()
-		Set DocumentMode = pHtmlDoc.documentMode
+		Set DocumentMode = p_HtmlDoc.documentMode
 	End Property
 
 	Public Property Get DocumentURI()
-		DocumentURI = pHtmlDoc.url
+		DocumentURI = p_HtmlDoc.url
 	End Property
 
 	Public Property Get Domain()
-		Domain = pHtmlDoc.domain
+		Domain = p_HtmlDoc.domain
 	End Property
 
 	Public Property Get Embeds()
-		Embeds = pHtmlDoc.embeds
+		Embeds = p_HtmlDoc.embeds
 	End Property
 
 	Public Property Get FgColor()
-		FgColor = pHtmlDoc.fgColor
+		FgColor = p_HtmlDoc.fgColor
 	End Property
 
 	Public Property Get FileCreatedDate()
-		FileCreatedDate = pHtmlDoc.fileCreatedDate
+		FileCreatedDate = p_HtmlDoc.fileCreatedDate
 	End Property
 
 	Public Property Get FileModifiedDate()
-		FileModifiedDate = pHtmlDoc.fileModifiedDate
+		FileModifiedDate = p_HtmlDoc.fileModifiedDate
 	End Property
 
 	Public Property Get FileSize()
-		FileSize = pHtmlDoc.fileSize
+		FileSize = p_HtmlDoc.fileSize
 	End Property
 
 	Public Property Get FileUpdatedDate()
-		FileUpdatedDate = pHtmlDoc.fileUpdatedDate
+		FileUpdatedDate = p_HtmlDoc.fileUpdatedDate
 	End Property
 
 	Public Property Get FirstChild()
-		Set FirstChild = pHtmlDoc.firstChild
+		Set FirstChild = p_HtmlDoc.firstChild
 	End Property
 
 	Public Property Get Forms()
-		Set Forms = pHtmlDoc.forms
+		Set Forms = p_HtmlDoc.forms
 	End Property
 
 	Public Property Get Frames()
-		Set Frames = pHtmlDoc.frames
+		Set Frames = p_HtmlDoc.frames
 	End Property
 
 	Public Property Get Head()
-		Set Head = pHtmlDoc.getElementsByTagName("head")(0)
+		Set Head = p_HtmlDoc.getElementsByTagName("head")(0)
 	End Property
 
 	Public Property Get HTML()
-		HTML = pHtmlDoc.documentElement.outerHTML
+		HTML = p_HtmlDoc.documentElement.outerHTML
 	End Property
 
 	Public Property Get Images()
-		Set Images = pHtmlDoc.images
+		Set Images = p_HtmlDoc.images
 	End Property
 
 	Public Property Get Implementation()
-		Set Implementation = pHtmlDoc.implementation
+		Set Implementation = p_HtmlDoc.implementation
 	End Property
 
 	Public Property Get LastChild()
-		Set LastChild = pHtmlDoc.lastChild
+		Set LastChild = p_HtmlDoc.lastChild
 	End Property
 
 	Public Property Get LastModified()
-		LastModified = pHtmlDoc.lastModified
+		LastModified = p_HtmlDoc.lastModified
 	End Property
 
 	Public Property Get LinkColor()
-		Set LinkColor = pHtmlDoc.linkColor
+		Set LinkColor = p_HtmlDoc.linkColor
 	End Property
 
 	Public Property Get Links()
-		Set Links = pHtmlDoc.links
+		Set Links = p_HtmlDoc.links
 	End Property
 
 	Public Property Get Location()
-		Set Location = pHtmlDoc.location
+		Set Location = p_HtmlDoc.location
 	End Property
 
 	Public Property Get Media()
-		Media = pHtmlDoc.media
+		Media = p_HtmlDoc.media
 	End Property
 
 	Public Property Get MimeType()
 		On Error Resume Next
 		Dim strMimeType
-		strMimeType = pHtmlDoc.mimeType
+		strMimeType = p_HtmlDoc.mimeType
 		If Err.Number = 0 Then MimeType = strMimeType
 	End Property
 
 	Public Property Get Name()
-		Name = pHtmlDoc.nameProp
+		Name = p_HtmlDoc.nameProp
 	End Property
 	
 	Public Property Get Namespaces()
-		Set Namespaces = pHtmlDoc.namespaces
+		Set Namespaces = p_HtmlDoc.namespaces
 	End Property
 
 	Public Property Get NextSibling()
-		Set NextSibling = pHtmlDoc.nextSibling
+		Set NextSibling = p_HtmlDoc.nextSibling
 	End Property
 
 	Public Property Get NodeName()
-		NodeName = pHtmlDoc.nodeName
+		NodeName = p_HtmlDoc.nodeName
 	End Property
 
 	Public Property Get NodeType()
-		NodeType = pHtmlDoc.nodeType
+		NodeType = p_HtmlDoc.nodeType
 	End Property
 
 	Public Property Get NodeValue()
-		If IsObject(pHtmlDoc.nodeValue) Then
-			Set NodeValue = pHtmlDoc.nodeValue
+		If IsObject(p_HtmlDoc.nodeValue) Then
+			Set NodeValue = p_HtmlDoc.nodeValue
 		Else
-			NodeValue = pHtmlDoc.nodeValue
+			NodeValue = p_HtmlDoc.nodeValue
 		End If
 	End Property
 
 	Public Property Get OwnerDocument()
-		Set OwnerDocument = pHtmlDoc.ownerDocument
+		Set OwnerDocument = p_HtmlDoc.ownerDocument
 	End Property
 
 	Public Property Get ParentNode()
-		Set ParentNode = pHtmlDoc.parentNode
+		Set ParentNode = p_HtmlDoc.parentNode
 	End Property
 
 	Public Property Get ParentWindow()
-		Set ParentWindow = pHtmlDoc.parentWindow
+		Set ParentWindow = p_HtmlDoc.parentWindow
 	End Property
 
 	Public Property Get Plugins()
-		Set Plugins = pHtmlDoc.plugins
+		Set Plugins = p_HtmlDoc.plugins
 	End Property
 
 	Public Property Get PreviousSibling()
-		Set PreviousSibling = pHtmlDoc.previousSibling
+		Set PreviousSibling = p_HtmlDoc.previousSibling
 	End Property
 
 	Public Property Get ReadyState()
-		ReadyState = pHtmlDoc.readyState
+		ReadyState = p_HtmlDoc.readyState
 	End Property
 
 	Public Property Get Referrer()
-		Referrer = pHtmlDoc.referrer
+		Referrer = p_HtmlDoc.referrer
 	End Property
 
 	Public Property Get Scripts()
-		Set Scripts = pHtmlDoc.Scripts
+		Set Scripts = p_HtmlDoc.Scripts
 	End Property
 
 	Public Property Get Security()
-		Security = pHtmlDoc.security
+		Security = p_HtmlDoc.security
 	End Property
 
 	Public Property Get Selection()
-		Set Selection = pHtmlDoc.selection
+		Set Selection = p_HtmlDoc.selection
 	End Property
 
 	Public Property Get StyleSheets()
-		Set StyleSheets = pHtmlDoc.styleSheets
+		Set StyleSheets = p_HtmlDoc.styleSheets
 	End Property
 
 	Public Property Get Text()
-		Text = pHtmlDoc.documentElement.innerText
+		Text = p_HtmlDoc.documentElement.innerText
 	End Property
 
 	Public Property Get Title()
-		Title = pHtmlDoc.title
+		Title = p_HtmlDoc.title
 	End Property
 
 	Public Property Get URL()
-		URL = pHtmlDoc.url
+		URL = p_HtmlDoc.url
 	End Property
 
 	Public Property Get URLUnencoded()
-		URLUnencoded = pHtmlDoc.URLUnencoded
+		URLUnencoded = p_HtmlDoc.URLUnencoded
 	End Property
 
 	Public Property Get VLinkColor()
-		Set VLinkColor = pHtmlDoc.vlinkColor
+		Set VLinkColor = p_HtmlDoc.vlinkColor
 	End Property
 
 
@@ -298,171 +292,171 @@ Class base_HTML_Document
 
 
 	Public Property Get OnActivate()
-		Set OnActivate = pHtmlDoc.onactivate
+		Set OnActivate = p_HtmlDoc.onactivate
 	End Property
 
 	Public Property Get OnAfterUpdate()
-		Set OnAfterUpdate = pHtmlDoc.onafterupdate
+		Set OnAfterUpdate = p_HtmlDoc.onafterupdate
 	End Property
 
 	Public Property Get OnBeforeActivate()
-		Set OnBeforeActivate = pHtmlDoc.onbeforeactivate
+		Set OnBeforeActivate = p_HtmlDoc.onbeforeactivate
 	End Property
 
 	Public Property Get OnBeforeDeactivate()
-		Set OnBeforeDeactivate = pHtmlDoc.onbeforedeactivate
+		Set OnBeforeDeactivate = p_HtmlDoc.onbeforedeactivate
 	End Property
 
 	Public Property Get OnBeforeEditFocus()
-		Set OnBeforeEditFocus = pHtmlDoc.onbeforeeditfocus
+		Set OnBeforeEditFocus = p_HtmlDoc.onbeforeeditfocus
 	End Property
 	
 	Public Property Get OnBeforeUpdate()
-		Set OnBeforeUpdate = pHtmlDoc.onbeforeupdate
+		Set OnBeforeUpdate = p_HtmlDoc.onbeforeupdate
 	End Property
 
 	Public Property Get OnCellChange()
-		Set OnCellChange = pHtmlDoc.oncellchange
+		Set OnCellChange = p_HtmlDoc.oncellchange
 	End Property
 
 	Public Property Get OnClick()
-		Set OnClick = pHtmlDoc.onclick
+		Set OnClick = p_HtmlDoc.onclick
 	End Property
 
 	Public Property Get OnContextMenu()
-		Set OnContextMenu = pHtmlDoc.oncontextmenu
+		Set OnContextMenu = p_HtmlDoc.oncontextmenu
 	End Property
 
 	Public Property Get OnControlSelect()
-		Set OnControlSelect = pHtmlDoc.oncontrolselect
+		Set OnControlSelect = p_HtmlDoc.oncontrolselect
 	End Property
 
 	Public Property Get OnDataAvailable()
-		Set OnDataAvailable = pHtmlDoc.ondataavailable
+		Set OnDataAvailable = p_HtmlDoc.ondataavailable
 	End Property
 
 	Public Property Get OnDatasetChanged()
-		Set OnDatasetChanged = pHtmlDoc.ondatasetchanged
+		Set OnDatasetChanged = p_HtmlDoc.ondatasetchanged
 	End Property
 
 	Public Property Get OnDatasetComplete()
-		Set OnDatasetComplete = pHtmlDoc.ondatasetcomplete
+		Set OnDatasetComplete = p_HtmlDoc.ondatasetcomplete
 	End Property
 
 	Public Property Get OnDblClick()
-		Set OnDblClick = pHtmlDoc.ondblclick
+		Set OnDblClick = p_HtmlDoc.ondblclick
 	End Property
 
 	Public Property Get OnDeactivate()
-		Set OnDeactivate = pHtmlDoc.ondeactivate
+		Set OnDeactivate = p_HtmlDoc.ondeactivate
 	End Property
 
 	Public Property Get OnDragStart()
-		Set OnDragStart = pHtmlDoc.ondragstart
+		Set OnDragStart = p_HtmlDoc.ondragstart
 	End Property
 
 	Public Property Get onErrorUpdate()
-		Set onErrorUpdate = pHtmlDoc.onerrorupdate
+		Set onErrorUpdate = p_HtmlDoc.onerrorupdate
 	End Property
 
 	Public Property Get OnFocusIn()
-		Set OnFocusIn = pHtmlDoc.onfocusin
+		Set OnFocusIn = p_HtmlDoc.onfocusin
 	End Property
 
 	Public Property Get OnFocusOut()
-		Set OnFocusOut = pHtmlDoc.onfocusout
+		Set OnFocusOut = p_HtmlDoc.onfocusout
 	End Property
 
 	Public Property Get OnHelp()
-		Set OnHelp = pHtmlDoc.onhelp
+		Set OnHelp = p_HtmlDoc.onhelp
 	End Property
 
 	Public Property Get OnKeyDown()
-		Set OnKeyDown = pHtmlDoc.onkeydown
+		Set OnKeyDown = p_HtmlDoc.onkeydown
 	End Property
 
 	Public Property Get OnKeyPress()
-		Set OnKeyPress = pHtmlDoc.onkeypress
+		Set OnKeyPress = p_HtmlDoc.onkeypress
 	End Property
 
 	Public Property Get OnKeyUp()
-		Set OnKeyUp = pHtmlDoc.onkeyup
+		Set OnKeyUp = p_HtmlDoc.onkeyup
 	End Property
 
 	Public Property Get OnMouseDown()
-		Set OnMouseDown = pHtmlDoc.onmousedown
+		Set OnMouseDown = p_HtmlDoc.onmousedown
 	End Property
 
 	Public Property Get OnMouseMove()
-		Set OnMouseMove = pHtmlDoc.onmousemove
+		Set OnMouseMove = p_HtmlDoc.onmousemove
 	End Property
 
 	Public Property Get OnMouseOut()
-		Set OnMouseOut = pHtmlDoc.onmouseout
+		Set OnMouseOut = p_HtmlDoc.onmouseout
 	End Property
 
 	Public Property Get OnMouseOver()
-		Set OnMouseOver = pHtmlDoc.onmouseover
+		Set OnMouseOver = p_HtmlDoc.onmouseover
 	End Property
 
 	Public Property Get OnMouseUp()
-		Set OnMouseUp = pHtmlDoc.onmouseup
+		Set OnMouseUp = p_HtmlDoc.onmouseup
 	End Property
 
 	Public Property Get OnMouseWheel()
-		Set OnMouseWheel = pHtmlDoc.onmousewheel
+		Set OnMouseWheel = p_HtmlDoc.onmousewheel
 	End Property	
 
 	Public Property Get OnMsSiteModeJumplistItemRemoved()
-		Set OnMsSiteModeJumplistItemRemoved = pHtmlDoc.onmssitemodejumplistitemremoved
+		Set OnMsSiteModeJumplistItemRemoved = p_HtmlDoc.onmssitemodejumplistitemremoved
 	End Property
 
 	Public Property Get OnMsThumbnailClick()
-		Set OnMsThumbnailClick = pHtmlDoc.onmsthumbnailclick
+		Set OnMsThumbnailClick = p_HtmlDoc.onmsthumbnailclick
 	End Property
 
 	Public Property Get OnPropertyChange()
-		Set OnPropertyChange = pHtmlDoc.onpropertychange
+		Set OnPropertyChange = p_HtmlDoc.onpropertychange
 	End Property
 
 	Public Property Get OnReadyStateChange()
-		Set OnReadyStateChange = pHtmlDoc.onreadystatechange
+		Set OnReadyStateChange = p_HtmlDoc.onreadystatechange
 	End Property
 
 	Public Property Get OnRowEnter()
-		Set OnRowEnter = pHtmlDoc.onrowenter
+		Set OnRowEnter = p_HtmlDoc.onrowenter
 	End Property
 
 	Public Property Get OnRowExit()
-		Set OnRowExit = pHtmlDoc.onrowexit
+		Set OnRowExit = p_HtmlDoc.onrowexit
 	End Property
 
 	Public Property Get OnRowsDelete()
-		Set OnRowsDelete = pHtmlDoc.onrowsdelete
+		Set OnRowsDelete = p_HtmlDoc.onrowsdelete
 	End Property
 
 	Public Property Get OnRowsInserted()
-		Set OnRowsInserted = pHtmlDoc.onrowsinserted
+		Set OnRowsInserted = p_HtmlDoc.onrowsinserted
 	End Property
 
 	Public Property Get OnSelectStart()
-		Set OnSelectStart = pHtmlDoc.onselectstart
+		Set OnSelectStart = p_HtmlDoc.onselectstart
 	End Property
 
 	Public Property Get OnSelectionChange()
-		Set OnSelectionChange = pHtmlDoc.onselectionchange
+		Set OnSelectionChange = p_HtmlDoc.onselectionchange
 	End Property
 
 	Public Property Get OnStop()
-		Set OnStop = pHtmlDoc.onstop
+		Set OnStop = p_HtmlDoc.onstop
 	End Property
 
 	Public Property Get OnStorage()
-		Set OnStorage = pHtmlDoc.onstorage
+		Set OnStorage = p_HtmlDoc.onstorage
 	End Property
 
 	Public Property Get OnStorageCommit()
-		Set OnStorageCommit = pHtmlDoc.onstoragecommit
+		Set OnStorageCommit = p_HtmlDoc.onstoragecommit
 	End Property
 
 	
@@ -477,31 +471,31 @@ Class base_HTML_Document
 	End Function
 	
 	Public Function AppendChild(objChild)
-		Set AppendChild = pHtmlDoc.appendChild(objChild)
+		Set AppendChild = p_HtmlDoc.appendChild(objChild)
 	End Function
 	
 	Public Function AttachEvent(strEvent, objCallbackFunction)
-		Set AttachEvent = pHtmlDoc.attachEvent(strEvent, objCallbackFunction)
+		Set AttachEvent = p_HtmlDoc.attachEvent(strEvent, objCallbackFunction)
 	End Function
 	
 	Public Sub Clear()
-		pHtmlDoc.clear()
+		p_HtmlDoc.clear()
 	End Sub
 	
 	Public Function CloneNode(blnDeep)
-		Set CloneNode = pHtmlDoc.cloneNode(blnDeep)
+		Set CloneNode = p_HtmlDoc.cloneNode(blnDeep)
 	End Function
 	
 	Public Function Close()
-		pHtmlDoc.close()
+		p_HtmlDoc.close()
 	End Function
 	
 	Public Function CreateAttribute(strAttrName)
-		Set CreateAttribute = pHtmlDoc.createAttribute(strAttrName)
+		Set CreateAttribute = p_HtmlDoc.createAttribute(strAttrName)
 	End Function
 
 	Public Function CreateComment(strComment)
-		Set CreateComment = pHtmlDoc.createComment(strComment)
+		Set CreateComment = p_HtmlDoc.createComment(strComment)
 	End Function
 	
 	Public Function CreateDocument()
@@ -509,7 +503,7 @@ Class base_HTML_Document
 	End Function
 	
 	Public Function CreateDocumentFragment()
-		Set CreateDocumentFragment = pHtmlDoc.createDocumentFragment()
+		Set CreateDocumentFragment = p_HtmlDoc.createDocumentFragment()
 	End Function
 	
 	Public Function CreateDocumentFromURL(strURL)
@@ -520,66 +514,66 @@ Class base_HTML_Document
 	End Function
 	
 	Public Function CreateElement(strTag)
-		Set CreateElement = pHtmlDoc.createElement(strTag)
+		Set CreateElement = p_HtmlDoc.createElement(strTag)
 	End Function
 	
 	Public Function CreateEvent()
-		Set CreateEvent = pHtmlDoc.createEventObject()
+		Set CreateEvent = p_HtmlDoc.createEventObject()
 	End Function
 	
 	Public Function CreateStyleSheet()
-		Set CreateStyleSheet = pHtmlDoc.createStyleSheet()
+		Set CreateStyleSheet = p_HtmlDoc.createStyleSheet()
 	End Function
 	
 	Public Function CreateTextNode(strText)
-		Set CreateTextNode = pHtmlDoc.createTextNode(strText)
+		Set CreateTextNode = p_HtmlDoc.createTextNode(strText)
 	End Function
 	
 	Public Function DetachEvent(strEvent, objCallbackFunction)
-		Set DetachEvent = pHtmlDoc.detachEvent(strEvent, objCallbackFunction)
+		Set DetachEvent = p_HtmlDoc.detachEvent(strEvent, objCallbackFunction)
 	End Function
 	
 	Public Function ElementFromPoint(intX, intY)
-		Set ElementFromPoint = pHtmlDoc.elementsFromPoint(intX, intY)(0)
+		Set ElementFromPoint = p_HtmlDoc.elementsFromPoint(intX, intY)(0)
 	End Function
 	
 	Public Function ElementsFromPoint(intX, intY)
-		Set ElementsFromPoint = pHtmlDoc.elementsFromPoint(intX, intY)
+		Set ElementsFromPoint = p_HtmlDoc.elementsFromPoint(intX, intY)
 	End Function
 	
 	Public Function ExecCommand(strCmdID)
-		Set ExecCommand = pHtmlDoc.execCommand(strCmdID)
+		Set ExecCommand = p_HtmlDoc.execCommand(strCmdID)
 	End Function
 
 	Public Function ExecCommandShowHelp(strCmdID)
-		Set ExecCommandShowHelp = pHtmlDoc.execCommandShowHelp(strCmdID)
+		Set ExecCommandShowHelp = p_HtmlDoc.execCommandShowHelp(strCmdID)
 	End Function
 	
 	Public Function ExecScript(strCode)
-		Set ExecScript = pHtmlDoc.parentWindow.execScript(strCode)
+		Set ExecScript = p_HtmlDoc.parentWindow.execScript(strCode)
 	End Function
 	
 	Public Function FireEvent(strEventName)
-		Set FireEvent = pHtmlDoc.fireEvent(strEventName)
+		Set FireEvent = p_HtmlDoc.fireEvent(strEventName)
 	End Function
 	
 	Public Sub Focus()
-		pHtmlDoc.focus()
+		p_HtmlDoc.focus()
 	End Sub
 	
 	Public Function GetElementByID(strID)
-		Set GetElementByID = pHtmlDoc.getElementById(strID)
+		Set GetElementByID = p_HtmlDoc.getElementById(strID)
 	End Function
 	
 	Public Function GetElementsByClassName(strClassName)
 		Dim objResultSet, _
 			i
 
-		Set objResultSet = New v_Data_Array
+		Set objResultSet = New base_Data_Array
 
-		For i = 0 To pHtmlDoc.all.length - 1
-			If pHtmlDoc.all(i).className = strClassName Then
-				objResultSet.Append pHtmlDoc.all(i)
+		For i = 0 To p_HtmlDoc.all.length - 1
+			If p_HtmlDoc.all(i).className = strClassName Then
+				objResultSet.Append p_HtmlDoc.all(i)
 			End If
 		Next
 
@@ -590,11 +584,11 @@ Class base_HTML_Document
 		Dim objResultSet, _
 			i
 
-		Set objResultSet = New v_Data_Array
+		Set objResultSet = New base_Data_Array
 
-		For i = 0 To pHtmlDoc.all.length - 1
-			If pHtmlDoc.all(i).getAttribute("name") = strName Then
-				objResultSet.Append pHtmlDoc.all(i)
+		For i = 0 To p_HtmlDoc.all.length - 1
+			If p_HtmlDoc.all(i).getAttribute("name") = strName Then
+				objResultSet.Append p_HtmlDoc.all(i)
 			End If
 		Next
 
@@ -606,8 +600,8 @@ Class base_HTML_Document
 			objTagElements, _
 			i
 
-		Set objResultSet = New v_Data_Array
-		Set objTagElements = pHtmlDoc.getElementsByTagName(strTagName)
+		Set objResultSet = New base_Data_Array
+		Set objTagElements = p_HtmlDoc.getElementsByTagName(strTagName)
 
 		For i = 0 To objTagElements.Length - 1
 			objResultSet.Append objTagElements(i)
@@ -617,11 +611,11 @@ Class base_HTML_Document
 	End Function
 	
 	Public Function HasChildNodes()
-		HasChildNodes = pHtmlDoc.hasChildNodes()
+		HasChildNodes = p_HtmlDoc.hasChildNodes()
 	End Function
 
 	Public Function HasFocus()
-		HasFocus = pHtmlDoc.hasFocus()
+		HasFocus = p_HtmlDoc.hasFocus()
 	End Function
 	
 	Public Function ImportNode(objNode, blnDeep)
@@ -630,7 +624,7 @@ Class base_HTML_Document
 				Dim objNewNode, _
 					i
 
-				Set objNewNode = pHtmlDoc.createElement(objNode.nodeName)
+				Set objNewNode = p_HtmlDoc.createElement(objNode.nodeName)
 
 				If Not objNode.attributes Is Nothing Then
 					If objNode.attributes.length > 0 Then
@@ -650,36 +644,36 @@ Class base_HTML_Document
 	
 				Set ImportNode = objNewNode
 			Case 3:
-				Set ImportNode = pHtmlDoc.createTextNode(objNode.nodeValue)
+				Set ImportNode = p_HtmlDoc.createTextNode(objNode.nodeValue)
 			Case 8:
-				Set ImportNode = pHtmlDoc.createComment(objNode.nodeValue)
+				Set ImportNode = p_HtmlDoc.createComment(objNode.nodeValue)
 		End Select	
 	End Function
 
 	Public Function InsertBefore(objNewChild, objRefChild)
-		Set InsertBefore = pHtmlDoc.insertBefore(objNewChild, objRefChild)
+		Set InsertBefore = p_HtmlDoc.insertBefore(objNewChild, objRefChild)
 	End Function
 
 	Public Function IsEqualNode(objNode)
 		Dim i
 
-		If Not pHtmlDoc.nodeType = objNode.nodeType Then
+		If Not p_HtmlDoc.nodeType = objNode.nodeType Then
 			IsEqualNode = False
 			Exit Function
 		End If
 
-		If Not pHtmlDoc.nodeName = objNode.nodeName Then
+		If Not p_HtmlDoc.nodeName = objNode.nodeName Then
 			IsEqualNode = False
 			Exit Function
 		End If
 
-		If IsObject(pHtmlDoc.nodeValue) And IsObject(objNode.nodeValue) Then
-			If Not pHtmlDoc.nodeValue Is objNode.nodeValue Then
+		If IsObject(p_HtmlDoc.nodeValue) And IsObject(objNode.nodeValue) Then
+			If Not p_HtmlDoc.nodeValue Is objNode.nodeValue Then
 				IsEqualNode = False
 				Exit Function
 			End If
-		ElseIf Not IsObject(pHtmlDoc.nodeValue) And Not IsObject(objNode.nodeValue) Then
-			If Not pHtmlDoc.nodeValue = objNode.nodeValue Then
+		ElseIf Not IsObject(p_HtmlDoc.nodeValue) And Not IsObject(objNode.nodeValue) Then
+			If Not p_HtmlDoc.nodeValue = objNode.nodeValue Then
 				IsEqualNode = False
 				Exit Function
 			End If
@@ -688,20 +682,20 @@ Class base_HTML_Document
 			Exit Function
 		End If
 
-		If Not pHtmlDoc.childNodes.length = objNode.childNodes.length Then
+		If Not p_HtmlDoc.childNodes.length = objNode.childNodes.length Then
 			IsEqualNode = False
 			Exit Function
 		Else
-			For i = 0 To pHtmlDoc.childNodes.length - 1
-				If Not pHtmlDoc.childNodes(i) Is objNode.childNodes(i) Then
+			For i = 0 To p_HtmlDoc.childNodes.length - 1
+				If Not p_HtmlDoc.childNodes(i) Is objNode.childNodes(i) Then
 					IsEqualNode = False
 					Exit Function				
 				End If
 			Next
 		End If
 
-		If Not pHtmlDoc.attributes Is Nothing And Not objNode.attributes Is Nothing Then
-			If Not pHtmlDoc.attributes.length = objNode.attributes.length Then
+		If Not p_HtmlDoc.attributes Is Nothing And Not objNode.attributes Is Nothing Then
+			If Not p_HtmlDoc.attributes.length = objNode.attributes.length Then
 				IsEqualNode = False
 				Exit Function
 			Else
@@ -709,8 +703,8 @@ Class base_HTML_Document
 					blnFound, _
 					j
 
-				For i = 0 To pHtmlDoc.attributes.length - 1
-					Set objAttr = pHtmlDoc.attributes(i)
+				For i = 0 To p_HtmlDoc.attributes.length - 1
+					Set objAttr = p_HtmlDoc.attributes(i)
 					blnFound = False
 
 					For j = 0 To objNode.attributes.length - 1
@@ -726,7 +720,7 @@ Class base_HTML_Document
 					End If
 				Next
 			End If
-		ElseIf Not (pHtmlDoc.attributes Is Nothing And objNode.attributes Is Nothing) Then
+		ElseIf Not (p_HtmlDoc.attributes Is Nothing And objNode.attributes Is Nothing) Then
 			IsEqualNode = False
 			Exit Function	
 		End If
@@ -735,7 +729,7 @@ Class base_HTML_Document
 	End Function
 	
 	Public Function IsSameNode(objNode)
-		If objNode Is pHtmlDoc Then
+		If objNode Is p_HtmlDoc Then
 			IsEqualNode = True
 		Else
 			IsEqualNode = False
@@ -744,9 +738,9 @@ Class base_HTML_Document
 	
 	Public Function IsSupported(strFeature, strVersion)
 		If strVersion = "1.0" Then
-			IsSupported = pHtmlDoc.implementation.hasFeature(strFeature, "1.0")
+			IsSupported = p_HtmlDoc.implementation.hasFeature(strFeature, "1.0")
 		ElseIf strVersion = "2.0" Then
-			IsSupported = pHtmlDoc.implementation.hasFeature(strFeature, "2.0")
+			IsSupported = p_HtmlDoc.implementation.hasFeature(strFeature, "2.0")
 		End If
 	End Function
 
@@ -761,7 +755,7 @@ Class base_HTML_Document
 		Dim objNode, _
 			objNextNode
 
-		Set objNode = pHtmlDoc.firstChild
+		Set objNode = p_HtmlDoc.firstChild
 
 		Do
 			If objNode.nodeType = 3 Then
@@ -771,7 +765,7 @@ Class base_HTML_Document
 
 						If objNextNode.nodeType = 3 Then					
 							objNode.appendData objNextNode.data
-							pHtmlDoc.removeChild objNextNode
+							p_HtmlDoc.removeChild objNextNode
 						End If
 					Else
 						Set objNextNode = Nothing
@@ -788,27 +782,27 @@ Class base_HTML_Document
 	End Sub
 	
 	Public Function QueryCommandEnabled(strCmdID)
-		Set QueryCommandEnabled = pHtmlDoc.queryCommandEnabled(strCmdID)
+		Set QueryCommandEnabled = p_HtmlDoc.queryCommandEnabled(strCmdID)
 	End Function
 	
 	Public Function QueryCommandIndeterm(strCmdID)
-		Set QueryCommandIndeterm = pHtmlDoc.queryCommandIndeterm(strCmdID)
+		Set QueryCommandIndeterm = p_HtmlDoc.queryCommandIndeterm(strCmdID)
 	End Function
 	
 	Public Function QueryCommandState(strCmdID)
-		Set QueryCommandState = pHtmlDoc.queryCommandState(strCmdID)
+		Set QueryCommandState = p_HtmlDoc.queryCommandState(strCmdID)
 	End Function
 	
 	Public Function QueryCommandSupported(strCmdID)
-		Set QueryCommandSupported = pHtmlDoc.queryCommandSupported(strCmdID)
+		Set QueryCommandSupported = p_HtmlDoc.queryCommandSupported(strCmdID)
 	End Function
 	
 	Public Function QueryCommandText(strCmdID)
-		Set QueryCommandText = pHtmlDoc.queryCommandText(strCmdID)
+		Set QueryCommandText = p_HtmlDoc.queryCommandText(strCmdID)
 	End Function
 	
 	Public Function QueryCommandValue(strCmdID)
-		Set QueryCommandValue = pHtmlDoc.queryCommandValue(strCmdID)
+		Set QueryCommandValue = p_HtmlDoc.queryCommandValue(strCmdID)
 	End Function
 	
 	Public Function QuerySelector(strSelector)
@@ -816,13 +810,13 @@ Class base_HTML_Document
 			objResult, _
 			i
 
-		Set objStyleSheet = pHtmlDoc.createStyleSheet()
+		Set objStyleSheet = p_HtmlDoc.createStyleSheet()
 
 		objStyleSheet.addRule strSelector, "k:v" 
 
-		For i = 0 To pHtmlDoc.all.Length - 1
-			If pHtmlDoc.all(i).currentStyle.getAttribute("k") = "v" Then
-				Set objResult = pHtmlDoc.all(i)
+		For i = 0 To p_HtmlDoc.all.Length - 1
+			If p_HtmlDoc.all(i).currentStyle.getAttribute("k") = "v" Then
+				Set objResult = p_HtmlDoc.all(i)
 				Exit For
 			End If
 		Next
@@ -838,17 +832,17 @@ Class base_HTML_Document
 			i, _
 			j
 
-		Set objStyleSheet = pHtmlDoc.createStyleSheet()
-		Set objResultSet = New v_Data_Array
+		Set objStyleSheet = p_HtmlDoc.createStyleSheet()
+		Set objResultSet = New base_Data_Array
 
 		strSelectors = Split(strSelectors, ",")
 
 		For i = 0 To UBound(strSelectors)
 			objStyleSheet.addRule strSelectors(i), "k:v" 
 
-			For j = 0 To pHtmlDoc.all.length - 1
-				If pHtmlDoc.all(j).currentStyle.getAttribute("k") = "v" Then
-					objResultSet.Append pHtmlDoc.all(j)
+			For j = 0 To p_HtmlDoc.all.length - 1
+				If p_HtmlDoc.all(j).currentStyle.getAttribute("k") = "v" Then
+					objResultSet.Append p_HtmlDoc.all(j)
 				End If
 			Next
 
@@ -859,27 +853,27 @@ Class base_HTML_Document
 	End Function
 
 	Public Sub Recalc()
-		pHtmlDoc.recalc()
+		p_HtmlDoc.recalc()
 	End Sub
 
 	Public Sub ReleaseCapture()
-		pHtmlDoc.releaseCapture()
+		p_HtmlDoc.releaseCapture()
 	End Sub
 	
 	Public Function RemoveChild(objChild)
-		Set RemoveChild = pHtmlDoc.removeChild(objChild)
+		Set RemoveChild = p_HtmlDoc.removeChild(objChild)
 	End Function
 	
 	Public Function RemoveNode(blnDeep)
-		Set RemoveNode = pHtmlDoc.removeNode(blnDeep)
+		Set RemoveNode = p_HtmlDoc.removeNode(blnDeep)
 	End Function
 
 	Public Function ReplaceChild(objNewChild, objOldChild)
-		Set ReplaceChild = pHtmlDoc.replaceChild(objNewChild, objOldChild)
+		Set ReplaceChild = p_HtmlDoc.replaceChild(objNewChild, objOldChild)
 	End Function
 	
 	Public Function ReplaceNode(objReplaceNode)
-		Set ReplaceNode = pHtmlDoc.replaceNode(objReplaceNode)
+		Set ReplaceNode = p_HtmlDoc.replaceNode(objReplaceNode)
 	End Function
 	
 	Public Sub Save(strFilename)
@@ -901,27 +895,27 @@ Class base_HTML_Document
 	End Sub
 	
 	Public Function SwapNode(objOtherNode)
-		Set SwapNode = pHtmlDoc.swapNode(objOtherNode)
+		Set SwapNode = p_HtmlDoc.swapNode(objOtherNode)
 	End Function
 	
 	Public Function ToDocument()
-		Set ToDocument = pHtmlDoc
+		Set ToDocument = p_HtmlDoc
 	End Function
 
 	Public Function ToString()
-		ToString = pHtmlDoc.toString()
+		ToString = p_HtmlDoc.toString()
 	End Function
 	
 	Public Sub UpdateSettings()
-		pHtmlDoc.updateSettings()
+		p_HtmlDoc.updateSettings()
 	End Sub
 
 	Public Sub Write(strText)
-		pHtmlDoc.write strText
+		p_HtmlDoc.write strText
 	End Sub
 	
 	Public Sub WriteLn(strText)
-		pHtmlDoc.writeln strText
+		p_HtmlDoc.writeln strText
 	End Sub
 
 
@@ -929,7 +923,7 @@ Class base_HTML_Document
 
 
 	Private Sub Class_Terminate()
-		Set pHtmlDoc = Nothing
+		Set p_HtmlDoc = Nothing
 	End Sub
 End Class
 

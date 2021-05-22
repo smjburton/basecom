@@ -24,12 +24,6 @@ Option Explicit
 ' http://erik.io/blog/2014/03/04/definitive-guide-to-cookie-domains/
 ' http://serverfault.com/questions/153409/can-subdomain-example-com-set-a-cookie-that-can-be-read-by-example-com
 
-Sub Include(file)
-	Dim FSO: Set FSO = CreateObject("Scripting.FileSystemObject")
-	ExecuteGlobal FSO.OpenTextFile(file, 1).ReadAll()
-	Set FSO = Nothing
-End Sub
-
 Include "base_URI"
 
 Class base_HTTP_Cookie

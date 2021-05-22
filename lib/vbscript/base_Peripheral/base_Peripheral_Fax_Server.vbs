@@ -1,6 +1,6 @@
 Option Explicit
 
-Class base_Fax_Server
+Class base_Peripheral_Fax_Server
 	Private p_FaxServer
 
 	Private Sub Class_Initialize()
@@ -22,6 +22,6 @@ Class base_Fax_Server
 	End Sub
 End Class
 
-If WScript.ScriptName = "base_Fax_Server.vbs" Then
+If WScript.ScriptName = "base_Peripheral_Fax_Server.vbs" Then
 
 End If

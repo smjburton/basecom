@@ -4,12 +4,6 @@ Option Explicit
 ' Remove
 ' Splice
 
-Sub Include(file)
-	Dim FSO: Set FSO = CreateObject("Scripting.FileSystemObject")
-	ExecuteGlobal FSO.OpenTextFile(file & ".vbs", 1).ReadAll()
-	Set FSO = Nothing
-End Sub
-
 Include "base_Sys_Script"
 
 Class base_JSON

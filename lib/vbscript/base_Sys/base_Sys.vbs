@@ -1,7 +1,7 @@
 Option Explicit
 
-Include "base_Sys.base_Sys_ErrorHandler"
-Include "base_Sys.base_Sys_EventHandler"
+Include "base_Sys_ErrorHandler"
+Include "base_Sys_EventHandler"
 
 Dim ErrorHandler, _
 	EventHandler
