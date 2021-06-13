@@ -40,13 +40,13 @@ Class base_IO_TextStream
 		Set p_TextStream = p_FileSystemObject.CreateTextFile(strFileName) 
 	End Function
   
-	Function Open(strFileName) ' Optional params: [IOMode As IOMode = ForReading], [Create As Boolean = False], [Format As Tristate = TristateFalse]) As TextStream
-		Set p_TextStream = p_FileSystemObject.OpenTextFile(strFileName)
+	Public Function Open(strFileName, intIoMode) ' Optional params: [IOMode As IOMode = ForReading], [Create As Boolean = False], [Format As Tristate = TristateFalse]) As TextStream
+		If p_FileSystemObject.FileExists(strFileName) Then Set p_TextStream = p_FileSystemObject.OpenTextFile(strFileName, intIoMode, False)
 	End Function
 
-	Public Function Read()
+	Public Function Read(intNumOfChars)
 		If Not p_TextStream Is Nothing Then
-			Read = p_TextStream.Read()
+			Read = p_TextStream.Read(intNumOfChars)
 		Else
 			Read = ""
 		End If
@@ -68,8 +68,8 @@ Class base_IO_TextStream
 		End If
 	End Function
 
-	Public Sub Skip()
-		If Not p_TextStream Is Nothing Then p_TextStream.Skip
+	Public Sub Skip(intNumOfChars)
+		If Not p_TextStream Is Nothing Then p_TextStream.Skip(intNumOfChars)
 	End Sub
 
 	Public Sub SkipLine()

@@ -7,12 +7,12 @@ Option Explicit
 Include "base_Sys_Script"
 
 Class base_JSON
-	Private pScript
+	Private p_Script
 
 	Private Sub Class_Initialize()
-		Set pScript = New base_Sys_Script
+		Set p_Script = New base_Sys_Script
 
-		With pScript
+		With p_Script
 			.Language = "JScript"
 			.AddCode("var json = {};")
 			.AddCode("function getKeys() { var keys = []; for (var k in json) { keys.push(k); } return keys; }")
@@ -48,23 +48,23 @@ Class base_JSON
 
 
 	Public Default Property Get Item(strKey)
-		If pScript.Run("getItemType", Array(strKey)) = "object" Then
-			Set Item = Deserialize(pScript.Run("getItemValue", Array(strKey)))
+		If p_Script.Run("getItemType", Array(strKey)) = "object" Then
+			Set Item = Deserialize(p_Script.Run("getItemValue", Array(strKey)))
 		Else
-			Item = Deserialize(pScript.Run("getItemValue", Array(strKey)))
+			Item = Deserialize(p_Script.Run("getItemValue", Array(strKey)))
 		End If
 	End Property
 
 	Public Property Get Items()
-		Items = Deserialize(pScript.Run("getItems", Array()))
+		Items = Deserialize(p_Script.Run("getItems", Array()))
 	End Property
 
 	Public Property Get Keys()
-		Keys = Deserialize(pScript.Run("getKeys", Array()))
+		Keys = Deserialize(p_Script.Run("getKeys", Array()))
 	End Property
 
 	Public Property Get Count()
-		Count = pScript.Run("getCount", Array())
+		Count = p_Script.Run("getCount", Array())
 	End Property
 
 	
@@ -72,53 +72,53 @@ Class base_JSON
 
 
 	Public Sub Clear()
-		pScript.Run "clear", Array()
+		p_Script.Run "clear", Array()
 	End Sub
 
 	Public Function Exists(strKey, varValue, blnDeep)
-		Exists = pScript.Run("exists", Array(strKey, varValue, blnDeep))
+		Exists = p_Script.Run("exists", Array(strKey, varValue, blnDeep))
 	End Function
 
 	Public Function KeyExists(strKey, blnDeep)
-		KeyExists = pScript.Run("keyExists", Array(strKey, blnDeep))
+		KeyExists = p_Script.Run("keyExists", Array(strKey, blnDeep))
 	End Function
 
 	Public Function ValueExists(varValue, blnDeep)
-		ValueExists = pScript.Run("valueExists", Array(varValue, blnDeep))
+		ValueExists = p_Script.Run("valueExists", Array(varValue, blnDeep))
 	End Function
 
 	Public Function Find(strKey, varValue)
-		Set Find = Deserialize(pScript.Run("find", Array(strKey, varValue)))
+		Set Find = Deserialize(p_Script.Run("find", Array(strKey, varValue)))
 	End Function
 
 	Public Function FindKey(strKey)
-		Set FindKey = Deserialize(pScript.Run("findKey", Array(strKey)))
+		Set FindKey = Deserialize(p_Script.Run("findKey", Array(strKey)))
 	End Function
 
 	Public Function FindValue(varValue)
-		If pScript.Run("getType", Array(pScript.Run("findValue", Array(varValue)))) = "object" Then
-			Set FindValue = Deserialize(pScript.Run("findValue", Array(varValue)))
+		If p_Script.Run("getType", Array(p_Script.Run("findValue", Array(varValue)))) = "object" Then
+			Set FindValue = Deserialize(p_Script.Run("findValue", Array(varValue)))
 		Else
-			FindValue = Deserialize(pScript.Run("findValue", Array(varValue)))
+			FindValue = Deserialize(p_Script.Run("findValue", Array(varValue)))
 		End If
 	End Function
 
 	Public Function FindAll(strKey, varValue)
-		FindAll = Deserialize(pScript.Run("findAll", Array(strKey, varValue)))
+		FindAll = Deserialize(p_Script.Run("findAll", Array(strKey, varValue)))
 	End Function
 
 	Public Function FindAllKeys(strKey)
-		FindAllKeys = Deserialize(pScript.Run("findAllKeys", Array(strKey)))
+		FindAllKeys = Deserialize(p_Script.Run("findAllKeys", Array(strKey)))
 	End Function
 
 	Public Function FindAllValues(varValue)
-		FindAllValues = Deserialize(pScript.Run("findAllValues", Array(varValue)))
+		FindAllValues = Deserialize(p_Script.Run("findAllValues", Array(varValue)))
 	End Function
 
 	Public Sub Load(strFile)
 		Dim objFSO
 		Set objFSO = CreateObject("Scripting.FileSystemObject")
-		FromString objFSO.OpenTextFile(strFile, 1).ReadAll()
+		Me.FromString objFSO.OpenTextFile(strFile, 1).ReadAll()
 		Set FSO = Nothing
 	End Sub
 
@@ -144,11 +144,11 @@ Class base_JSON
 	End Sub
 
 	Public Sub FromString(strJSON)
-		If TypeName(strJSON) = "String" Then pScript.Variable("json") = strJSON
+		If TypeName(strJSON) = "String" Then p_Script.Variable("json") = strJSON
 	End Sub
 
 	Public Function ToString()
-		ToString = pScript.Run("stringify", Array(pScript.Variable("json")))
+		ToString = p_Script.Run("stringify", Array(p_Script.Variable("json")))
 	End Function
 
 	
@@ -156,7 +156,7 @@ Class base_JSON
 
 
 	Private Function Deserialize(varItem)
-		Select Case pScript.Run("getType", Array(varItem))
+		Select Case p_Script.Run("getType", Array(varItem))
 			Case "object":
 				Set Deserialize = JSONObject(varItem)
 			Case "array":
@@ -171,7 +171,7 @@ Class base_JSON
 	Private Function JSONObject(objJSON)
 		Dim objJsonObj
 		Set objJsonObj = New vbs_JSON
-		objJsonObj.FromString pScript.Run("stringify", Array(objJSON))
+		objJsonObj.FromString p_Script.Run("stringify", Array(objJSON))
 		Set JSONObject = objJsonObj
 	End Function
 
@@ -179,18 +179,18 @@ Class base_JSON
 		Dim arrArray(), _
 			i
 
-		ReDim arrArray(pScript.Run("getArrayLength", Array(objJSONArr)) - 1)
+		ReDim arrArray(p_Script.Run("getArrayLength", Array(objJSONArr)) - 1)
 
 		For i = 0 To UBound(arrArray)
-			Select Case pScript.Run("getArrayItemType", Array(objJSONArr, i))
+			Select Case p_Script.Run("getArrayItemType", Array(objJSONArr, i))
 				Case "object":
-					Set arrArray(i) = JSONObject(pScript.Run("getArrayItem", Array(objJSONArr, i)))
+					Set arrArray(i) = JSONObject(p_Script.Run("getArrayItem", Array(objJSONArr, i)))
 				Case "array":
-					arrArray(i) = JSONArray(pScript.Run("getArrayItem", Array(objJSONArr, i)))
+					arrArray(i) = JSONArray(p_Script.Run("getArrayItem", Array(objJSONArr, i)))
 				Case "null":
 					arrArray(i) = Null
 				Case "string", "number", "boolean":
-					arrArray(i) = pScript.Run("getArrayItem", Array(objJSONArr, i))
+					arrArray(i) = p_Script.Run("getArrayItem", Array(objJSONArr, i))
 			End Select
 		Next
 
@@ -198,7 +198,7 @@ Class base_JSON
 	End Function
 
 	Private Sub Class_Terminate()
-		Set pScript = Nothing
+		Set p_Script = Nothing
 	End Sub 
 End Class
 

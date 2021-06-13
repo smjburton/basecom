@@ -3,7 +3,7 @@ Option Explicit
 Include "base_Data_Array_Util"
 
 Class base_Data_Array
-	Private pArray
+	Private p_Array
 
 	Private Sub Class_Initialize()
 
@@ -14,7 +14,7 @@ Class base_Data_Array
 
 
 	Public Property Get Allocated()
-		If IsArrayAllocated(pArray) Then
+		If IsArrayAllocated(p_Array) Then
 			Allocated = True
 		Else
 			Allocated = False
@@ -22,25 +22,25 @@ Class base_Data_Array
 	End Property
 
 	Public Default Property Get Item(intIndex)
-		If IsArrayAllocated(pArray) Then
-    			If IsObject(pArray(intIndex)) Then
-        			Set Item = pArray(intIndex)
+		If IsArrayAllocated(p_Array) Then
+    			If IsObject(p_Array(intIndex)) Then
+        			Set Item = p_Array(intIndex)
     			Else
-        			Item = pArray(intIndex)
+        			Item = p_Array(intIndex)
     			End If
 		End If
 	End Property
 
 	Public Property Let Item(intIndex, varInput)
-		If IsArrayAllocated(pArray) Then pArray(intIndex) = varInput
+		If IsArrayAllocated(p_Array) Then p_Array(intIndex) = varInput
 	End Property
 
 	Public Property Set Item(intIndex, objInput)
-		If IsArrayAllocated(pArray) Then Set pArray(intIndex) = varInput
+		If IsArrayAllocated(p_Array) Then Set p_Array(intIndex) = varInput
 	End Property
 
 	Public Property Get Length()
-		If IsArrayAllocated(pArray) Then Length = UBound(pArray) + 1
+		If IsArrayAllocated(p_Array) Then Length = UBound(p_Array) + 1
 	End Property
 
 
@@ -55,43 +55,43 @@ Class base_Data_Array
 
 			For i = 0 To UBound(varInput)
 				If IsObject(varInput(i)) Then
-					Set pArray(UBound(pArray) - UBound(varInput) + i) = varInput(i)
+					Set p_Array(UBound(p_Array) - UBound(varInput) + i) = varInput(i)
 				Else
-					pArray(UBound(pArray) - UBound(varInput) + i) = varInput(i)
+					p_Array(UBound(p_Array) - UBound(varInput) + i) = varInput(i)
 				End If
 			Next
 		Else
 			Extend 1, True
 
 			If IsObject(varInput) Then
-				Set pArray(UBound(pArray)) = varInput
+				Set p_Array(UBound(p_Array)) = varInput
 			Else
-				pArray(UBound(pArray)) = varInput
+				p_Array(UBound(p_Array)) = varInput
 			End If
 		End If
 	End Sub
 
 	Public Sub Insert(varInput, intIndex)
 		Dim objArray
-		Set objArray = Slice(LBound(pArray), intIndex - 1)
+		Set objArray = Slice(LBound(p_Array), intIndex - 1)
 		objArray.Append varInput
-		If UBound(pArray) > intIndex Then objArray.Append Slice(intIndex, UBound(pArray)).ToArray()
+		If UBound(p_Array) > intIndex Then objArray.Append Slice(intIndex, UBound(p_Array)).ToArray()
 		Me.FromArray objArray.ToArray()
 		Set objArray = Nothing
 	End Sub
 
 	Public Sub RemoveAt(intIndex)
-		If IsArrayAllocated(pArray) Then
+		If IsArrayAllocated(p_Array) Then
 			Dim objArray, _
 				i
 
 			Set objArray = New base_Data_Array
 
-			For i = 0 To UBound(pArray)
+			For i = 0 To UBound(p_Array)
   				Do
     					If i = intIndex Then Exit Do
         				
-					objArray.Append pArray(i)
+					objArray.Append p_Array(i)
   				Loop While False
 			Next
 
@@ -128,36 +128,36 @@ Class base_Data_Array
 
 	Public Sub Splice(intIndex, intRemove, arrInput)
 		Dim objArray
-		Set objArray = Slice(LBound(pArray), intIndex - 1)
+		Set objArray = Slice(LBound(p_Array), intIndex - 1)
 		objArray.Append arrInput
-		If UBound(pArray) > (intIndex + intRemove) Then objArray.Append Slice(intIndex + intRemove, UBound(pArray)).ToArray()
+		If UBound(p_Array) > (intIndex + intRemove) Then objArray.Append Slice(intIndex + intRemove, UBound(p_Array)).ToArray()
 		Me.FromArray objArray.ToArray()
 		Set objArray = Nothing
 	End Sub
 
 	Public Sub Extend(intSize, blnPreserve)
-		If IsArrayAllocated(pArray) Then
+		If IsArrayAllocated(p_Array) Then
 			If blnPreserve Then
-				ReDim Preserve pArray(UBound(pArray) + intSize)
+				ReDim Preserve p_Array(UBound(p_Array) + intSize)
 			Else
-				ReDim pArray(UBound(pArray) + intSize)
+				ReDim p_Array(UBound(p_Array) + intSize)
 			End If
 		Else
-			pArray = Array()
-			ReDim pArray(intSize - 1)
+			p_Array = Array()
+			ReDim p_Array(intSize - 1)
 		End If
 	End Sub
 
 	Public Sub Resize(intSize, blnPreserve)
-		If IsArrayAllocated(pArray) Then
+		If IsArrayAllocated(p_Array) Then
 			If blnPreserve Then
-				ReDim Preserve pArray(intSize - 1)
+				ReDim Preserve p_Array(intSize - 1)
 			Else
-				ReDim pArray(intSize - 1)
+				ReDim p_Array(intSize - 1)
 			End If
 		Else
-			pArray = Array()
-			ReDim pArray(intSize - 1)
+			p_Array = Array()
+			ReDim p_Array(intSize - 1)
 		End If
 	End Sub
 
@@ -165,11 +165,11 @@ Class base_Data_Array
 		Dim intIndex, _
 			i
 
-		For i = 0 To UBound(pArray)
-			If IsObject(varInput) And IsObject(pArray(i)) Then
-				If pArray(i) Is varInput Then intIndex = i
-			ElseIf Not IsObject(pArray(i)) And Not IsObject(varInput) Then
-				If pArray(i) = varInput Then intIndex = i
+		For i = 0 To UBound(p_Array)
+			If IsObject(varInput) And IsObject(p_Array(i)) Then
+				If p_Array(i) Is varInput Then intIndex = i
+			ElseIf Not IsObject(p_Array(i)) And Not IsObject(varInput) Then
+				If p_Array(i) = varInput Then intIndex = i
 			End If
 			If Not IsEmpty(intIndex) Then Exit For
 		Next
@@ -178,18 +178,18 @@ Class base_Data_Array
 	End Function
 
 	Public Sub Sort()
-		QuickSort pArray, LBound(pArray), UBound(pArray)
+		QuickSort p_Array, LBound(p_Array), UBound(p_Array)
 	End Sub
 
 	Public Sub Reverse()
-		If IsArrayAllocated(pArray) Then
+		If IsArrayAllocated(p_Array) Then
 			Dim objArray, _
 				i
 
 			Set objArray = New base_Data_Array
 
-			For i = UBound(pArray) To 0 Step -1
-				objArray.Append pArray(i)
+			For i = UBound(p_Array) To 0 Step -1
+				objArray.Append p_Array(i)
 			Next
 
 			Me.FromArray objArray.ToArray()
@@ -199,24 +199,24 @@ Class base_Data_Array
 
 	Public Sub FromArray(arrInput)
 		If IsArray(arrInput) Then
-			If IsArrayAllocated(pArray) Then Clear
-			pArray = arrInput
+			If IsArrayAllocated(p_Array) Then Clear
+			p_Array = arrInput
 		End If
 	End Sub
 
 	Public Function ToArray()
-		If IsArrayAllocated(pArray) Then ToArray = pArray
+		If IsArrayAllocated(p_Array) Then ToArray = p_Array
 	End Function
 
 	Public Sub FromString(strInput, varDelimiter)
 		If TypeName(strInput) = "String" Then
-			If IsArrayAllocated(pArray) Then Clear
-			pArray = Split(strInput, CStr(varDelimiter))
+			If IsArrayAllocated(p_Array) Then Clear
+			p_Array = Split(strInput, CStr(varDelimiter))
 		End If
 	End Sub
 
 	Public Function ToString()
-		If IsArrayAllocated(pArray) Then ToString = Join(pArray, ",")
+		If IsArrayAllocated(p_Array) Then ToString = Join(p_Array, ", ")
 	End Function
 
 	Public Function Clone()
@@ -227,7 +227,7 @@ Class base_Data_Array
 	End Function
 
 	Public Sub Clear()
-		If IsArrayAllocated(pArray) Then Erase pArray
+		If IsArrayAllocated(p_Array) Then Erase p_Array
 	End Sub
 
 	Private Sub Class_Terminate()
