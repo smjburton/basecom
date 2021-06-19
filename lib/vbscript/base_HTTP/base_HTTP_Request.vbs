@@ -1,206 +1,106 @@
 Option Explicit
 
-' Wrapper class around the WinHttp Request object ("WinHttp.WinHttpRequest.5.1")
-' The Request object. It carries out all functionality of Requests.
-
-' See: https://msdn.microsoft.com/en-us/library/windows/desktop/aa383147(v=vs.85).aspx (HTTP authentication)
-' See: https://github.com/VBA-tools/VBA-Web (for a good reference)
-
-' Properties:
-
-' Method
-' URL
-' FullURL
-' PathURL
-' Username
-' Password
-' ProxyUser
-' ProxyPass
-' Data
-' Params
-' Files
-' Headers
-' RawHeaders
-' Cookies
-' Proxy
-
-' Options:
-
-' HttpVersion
-' UserAgent
-' Async
-' AutoAuth
-' AutoAuthBypassProxy
-' PassportAuth
-' ClientCertificate
-' ImpersonateSecureClientAuth
-' VerifyServerCert
-' SecureProtocols
-' Secure
-' IgnoreSSLErrors
-' AllowRedirects
-' OnlySecureRedirects
-' MaxRedirects
-' MaxRetries
-' KeepAlive
-' MaxResponseHeader
-' MaxResponseBody
-' StoreCookies
-' StoreResponse
-' EncodeURI
-' EncodeCookies
-' URLCharacterEncoding
-' Timeout
-' StrictMode
-' SafeMode
-' DangerMode
-' BaseHeaders
-' Logger
-' Tracing
-' Status
-' StatusCode
-' StatusText
-' Redirected
-' Sent
-
-' Response object and properties:
-
-' Response
-
-' Methods:
-
-' Configure
-' Prepare
-' Request
-' Send
-' Download
-
-' GetReq
-' PostReq
-' PutReq
-' HeadReq
-' PatchReq
-' DeleteReq
-
-' Auth
-' ProxyAuth
-' Header (* should possibly add a AddHeader() method)
-' CookieHeader (* should possible add a AddCookie() method)
-' Headers (* should also add a AddHeaders() method)
-
-' FromString
-' ToString
-' FromDict
-' ToDict
-
-' (* potentially add an option for multi-dimensional arrays for building an HTTP request)
-
-' ClearHeaders
-' ClearDefaultHeaders
-' Timeout
-' RegisterHook
-
 Include "base_HTTP_Constants"
 Include "base_HTTP_Response"
-Include "base_HTTP_Cookie"
+Include "base_HTTP_Headers"
+Include "base_HTTP_CookieJar"
+Include "base_Sys_Logger"
 Include "base_URI"
 
 Class base_HTTP_Request
-	Private pHttpReq, _
-		pHttpResp
+	Private p_objHttpReq, _
+    		p_objHttpResp, _
+    		p_objHttpHeaders, _
+    		p_objCookies
 
-	' Properties
-	' Properties are set by the user and do not have default values.
+	Private p_strMethod, _
+		p_objUrl, _
+		p_strUserAgent, _
+		p_strUsername, _
+		p_strPassword, _
+		p_strProxyUsername, _
+		p_strProxyPassword, _
+		p_strProxyServer, _
+		p_strProxyBypassList, _
+		p_arrParams, _
+		p_varData, _
+		p_varFiles, _
+		p_lngResolveTimeout, _
+		p_lngConnectTimeout, _
+		p_lngSendTimeout, _
+		p_lngReceiveTimeout, _
+		p_lngAsyncTimeout,_
+		p_objLogger
 
-	Private pMethod, _
-		pURL, _
-		pUsername, _
-		pPassword, _
-		pProxyUser, _
-		pProxyPass, _
-		pProxy, _
-		pParams, _
-		pData, _
-		pFiles, _
-		pCookies, _
-		pHeaders
+	Private p_blnAsync, _
+		p_intMaxRetries, _
+		p_blnKeepAlive, _
+		p_blnStoreCookies, _
+		p_blnStoreResponse, _
+		p_blnEncodeCookies
 
-	' Options
-	' Options have default values unless they are overridden by the user. Setting these
-	' parameters is optional.
+	Private p_blnSent, _
+		p_blnRedirected
 
-	Private pUserAgent, _
-		pAsync, _
-		pMaxRetries, _
-		pKeepAlive, _
-		pStoreCookies, _
-		pStoreResponse, _
-		pEncodeURI, _
-		pEncodeCookies, _
-		pStoreResponse, _
-		pStrictMode, _
-		pSafeMode, _
-		pDangerMode
+	' Public Event OnError(ByVal lngErrorNumber As Long, ByVal strErrorDescription As String)
+	' Public Event OnResponseStart(ByVal lngStatus As Long, ByVal strContentType As String)
+	' Public Event OnResponseDataAvailable(ByRef bytData() As Byte)
+	' Public Event OnResponseFinished()
 
-	' Status Flags
-
-	Private pSent, _
-		pRedirected
-
-	' *** Need to add a check in here to see if I can instantiate the object
-	' If not, throw an error and suggest to the user to use XMLHTTP or ServerXMLHTTP
 	Private Sub Class_Initialize()
-		Set pHttpReq = CreateObject("WinHttp.WinHttpRequest.5.1")
-		Set pHttpResp = New clsHttpResponse
+		Set p_objHttpReq = CreateObject("WinHttp.WinHttpRequest")
+		Set p_objHttpResp = New base_HTTP_Response
+		Set p_objHttpHeaders = New base_HTTP_Headers
+		Set p_objCookies = New base_HTTP_CookieJar
+		Set p_objUrl = New base_URI
+    
+		p_strMethod = ""
+		p_objHttpReq.Option(WinHttpRequestOption_UserAgentString) = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36"
+		p_strUsername = ""
+		p_strPassword = ""
+		p_strProxyUsername = ""
+		p_strProxyPassword = ""
 
-	' Properties
-		pMethod = ""
-		Set pURL = New clsURL
-		pUsername = ""
-		pPassword = ""
-		pProxyUser = ""
-		pProxyPass = ""
-		Set pCookies = New clsCookieJar
+		With p_objHttpReq
+			.Option(WinHttpRequestOption_EnableHttp1_1) = True
+			p_blnAsync = False
+			.SetAutoLogonPolicy AutoLogonPolicy_Never
+			.Option(WinHttpRequestOption_EnablePassportAuthentication) = False
+			.Option(WinHttpRequestOption_EnableCertificateRevocationCheck) = True
+			.Option(WinHttpRequestOption_SecureProtocols) = SecureProtocol_ALL
+			.Option(WinHttpRequestOption_SslErrorIgnoreFlags) = SslErrorFlag_Ignore_None
+			.Option(WinHttpRequestOption_EnableRedirects) = False
+			.Option(WinHttpRequestOption_EnableHttpsToHttpRedirects) = False
+			.Option(WinHttpRequestOption_MaxAutomaticRedirects) = 10
+			p_intMaxRetries = 5
+			p_blnKeepAlive = False
+			.Option(WinHttpRequestOption_MaxResponseHeaderSize) = 64000
+			.Option(WinHttpRequestOption_MaxResponseDrainSize) = 1000000
+			p_blnStoreCookies = True
+			p_blnStoreResponse = True
+			p_blnEncodeCookies = False
+			.Option(WinHttpRequestOption_URLCodePage) = UTF_8
+			.Option(WinHttpRequestOption_EscapePercentInURL) = True
+			.Option(WinHttpRequestOption_UrlEscapeDisable) = True
+			.Option(WinHttpRequestOption_UrlEscapeDisableQuery) = True
+			p_lngResolveTimeout = 0
+			p_lngConnectTimeout = 0
+			p_lngSendTimeout = 0
+			p_lngReceiveTimeout = 0
+			p_lngAsyncTimeout = 0
+			.SetTimeouts p_lngResolveTimeout, p_lngConnectTimeout, p_lngSendTimeout, p_lngReceiveTimeout
+			Set p_objLogger = New base_Sys_Logger
+			.Option(WinHttpRequestOption_EnableTracing) = False
+		End With
 
-	' Options
-		pHttpReq.Option(WinHttpRequestOption_EnableHttp1_1) = True
-		pHttpReq.Option(WinHttpRequestOption_UserAgentString) = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36"
-		pAsync = False
-		pHttpReq.SetAutoLogonPolicy(AutoLogonPolicy_Never)
-		pHttpReq.Option(WinHttpRequestOption_EnablePassportAuthentication) = False
-		pHttpReq.Option(WinHttpRequestOption_EnableCertificateRevocationCheck) = True
-		pHttpReq.Option(WinHttpRequestOption_SecureProtocols) = SecureProtocol_ALL
-		pHttpReq.Option(WinHttpRequestOption_SslErrorIgnoreFlags) = SslErrorFlag_Ignore_None
-		pHttpReq.Option(WinHttpRequestOption_EnableRedirects) = False
-		pHttpReq.Option(WinHttpRequestOption_EnableHttpsToHttpRedirects) = False
-		pHttpReq.Option(WinHttpRequestOption_MaxAutomaticRedirects) = 10
-		pMaxRetries = 5
-		pKeepAlive = False
-		pHttpReq.Option(WinHttpRequestOption_MaxResponseHeaderSize) = 64000
-		pHttpReq.Option(WinHttpRequestOption_MaxResponseDrainSize) = 1000000
-		pStoreCookies = True
-		pStoreResponse = True
-		pEncodeURI = False
-		pEncodeCookies = False
-		pHttpReq.Option(WinHttpRequestOption_URLCodePage) = 65001
-		' Timeout
-		pStrictMode = False
-		pSafeMode = False
-		pDangerMode = False
-		' BaseHeaders
-		' Logger
-		pHttpReq.Option(WinHttpRequestOption_EnableTracing) = False
-
-	' Status Flags
-		pSent = False
-		pRedirected = False
+		p_blnSent = False
+		p_blnRedirected = False
 	End Sub
 
 	
 	' Properties
 
 
-	' HTTP Method to use.
 	Public Property Get Method()
 		Method = pMethod
 	End Property
@@ -209,7 +109,6 @@ Class base_HTTP_Request
 		pMethod = strMethod
 	End Property
 
-	' Request URL.
 	Public Property Get URL()
 		URL = pURL.ToString()
 	End Property
@@ -222,17 +121,17 @@ Class base_HTTP_Request
 		Set pURL = objURL
 	End Property
 
-	' Build the actual URL to use.
-	Public Property Get FullURL()
-
+	Public Property Get UserAgent()
+		UserAgent = p_objHttpReq.Option(WinHttpRequestOption_UserAgentString)
 	End Property
 
-	' Build the path URL to use.
-	Public Property Get PathURL()
-
+	Public Property Let UserAgent( _
+		ByVal strUserAgent _
+		)
+    
+		p_objHttpReq.Option(WinHttpRequestOption_UserAgentString) = strUserAgent
 	End Property
 
-	' Username used for HTTP Basic Auth.
 	Public Property Get Username()
 		Username = pUsername
 	End Property
@@ -241,7 +140,6 @@ Class base_HTTP_Request
 		pUsername = strUsername
 	End Property
 
-	' Password used for HTTP Basic Auth.
 	Public Property Get Password()
 		Password = pPassword
 	End Property
@@ -250,76 +148,82 @@ Class base_HTTP_Request
 		pPassword = strPassword
 	End Property
 
-	' Dictionary or byte of request body data to attach to the Request.
-	' Used for POST method
+	Public Property Get ProxyUsername()
+		ProxyUsername = p_strProxyUsername
+	End Property
+
+	Public Property Let ProxyUsername( _
+		ByVal strProxyUsername As String _
+		)
+    
+		p_strProxyUsername = strProxyUsername
+	End Property
+
+	Public Property Get ProxyPassword()
+		ProxyPassword = p_strProxyPassword
+	End Property
+
+	Public Property Let ProxyPassword( _
+		ByVal strProxyPassword _
+		)
+    
+		p_strProxyPassword = strProxyPassword
+	End Property
+
+	Public Property Get ProxyServer()
+		ProxyServer = p_strProxyServer
+	End Property
+
+	Public Property Let ProxyServer( _
+		ByVal strProxyServer _
+		)
+    
+		p_strProxyServer = strProxyServer
+	End Property
+
+	Public Property Get ProxyBypassList()
+		ProxyBypassList = p_strProxyBypassList
+	End Property
+
+	Public Property Let ProxyBypassList( _
+		ByVal strProxyBypassList _
+		)
+    
+		p_strProxyBypassList = strProxyBypassList
+	End Property
+
 	Public Property Get Data()
-		Data = pData
+		Data = p_varData
 	End Property
 
-	' Dictionary or byte of querystring data to attach to the Request.
 	Public Property Get Params()
-
+		Params = p_arrParams
 	End Property
 
-	' for multipart encoding upload.
-	' You can upload files through HTTP using the setFileUpload method. This method takes
-	' a file name as the first parameter, a form name as the second parameter, and data as a
-	' third optional parameter. If the third data parameter is NULL, the first file name
-	' parameter is considered to be a real file on disk, and Zend\Http\Client will try to read
-	' this file and upload it. If the data parameter is not NULL, the first file name parameter
-	' will be sent as the file name, but no actual file needs to exist on the disk. The second
-	' form name parameter is always required, and is equivalent to the ?name? attribute of an
-	' <input> tag, if the file was to be uploaded through an HTML form. A fourth optional
-	' parameter provides the file?s content-type. If not specified, and Zend\Http\Client reads
-	' the file from the disk, the mime_content_type function will be used to guess the file?s
-	' content type, if it is available. In any case, the default MIME type will be application/
-	' octet-stream.
-	' // Uploading arbitrary data as a file
-	' $text = 'this is some plain text';
-	' $client->setFileUpload('some_text.txt', 'upload', $text, 'text/plain');
-	' // Uploading an existing file
-	' $client->setFileUpload('/tmp/Backup.tar.gz', 'bufile');
-	' // Send the files
-	' $client->setMethod('POST');
-	' $client->send();
-	' Dictionary of files to multipart upload ({filename: content}).
 	Public Property Get Files()
 
 	End Property
 
-	' Dictionary of HTTP Headers to attach to the Request.
-	' Public Property Get Headers()
-
-	' End Property
-
-	' Outputs the headers as a string. For example:
-	' GET /docs/index.html HTTP/1.1
-	' Host: www.test101.com
-	' Accept: image/gif, image/jpeg, */*
-	' Accept-Language: en-us
-	' Accept-Encoding: gzip, deflate
-	' User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)
 	Public Property Get RawHeaders()
 
 	End Property
 
-	' CookieJar to attach to Request.
-	' Allows the user to attach a cookiejar to a request
-	Public Property Get Cookies()
-		Cookies = pCookies
+	Public Property Get Headers()
+		Set Headers = p_objHttpHeaders
 	End Property
 
-	' Set the proxy to use for the upcoming request.
-	Public Property Get Proxy()
+	Public Property Get Cookies()
+		Cookies = p_objCookies
+	End Property
 
+	Public Property Get Response()
+		Response = p_objHttpResp
 	End Property
 
 
 	' Options
 
 
-	' The HTTP version to be used for the request.
-	' HTTP protocol version (usually ?1.1? or ?1.0?)
 	Public Property Get HttpVersion()
 		If pHttpReq.Option(WinHttpRequestOption_EnableHttp1_1) Then
 			HttpVersion = "1.1"
@@ -335,17 +239,7 @@ Class base_HTTP_Request
 			pHttpReq.Option(WinHttpRequestOption_EnableHttp1_1) = False
 		End If
 	End Property
-	
-	User agent identifier string (sent in request headers)
-	Public Property Get UserAgent()
-		UserAgent = pHttpReq.Option(WinHttpRequestOption_UserAgentString)
-	End Property
 
-	Public Property Let UserAgent(strUserAgent)
-		pHttpReq.Option(WinHttpRequestOption_UserAgentString) = strUserAgent
-	End Property
-
-	' Determines whether the HTTP request should be sent sychronously or asynchronously.
 	Public Property Get Async()
 		Async = pAsync
 	End Property
@@ -406,9 +300,13 @@ Class base_HTTP_Request
 		pHttpReq.Option(WinHttpRequestOption_EnableCertificateRevocationCheck) = blnVerify
 	End Property
 
-	Public Sub SecureProtocols(intProtocols) 
+	Public Property Let SecureProtocols(intProtocols) 
 		pHttpReq.Option(WinHttpRequestOption_SecureProtocols) = intProtocols
-	End Sub
+	End Property
+
+	Public Property Get Secure()
+		Secure = blnSecure
+	End Property
 
 	Public Property Let Secure(blnSecure)
 		If blnSecure Then
@@ -418,11 +316,14 @@ Class base_HTTP_Request
 		End If
 	End Property
 
-	Public Sub IgnoreSSLErrors(lngIgnore)
-		pHttpReq.Option(WinHttpRequestOption_SslErrorIgnoreFlags) = lngIgnore
-	End Sub
+	Public Property Get IgnoreSSLErrors()
+		IgnoreSSLErrors = p_objHttpReq.Option(WinHttpRequestOption_SslErrorIgnoreFlags)
+	End Property
 
-	' Set to True if full redirects are allowed (e.g. re-POST-ing of data at new Location)
+	Public Property Let IgnoreSSLErrors(lngIgnore)
+		pHttpReq.Option(WinHttpRequestOption_SslErrorIgnoreFlags) = lngIgnore
+	End Property
+
 	Public Property Get AllowRedirects()
 		AllowRedirects = pHttpReq.Option(WinHttpRequestOption_EnableRedirects)
 	End Property
@@ -439,7 +340,6 @@ Class base_HTTP_Request
 		pHttpReq.Option(WinHttpRequestOption_EnableHttpsToHttpRedirects) = blnSecureOnly
 	End Property
 
-	' Maximum number of redirects allowed within a request.
 	Public Property Get MaxRedirects()
 		MaxRedirects = pHttpReq.Option(WinHttpRequestOption_MaxAutomaticRedirects)
 	End Property
@@ -448,7 +348,6 @@ Class base_HTTP_Request
 		pHttpReq.Option(WinHttpRequestOption_MaxAutomaticRedirects) = intRedirects
 	End Property
 
-	' The number of times a request should be retried in the event of a connection failure.
 	Public Property Get MaxRetries()
 		MaxRetries = pMaxRetries
 	End Property
@@ -457,7 +356,6 @@ Class base_HTTP_Request
 		pMaxRetries = intRetries
 	End Property
 
-	' Reuse HTTP Connections through a 'Connection' header.
 	Public Property Get KeepAlive()
 		KeepAlive = pKeepAlive
 	End Property
@@ -482,9 +380,6 @@ Class base_HTTP_Request
 		pHttpReq.Option(WinHttpRequestOption_MaxResponseDrainSize) = lngSize
 	End Property
 
-	' If StoreCookies is enabled, the request object will automatically add cookies to the jar
-	' Used to manage and retain cookies between requests
-	' If false, the received cookies as part of the HTTP response would be ignored.
 	Public Property Get StoreCookies()
 		StoreCookies = pStoreCookies
 	End Property
@@ -493,8 +388,6 @@ Class base_HTTP_Request
 		pStoreCookies = blnStoreCookies
 	End Property
 
-	' Whether to store last response for later retrieval with getLastResponse().
-	' If set to FALSE, getLastResponse() will return NULL.
 	Public Property Get StoreResponse()
 		StoreResponse = pStoreResponse
 	End Property
@@ -503,13 +396,26 @@ Class base_HTTP_Request
 		pStoreResponse = blnStoreResp
 	End Property
 
-	' If true, URIs will automatically be percent-encoded.
-	' Whether to strictly adhere to RFC 3986 (in practice, this means replacing ?+? with ?%20?)
-	' *** Need to use WinHTTP tracing in order to verify the effect of changing these settings.
-	Public Property Get EncodeURI()
-		' WinHttpRequestOption_EscapePercentInURL	= True
-		' WinHttpRequestOption_UrlEscapeDisable		= False
-		' WinHttpRequestOption_UrlEscapeDisableQuery	= False
+	Public Property Get EncodeUrl()
+		If p_objHttpReq.Option(WinHttpRequestOption_EscapePercentInURL) And _
+			p_objHttpReq.Option(WinHttpRequestOption_UrlEscapeDisable) And _
+			p_objHttpReq.Option(WinHttpRequestOption_UrlEscapeDisableQuery) Then
+        
+			EncodeURI = True
+		Else
+			EncodeURI = False
+		End If
+	End Property
+
+	Public Property Let EncodeUrl( _
+		ByVal blnEncode _
+		)
+
+		With p_objHttpReq
+			.Option(WinHttpRequestOption_EscapePercentInURL) = blnEncode
+			.Option(WinHttpRequestOption_UrlEscapeDisable) = blnEncode
+			.Option(WinHttpRequestOption_UrlEscapeDisableQuery) = blnEncode
+		End With
 	End Property
 
 	Public Property Get EncodeCookies()
@@ -520,32 +426,87 @@ Class base_HTTP_Request
 		pEncodeCookies = blnEncodeCookies
 	End Property
 
-	Public Property Get URLCharacterEncoding()
-		' WinHttpRequestOption_URLCodePage
+	Public Property Get UrlCharacterEncoding()
+		UrlCharacterEncoding = p_objHttpReq.Option(WinHttpRequestOption_URLCodePage)
 	End Property
 
-	Public Property Let URLCharacterEncoding(strEncoding)
-		' WinHttpRequestOption_URLCodePage
+	Public Property Let UrlCharacterEncoding( _
+		ByVal lngEncoding _
+		)
+    
+		p_objHttpReq.Option(WinHttpRequestOption_URLCodePage) = lngEncoding
 	End Property
 
-	' Long integer describes the timeout of the request.
-	' Connection timeout (seconds)
-	' Likely need to split this into four properties.
-	Public Property Get Timeout(lngTime)
-		' SetTimeouts(ResolveTimeout, ConnectTimeout, SendTimeout, ReceiveTimeout)
+	Public Property Let Timeout( _
+		ByVal lngTime _
+		)
+    
+		p_lngResolveTimeout = lngTime
+		p_lngConnectTimeout = lngTime
+		p_lngSendTimeout = lngTime
+		p_lngReceiveTimeout = lngTime
+
+		p_objHttpReq.SetTimeouts p_lngResolveTimeout, p_lngConnectTimeout, p_lngSendTimeout, p_lngReceiveTimeout
 	End Property
 
-	' SetAutoLogonPolicy uses Windows Authentication (formerly NTLM)
-	' 	It should be set to 'never' unless the user is planning to use Windows Authentication
-	' The automatic logon (auto-logon) policy determines when it is acceptable for WinHTTP to include the default credentials in a request. 
-	' These default credentials are often the username and password used to log on to Microsoft Windows.
-	' The auto-logon policy was implemented to prevent these credentials from being casually used to authenticate against an untrusted server. 
-	' The auto-logon policy only applies to the NTLM and Negotiate authentication schemes. Credentials are never automatically transmitted with other schemes.
+	Public Property Get ResolveTimeout()
+		ResolveTimeout = p_lngResolveTimeout
+	End Property
 
+	Public Property Let ResolveTimeout( _
+		ByVal lngTime _
+		)
+    
+		p_lngResolveTimeout = lngTime
+		p_objHttpReq.SetTimeouts p_lngResolveTimeout, p_lngConnectTimeout, p_lngSendTimeout, p_lngReceiveTimeout
+	End Property
 
+	Public Property Get ConnectTimeout()
+		ConnectTimeout = p_lngConnectTimeout
+	End Property
 
+	Public Property Let ConnectTimeout( _
+		ByVal lngTime _
+		)
+    
+		p_lngConnectTimeout = lngTime
+		p_objHttpReq.SetTimeouts p_lngResolveTimeout, p_lngConnectTimeout, p_lngSendTimeout, p_lngReceiveTimeout
+	End Property
 
-	' If true, Requests will do its best to follow RFCs (e.g. POST redirects).
+	Public Property Get SendTimeout()
+		SendTimeout = p_lngSendTimeout
+	End Property
+
+	Public Property Let SendTimeout( _
+		ByVal lngTime _
+		)
+    
+		p_lngSendTimeout = lngTime
+		p_objHttpReq.SetTimeouts p_lngResolveTimeout, p_lngConnectTimeout, p_lngSendTimeout, p_lngReceiveTimeout
+	End Property
+
+	Public Property Get ReceiveTimeout()
+		ReceiveTimeout = p_lngReceiveTimeout
+	End Property
+
+	Public Property Let ReceiveTimeout( _
+		ByVal lngTime _
+		)
+    
+		p_lngReceiveTimeout = lngTime
+	End Property
+
+	Public Property Get AsyncTimeout()
+		ReceiveTimeout = p_lngAsyncTimeout
+	End Property
+
+	Public Property Let AsyncTimeout( _
+		ByVal lngTime _
+		)
+    
+		p_lngAsyncTimeout = lngTime
+	End Property
+
 	Public Property Get StrictMode()
 		StrictMode = pStrictMode
 	End Property
@@ -554,7 +515,6 @@ Class base_HTTP_Request
 		pStrictMode = blnStrictMode
 	End Property
 
-	' If true, Requests will catch all errors.
 	Public Property Get SafeMode()
 		SafeMode = pSafeMode
 	End Property
@@ -563,7 +523,6 @@ Class base_HTTP_Request
 		pSafeMode = blnSafeMode
 	End Property
 
-	' If true, Requests will raise errors immediately.
 	Public Property Get DangerMode()
 		DangerMode = pDangerMode
 	End Property
@@ -572,52 +531,23 @@ Class base_HTTP_Request
 		pDangerMode = blnDangerMode
 	End Property	
 
-	' Default HTTP headers
+	Public Property Get DefaultHeader()
 
-	' base_headers = {"Connection":"keep-alive",
-	'             "User-Agent":user_agent,
-	'             "Accept-Encoding":"gzip",
- 	'            "Host":"xxxxxxxxxxx",
-	'             "Content-Type":"application/json; charset=UTF-8"}
+	End Property 
 
-	' BASE_HEADERS = {"Connection":"keep-alive",
-	'                     "Accept-Encoding":"gzip",
-	'                     "Host":"xxxxxxxxxxx",
-	'                     "Content-Type":"application/json; charset=UTF-8"}
-	
-	' Stream to write request logging to.
-	' Destination for streaming of received data (options: string (filename),
-	' true for temp file, false/null to disable streaming)
+	Public Property Let DefaultHeaders(arrHeaders)
 
-	' Default Request Headers
-	' You can set default headers that will be sent on every request:
-
-	' Unirest\Request::defaultHeader("Header1", "Value1");
-	' Unirest\Request::defaultHeader("Header2", "Value2");
-	Public Sub DefaultHeader()
-
-	End Sub
-
-	' You can set default headers in bulk by passing an array:
-
-	' Unirest\Request::defaultHeaders(array(
-    	'	"Header1" => "Value1",
-    	'	"Header2" => "Value2"
-	' ));
-	Public Sub DefaultHeaders(arrHeaders)
-
-	End Sub
-
-	Public Sub ClearDefaultHeaders()
-
-	End Sub
+	End Property 
 
 	Public Property Get Logger()
-
+		Set Logger = p_objLogger
 	End Property
 
-	Public Property Set Logger()
+	Public Property Set Logger( _
+		ByVal objLogger _
+		)
 
+		Set p_objLogger = objLogger
 	End Property
 
 	Public Property Get Tracing()
@@ -629,20 +559,7 @@ Class base_HTTP_Request
 	End Property
 
 
-	' TODO:
-	' Possibly add shortcut methods for common HTTP headers, such as ContentType, ExpectedType, etc.
-
-	' SSL Verification.
-	' Public Property Get Verify()
-	' End Property
-
-	' Event-handling hooks.
-	' Public Property Get Hooks()
-	' End Property
-
-
 	' Status Flags
-	' Indicate the state of the HTTP request.
 
 
 	Public Property Get Status()
@@ -657,149 +574,101 @@ Class base_HTTP_Request
 		StatusText = pHttpReq.StatusText
 	End Property
 
-	' True if Request is part of a redirect chain (disables history and HTTPError storage).
 	Public Property Get Redirected()
 		Redirected = pRedirected
 	End Property
 
-	' True if Request has been sent.
 	Public Property Get Sent()
 		Sent = pSent
 	End Property
 
-	
-	' HTTP Response
+	Public Property Get Redirected()
+		Redirected = p_blnRedirected
+	End Property
 
-
-	' Response instance, containing content and metadata of HTTP Response, once sent.
 	Public Property Get Response()
 		Response = pHttpResp
 	End Property
 
 
-	' Constructor method to configure options for an HTTP request.
-	' Dictionary of configurations/options for this request.
-	' Easier to pass in a dictionary of configurations than to set each flag individually
+	' Events
+
+
+	' Private Sub p_objHttpReq_OnError( _
+	'	ByVal lngErrorNumber, _
+	'	ByVal strErrorDescription _
+	'	)
+	'    
+	'	RaiseEvent OnError(lngErrorNumber, strErrorDescription)
+	' End Sub
+
+	' Private Sub p_objHttpReq_OnResponseStart( _
+	'	ByVal lngStatus, _
+	'	ByVal strContentType _
+	'	)
+	'	    
+	'	RaiseEvent OnResponseStart(lngStatus, strContentType)
+	' End Sub
+
+	' Private Sub p_objHttpReq_OnResponseDataAvailable( _
+	'	ByRef bytData() _
+	'	)
+    	'
+	'	RaiseEvent OnResponseDataAvailable(bytData)
+	' End Sub
+
+	' Private Sub p_objHttpReq_OnResponseFinished()
+	'	RaiseEvent OnResponseFinished
+	' End Sub
+
+
+	' Constructors
+
+
 	Public Sub Configure(objBaseHeaders, _
-				objLogger, _
-				blnKeepAlive, _
-				intMaxRetries, _
-				blnDangerMode, _
-				blnSafeMode, _
-				blnStrictMode, _
-				blnEncodeURI, _
-				blnStoreCookies)
+		objLogger, _
+		blnKeepAlive, _
+		intMaxRetries, _
+		blnDangerMode, _
+		blnSafeMode, _
+		blnStrictMode, _
+		blnEncodeURI, _
+		blnStoreCookies _
+		)
 
 	End Sub
 
-
-
-	' Constructor method to prepare the HTTP request.
 	Public Default Sub Prepare(strMethod, _
-					strURL, _
-					pUsername, _
-					pPassword, _
-					strProxyUser, _
-					strProxyPass, _
-					varParams, _
-					varData, _
-					varFiles, _
-					objCookies, _
-					objHeaders)
-	End Sub
-
-	' For GET, POST, PUT, HEAD, DELETE, OPTIONS, etc.
-	' *** Consider putting a select case statement in here to handle different options so that
-	' variable checks are not performed on every method.
-	Public Sub Request(strMethod, strURL, blnAsync, varParams, varData)
-		With pHttpReq
-			pMethod = strMethod
-
-			pURL.FromString(strURL)
-		
-			' *** Need to check if basic auth is set in the URL.
-			' // You can also specify username and password in the URI
-			' $client->setUri('http://christer:secret@example.com');
-
-			.Open strMethod, strURL, blnAsync
-
-			If pUsername <> "" And pPassword <> "" Then
-				.SetCredentials pUsername, pPassword, WinHttpRequest_SetCredentials_For_Server
-			End If
-
-			If Not IsNull(varData) Then
-				.Send varData
-			Else
-				.Send
-			End If
-
-			If blnAsync = True Then
-				' *** Need to add a check in here for the timeout as an optional parameter.
-				.WaitForResponse	
-			End If
-
-			' Once a request is successfully sent, sent will equal True.
-			pSent = True
-
-			' If Not .Options(WinHttpRequestOption_URL) = strURL Then
-			'	pRedirected = True
-			' End If
-		End With
-	End Sub
-
-	Public Sub Send()
-		' *** Need to check that the method and url are set
-		Request pMethod, pURL.ToString(), pAsync, pParams, pData
-	End Sub
-
-	Public Sub Download(url, file)
+		strURL, _
+		strUsername, _
+		strPassword, _
+		strProxyUser, _
+		strProxyPass, _
+		varParams, _
+		varData, _
+		varFiles, _
+		objCookies, _
+		objHeaders _
+		)
 
 	End Sub
 
-	
-	' Quick access to HTTP methods
-
-
-	Public Sub GetReq(strURL, strAsync, varQuery)
-
+	Public Sub Auth( _
+		ByVal strUser, _
+		ByVal strPass _
+		)
+    
+		p_strUsername = strUser
+		p_strPassword = strPass
 	End Sub
 
-	Public Sub PostReq(strURL, strAsync, varData)
-
-	End Sub
-
-	Public Sub PutReq()
-
-	End Sub
-
-	Public Sub HeadReq()
-
-	End Sub
-
-	Public Sub PatchReq()
-
-	End Sub
-
-	Public Sub DeleteReq()
-
-	End Sub
-
-
-	' Mini Constructor Methods
-	
-
-	' Authentication tuple or object to attach to Request.
-	' Equivalent in VBScript would be to pass an array
-	' E.g. requests.post(url, data={}, auth=('user', 'pass'))
-	' For more information, see: http://docs.python-requests.org/en/latest/user/authentication/
-	Public Sub Auth(pUser, pPass)
-		pUsername = pUser
-		pPassword = pPass
-	End Sub
-
-	' Passing a username, password (optional), defaults to Basic Authentication
-	Public Sub ProxyAuth(pProxyUser, pProxyPath)
-
+	Public Sub ProxyAuth( _
+		ByVal strProxyUser, _
+		ByVal strProxyPath _
+		)
+    
+		p_strProxyUser = strProxyUser
+		p_strProxyPass = strProxyPath
 	End Sub
 
 	Public Sub Header()
@@ -815,109 +684,169 @@ Class base_HTTP_Request
 		End Select
 	End Sub
 
-	' Can set headers in bulk by passing an array:
-	' Headers(array("Header1" => "Value1", "Header2" => "Value2"))
 	Public Sub Headers(arrHeaders)
 
 	End Sub
 
-	' Clear/Reset Property Methods
 
+	' Methods
+
+
+	Public Function Request( _
+		ByVal strMethod, _
+		ByVal strUrl, _
+		ByVal varData _
+		)
+  
+		' On Error GoTo Catch
+
+		Dim objFinalUrl, _
+			intHeaderIndex
+
+		p_strMethod = strMethod
+		p_objUrl.FromString strUrl
+		p_varData = varData
+
+		With p_objHttpReq
+			.Open strMethod, _
+				p_objUrl.ToString(), _
+				p_blnAsync
+
+			If p_objUrl.Userinfo <> "" Then
+				p_strUsername = p_objUrl.Username
+				p_strPassword = p_objUrl.Password
+			End If
+
+			If p_strUsername <> "" And p_strPassword <> "" Then
+				.SetCredentials p_strUsername, _
+						p_strPassword, _
+						WinHttpRequest_SetCredentials_For_Server
+			End If
+
+			If p_strProxyUsername <> "" And p_strProxyPassword <> "" Then
+				.SetCredentials p_strProxyUsername, _
+						p_strProxyPassword, _
+						WinHttpRequest_SetCredentials_For_Proxy
+				.SetProxy WinHttpRequest_ProxySetting_Proxy, _
+						p_strProxyServer, _
+						p_strProxyBypassList
+			End If
+
+			If p_blnKeepAlive Then p_objHttpHeaders.AddHeaderString "Connection: Keep-Alive"
+
+			For intHeaderIndex = 1 To p_objHttpHeaders.Count
+				.SetRequestHeader p_objHttpHeaders.Item(intHeaderIndex).Name, _
+				p_objHttpHeaders.Item(intHeaderIndex).Value
+			Next
+
+			If Not IsNull(p_varData) Then
+				.Send p_varData
+			Else
+				.Send
+			End If
+
+			If p_blnAsync = True Then
+				If p_lngAsyncTimeout > 0 Then
+					.WaitForResponse p_lngAsyncTimeout
+				Else
+					.WaitForResponse
+				End If
+			End If
+
+			Set objFinalUrl = New vba_URI
+			objFinalUrl.FromString .Option(WinHttpRequestOption_URL)
+
+			If Not p_objUrl.Equals(objFinalUrl) Then p_blnRedirected = True
+
+			p_objHttpResp.Make .GetAllResponseHeaders(), _
+						.ResponseBody, _
+						.ResponseStream, _
+						.ResponseText, _
+						.Status, _
+						.StatusText, _
+						objFinalUrl.ToString(), _
+						p_blnRedirected
+
+			If p_objHttpResp.IsOk() Then p_blnSent = True
+			If p_blnStoreCookies Then p_objCookies.FromResponseHeaders .GetAllResponseHeaders()
+		End With
+    
+		Set Request = p_objHttpResp
+		Set objFinalUrl = Nothing
+	End Function
+
+	Public Function Send()
+		If p_strMethod <> "" And p_objUrl.ToString() <> "" Then
+			Set Send = Me.Request(p_strMethod, p_objUrl.ToString(), p_varData)
+		End If
+	End Function
+
+	Public Function GetRequest( _
+		ByVal strUrl _
+		)
+
+		p_strMethod = "GET"
+		Set GetRequest = Me.Request(p_strMethod, strUrl, p_varData)
+	End Function
+
+	Public Function PostRequest( _
+		ByVal strUrl, _
+		ByVal varData _
+		)
+
+		p_strMethod = "POST"
+		Set PostRequest = Me.Request(p_strMethod, strUrl, varData)
+	End Function
+
+	Public Function PutRequest( _
+		ByVal strUrl, _
+		ByVal varData _
+		)
+    
+		p_strMethod = "PUT"
+		Set PutRequest = Me.Request(p_strMethod, strUrl, varData)
+	End Function
+
+	Public Function HeadRequest( _
+		ByVal strUrl _
+		)
+
+		p_strMethod = "HEAD"
+		Set HeadRequest = Me.Request(p_strMethod, strUrl, p_varData)
+	End Function
+
+	Public Function PatchRequest( _
+		ByVal strUrl, _
+		ByVal varData _
+		)
+    
+		p_strMethod = "PATCH"
+		Set PatchRequest = Me.Request(p_strMethod, strUrl, varData)
+	End Function
+
+	Public Function DeleteRequest( _
+		ByVal strUrl _
+		)
+
+		p_strMethod = "DELETE"
+		Set DeleteRequest = Me.Request(p_strMethod, strUrl, p_varData)
+	End Function
+
+	Public Sub Download(URL, file)
+
+	End Sub
+
+	Public Sub Cancel()
+		p_objHttpReq.Abort
+	End Sub
 
 	Public Sub ClearHeaders()
 
 	End Sub
 
-	' Likely need to split this four constructors.
-	' Public Sub Timeout(lngTime)
-		' SetTimeouts(ResolveTimeout, ConnectTimeout, SendTimeout, ReceiveTimeout)
-	' End Sub
+	Public Sub ClearDefaultHeaders()
 
-	' For event hooks
-	' Resources for creating callbacks in VBScript:
-	' http://www.advancedqtp.com/wp-content/uploads/WLW/FunctionPointers_143CC/FunctionPointersinVBScript.pdf
-	' http://www.knowledgeinbox.com/articles/vbscript/implementing-callback-in-vbscript/
-	' https://msdn.microsoft.com/en-us/library/windows/desktop/aa382276(v=vs.85).aspx
-	' See: http://docs.python-requests.org/en/latest/user/advanced/#event-hooks
-	' Public Sub RegisterHook(event, hook)
-	' End Sub
-
-	' Could also implement these events:
-	' OnError
-	' OnResponseDataAvailable
-	' OnResponseFinished
-	' OnResponseStart
-	' See: https://msdn.microsoft.com/en-us/library/ms974564
-
-	' Request objects can either be created from the provided fromString() factory
-
-	' $request = Request::fromString(<<<EOS
-	' POST /foo HTTP/1.1
-	' \r\n
-	' HeaderField1: header-field-value1
-	' HeaderField2: header-field-value2
-	' \r\n\r\n
-	' foo=bar&
-	' EOS
-	' );
-
-	' $string = "GET /foo HTTP/1.1\r\n\r\nSome Content";
-	' $request = Request::fromString($string);
-
-	' $request->getMethod();    // returns Request::METHOD_GET
-	' $request->getUri();       // returns Zend\Uri\Http object
-	' $request->getUriString(); // returns '/foo'
-	' $request->getVersion();   // returns Request::VERSION_11 or '1.1'
-	' $request->getContent();   // returns 'Some Content'
-
-	' Should also consider creating a FromDict() factory method
-
-	' Also ToString() and ToDict()
-
-	' Sending Raw POST Data
-	' You can use a Zend\Http\Client to send raw POST data using the setRawBody() method. This method
-	' takes one parameter: the data to send in the request body. When sending raw POST data, it is
-	' advisable to also set the encoding type using setEncType().
-
-	' Sending Raw POST Data
-
-	' $xml = '<book>' .
-       	'	'  <title>Islands in the Stream</title>' .
-       	'	'  <author>Ernest Hemingway</author>' .
-       	'	'  <year>1970</year>' .
-       	'	'</book>';
-	' $client->setMethod('POST');
-	' $client->setRawBody($xml);
-	' $client->setEncType('text/xml');
-	' $client->send();
-
-	' The data should be available on the server side through PHP?s $HTTP_RAW_POST_DATA variable or
-	' through the php://input stream.
-
-	' Note
-	' Using raw POST data
-	' Setting raw POST data for a request will override any POST parameters or file uploads. You should not try to use both on the same request. Keep in mind that most servers will ignore the request body unless you send a POST request.
-
-	' Data Streaming?
-	' By default, Zend\Http\Client accepts and returns data as PHP strings. However, in many cases there are big files to be received, thus keeping them in memory might be unnecessary or too expensive. For these cases, Zend\Http\Client supports writing data to files (streams).
-
-	' In order to receive data from the server as stream, use setStream(). Optional argument specifies the filename where the data will be stored. If the argument is just TRUE (default), temporary file will be used and will be deleted once response object is destroyed. Setting argument to FALSE disables the streaming functionality.
-
-	' When using streaming, send() method will return object of class Zend\Http\Response\Stream, which has two useful methods: getStreamName() will return the name of the file where the response is stored, and getStream() will return stream from which the response could be read.
-
-	' You can either write the response to pre-defined file, or use temporary file for storing it and send it out or write it to another file using regular stream functions.
-
-	' Receiving file from HTTP server with streaming
-
-	' $client->setStream(); // will use temp file
-	' $response = $client->send();
-	' // copy file
-	' copy($response->getStreamName(), "my/downloads/file");
-	' // use stream
-	' $fp = fopen("my/downloads/file2", "w");
-	' stream_copy_to_stream($response->getStream(), $fp);
-	' // Also can write to known file
-	' $client->setStream("my/downloads/myfile")->send();
+	End Sub
 
 	Private Sub Class_Terminate()
 		Set pHttpReq = Nothing
@@ -928,172 +857,5 @@ Class base_HTTP_Request
 End Class
 
 If WScript.ScriptName = "base_HTTP_Request.vbs" Then
-	Dim http
-	Set http = New base_HTTP_Request
-	
-	With http
-		.Auth "TheUser", "ThePass"
-		.CookieHeader "Set-Cookie: sessionToken=abc123; Domain=foo.com; Path=/; Expires=Wed, 09 Jun 2021 10:18:14 GMT; Secure; HttpOnly" 
-		.Request "GET", "http://www.startech.com", False, Null, Null
-	End With
+
 End If
-
-' Example usage:
-' Dim oHttp
-' Set oHttp=CreateObject("WinHttp.WinHttpRequest.5.1")
-' sUrl = InputBox("Url",wscript.ScriptName,"http://www.dormforce.net";)
-' With oHttp
-' .Open "GET",sUrl,False
-' .Option(6)=0
-' .SetTimeouts 5000,5000,30000,5000
-' .SetRequestHeader "Accept","*/*"
-' .SetRequestHeader "Accept-Language","zh-cn"
-' .SetRequestHeader "User-Agent","Mozilla/4.0 (compatible; MSIE 6.0;)"
-' .SetRequestHeader "HOST","www.dormforce.net"
-' .SetRequestHeader "Connection","Keep-Alive"
-' .Send
-
-' Another example:
-' Option Explicit
-' Wscript.Echo(GetDataFromURL("http://www.808.dk/", "GET", ""))
-' Function GetDataFromURL(strURL, strMethod, strPostData)
-'   Dim lngTimeout
-'   Dim strUserAgentString
-'   Dim intSslErrorIgnoreFlags
-'   Dim blnEnableRedirects
-'   Dim blnEnableHttpsToHttpRedirects
-'   Dim strHostOverride
-'   Dim strLogin
-'   Dim strPassword
-'   Dim strResponseText
-'   Dim objWinHttp
-'   lngTimeout = 59000
-'   strUserAgentString = "http_requester/0.1"
-'   intSslErrorIgnoreFlags = 13056 ' 13056: ignore all err, 0: accept no err
-'   blnEnableRedirects = True
-'   blnEnableHttpsToHttpRedirects = True
-'   strHostOverride = ""
-'   strLogin = ""
-'   strPassword = ""
-'   Set objWinHttp = CreateObject("WinHttp.WinHttpRequest.5.1")
-'   objWinHttp.SetTimeouts lngTimeout, lngTimeout, lngTimeout, lngTimeout
-'   objWinHttp.Open strMethod, strURL
-'   If strMethod = "POST" Then
-'     objWinHttp.setRequestHeader "Content-type", _
-'      "application/x-www-form-urlencoded"
-'   End If
-'   If strHostOverride <> "" Then
-'     objWinHttp.SetRequestHeader "Host", strHostOverride
-'   End If
-'   objWinHttp.Option(0) = strUserAgentString
-'   objWinHttp.Option(4) = intSslErrorIgnoreFlags
-'   objWinHttp.Option(6) = blnEnableRedirects
-'   objWinHttp.Option(12) = blnEnableHttpsToHttpRedirects
-'   If (strLogin <> "") And (strPassword <> "") Then
-'     objWinHttp.SetCredentials strLogin, strPassword, 0
-'   End If    
-'   On Error Resume Next
-'   objWinHttp.Send(strPostData)
-'   If Err.Number = 0 Then
-'     If objWinHttp.Status = "200" Then
-'       GetDataFromURL = objWinHttp.ResponseText
-'     Else
-'       GetDataFromURL = "HTTP " & objWinHttp.Status & " " & _
-'         objWinHttp.StatusText
-'     End If
-'   Else
-'     GetDataFromURL = "Error " & Err.Number & " " & Err.Source & " " & _
-'       Err.Description
-'   End If
-'   On Error GoTo 0
-'   Set objWinHttp = Nothing
-' End Function
-' And another:
-' Function eBayFileExchangeUPLoad(CsvFile As String) As String
-' 
-'     Const URL = "https://bulksell.ebay.com/ws/eBayISAPI.dll?FileExchangeUpload"
-'     Dim WinHttpReq As WinHttp.WinHttpRequest
-'     Dim RequestContent As String
-'     Dim MyToken As String
-'     Dim ReturnString As String
-'     Dim wsLine As String
-' 
-'     Set WinHttpReq = CreateObject("WinHttp.WinHttpRequest.5.1")
-'     MyToken = "****************Insert Your Token*******************"
-'     
-'     RequestContent = "--THIS_STRING_SEPARATES" & vbCrLf _
-'     & "Content-Disposition: form-data; name=" & """token""" & vbCrLf & vbCrLf _
-'     & MyToken & vbCrLf _
-'     & "--THIS_STRING_SEPARATES" & vbCrLf _
-'     & "Content-Disposition: form-data; name=" & """file""" & "; filename=""" & CsvFile & """" & vbCrLf _
-'     & "Content-Type: text/csv" & vbCrLf & vbCrLf
-'     
-'     Open CsvFile For Input As #76
-'     Do Until EOF(76)
-'        Line Input #76, wsLine
-'        RequestContent = RequestContent + wsLine + vbLf
-'     Loop
-'     Close #76
-'        
-'     RequestContent = RequestContent + vbCrLf
-'     RequestContent = RequestContent & "--THIS_STRING_SEPARATES"
-' 
-'     MsgBox (Replace(RequestContent, MyToken, "**Token**"))
-'     
-'     WinHttpReq.open "POST", URL, False
-'     WinHttpReq.setRequestHeader "Connection", "Keep-Alive"
-'     WinHttpReq.setRequestHeader "User-Agent", "Halfupd v2"
-'     WinHttpReq.setRequestHeader "Content-Type", "multipart/form-data; boundary=THIS_STRING_SEPARATES"
-'     WinHttpReq.setRequestHeader "Content-Length", Len(RequestContent)
-'    
-'     WinHttpReq.send (RequestContent)
-'      
-'     ReturnString = WinHttpReq.responseText
-'     eBayFileExchangeUPLoad= ReturnString
-'     MsgBox (ReturnString)
-' End Function
-
-' Dim strCookie As String, strResponse As String, _
-'     strUrl As String
-'
-'   Dim xobj As Object
-'
-'   Set xobj = New WinHttp.WinHttpRequest
-'
-'   strUrl = "https://www.example.com/login.php"
-'   xobj.Open "POST", strUrl, False
-'   xobj.SetRequestHeader "User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)"
-'   xobj.SetRequestHeader "Content-Type", "application/x-www-form-urlencoded"
-'   xobj.Send "username=johndoe2&password=mypassword"
-'
-'   strCookie = xobj.GetResponseHeader("Set-Cookie")
-'   strResponse = xobj.ResponseText
-'
-' now try to get confidential contents:
-'
-'   strUrl = "https://www.example.com/secret-contents.php"
-'   xobj.Open "GET", strUrl, False
-'
-' these 2 instructions are determining:
-'
-'   xobj.SetRequestHeader "Connection", "keep-alive"
-'   xobj.SetRequestHeader "User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)"
-'
-'   xobj.SetRequestHeader "Cookie", strCookie
-'   xobj.Send
-'
-'   strCookie = xobj.GetResponseHeader("Set-Cookie")
-'   strResponse = xobj.ResponseText
-' Source: http://stackoverflow.com/questions/19294956/winhttp-vba-subsequent-request-cannot-use-the-previous-login-credentials
-' oHTTP.Open("GET", URL , False)
-' oHTTP.SetRequestHeader("Referer", URL)
-' oHTTP.Send()
-'
-' m_oWinHttp.SetCredentials(m_szUser, m_szPwd, WinHttp.WinHttpRequestAutoLogonPolicy.AutoLogonPolicy_Always)
-' m_oWinHttp.SetClientCertificate(m_szCertificateLocation)
-'
-' oHttp.SetAutoLogonPolicy AutoLogonPolicy_Always
-' WScript.Echo( 'User agent:      '+ WinHttpReq.Option(WinHttpRequestOption_UserAgentString));
-' WScript.Echo( 'URL:             '+ WinHttpReq.Option(WinHttpRequestOption_URL));
-' WScript.Echo( 'Code page:       '+ WinHttpReq.Option(WinHttpRequestOption_URLCodePage));
-' WScript.Echo( 'Escape percents: '+ WinHttpReq.Option(WinHttpRequestOption_EscapePercentInURL));

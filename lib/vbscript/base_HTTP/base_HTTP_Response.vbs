@@ -1,109 +1,210 @@
 Option Explicit
 
-' The core Response object. All Request objects contain a response attribute, which is
-' an instance of this class.
-
-' See: http://framework.zend.com/manual/current/en/modules/zend.http.response.html
-
-' Body
-' RawBody
-' Headers
-' RawHeaders
-' Request
-' Status Code
-' Content Type
-' Parent Type
-' Charset
-' Meta Data
-' Is Mime Vendor Specific
-' Is Mime Personal
+Include "base_HTTP_Headers"
+Include "base_HTTP_CookieJar"
+Include "base_HTTP_URI"
+Include "base_JSON"
 
 Class base_HTTP_Response
-	Private Sub Class_Initialize()
+	Private p_objHttpHeaders, _
+		p_objCookies, _
+		p_objUrl
+        
+	Private p_strVersion, _
+		p_varResponseBody, _
+		p_varResponseStream, _
+		p_strResponseText, _
+		p_lngStatusCode, _
+		p_strStatusReason, _
+		p_blnRedirected
 
+
+	' Constructors
+
+
+	Private Sub Class_Initialize()
+		Set p_objHttpHeaders = New base_HTTP_Headers
+		Set p_objCookies = New base_HTTP_CookieJar
+		Set p_objUrl = New base_URI
 	End Sub
 
-	' Dictionary of configurations for this request.
+	Public Sub Make( _
+		ByVal strResponseHeaders, _
+		ByVal varResponseBody, _
+		ByVal varResponseStream, _
+		ByVal strResponseText, _
+		ByVal lngStatusCode, _
+		ByVal strStatusReason, _
+		ByVal strUrl, _
+		ByVal blnRedirected _
+		)
+
+		p_objHttpHeaders.FromString strResponseHeaders
+		p_objCookies.FromResponseHeaders strResponseHeaders
+		p_varResponseBody = varResponseBody
+		p_varResponseStream = varResponseStream
+		p_strResponseText = strResponseText
+		p_lngStatusCode = lngStatusCode
+		p_strStatusReason = strStatusReason
+		p_objUrl.FromString strUrl
+		p_blnRedirected = blnRedirected
+	End Sub
+
+
+	' Properties
+
+
+	Public Property Get Body()
+		If TypeName(p_varResponseBody) = "Object" Then
+			Set Body = p_varResponseBody
+		Else
+			Body = p_varResponseBody
+		End If
+	End Property
+
 	Public Property Get Config()
 
 	End Property
 
-	' Content of the response, in bytes.
 	Public Property Get Content()
 
 	End Property
 
-	' A dictionary of Cookies the server sent back.
 	Public Property Get Cookies()
-
+		Set Cookies = p_objCookies
 	End Property
 
-	' Encoding to decode with when accessing r.content.
 	Public Property Get Encoding()
 
 	End Property
 
-	' Resulting HTTPError of request, if one occurred.
 	Public Property Get Error()
 
 	End Property
 
-	' Case-insensitive Dictionary of Response Headers. For example, headers['content-encoding']
-	' will return the value of a 'Content-Encoding' response header.
 	Public Property Get Headers()
-
+		Set Headers = p_objHttpHeaders
 	End Property
 
-	' A list of Response objects from the history of the Request. Any redirect responses
-	' will end up here.
 	Public Property Get History()
 
 	End Property
 
-	' File-like object representation of response (for advanced usage).
+	Public Property Get HTML()
+		' Need to check that the response type is HTML and then return an object
+	End Property
+
+	Public Property Get IsRedirect()
+		IsRedirect = p_blnRedirected
+	End Property
+
+	Public Property Get IsOk()
+		If p_lngStatusCode >= 200 And p_lngStatusCode < 400 Then
+			IsOk = True
+		Else
+			IsOk = False
+		End If
+	End Property
+
+	Public Property Get IsSuccess()
+		If p_lngStatusCode >= 200 And p_lngStatusCode < 300 Then
+			IsSuccess = True
+		Else
+			IsSuccess = False
+		End If
+	End Property
+
+	Public Property Get IsInformational()
+		If p_lngStatusCode >= 100 And p_lngStatusCode < 200 Then
+			IsSuccess = True
+		Else
+			IsSuccess = False
+		End If
+	End Property
+
+	Public Property Get IsClientError()
+		If p_lngStatusCode >= 400 And p_lngStatusCode < 500 Then
+			IsSuccess = True
+		Else
+			IsSuccess = False
+		End If
+	End Property
+
+	Public Property Get IsServerError()
+		If p_lngStatusCode >= 500 And p_lngStatusCode < 600 Then
+			IsSuccess = True
+		Else
+			IsSuccess = False
+		End If
+	End Property
+
+	Public Property Get IsNotFound()
+		If p_lngStatusCode = HTTP_Not_Found Then
+			IsSuccess = True
+		Else
+			IsSuccess = False
+		End If
+	End Property
+
+	Public Property Get IsForbidden()
+		If p_lngStatusCode = HTTP_Forbidden Then
+			IsSuccess = True
+		Else
+			IsSuccess = False
+		End If
+	End Property
+
+	Public Property Get JSON()
+		' Need to check that the response type is JSON and then return an object
+	End Property
+
 	Public Property Get Raw()
 
 	End Property
 
-	' The Request that created the Response.
 	Public Property Get Request()
 
 	End Property
 
-	' Integer Code of responded HTTP Status.
 	Public Property Get Status()
 
 	End Property
 
-	' Content of the response, in unicode.
-	' If Response.encoding is None and chardet module is available, encoding will be guessed.
+	Public Property Get StatusCode()
+		StatusCode = p_lngStatusCode
+	End Property
+
+	Public Property Get StatusReason()
+		StatusReason = p_strStatusReason
+	End Property
+
+	Public Property Get Stream()
+		If TypeName(p_varResponseStream) = "Object" Then
+			Set Stream = p_varResponseStream
+		Else
+			Stream = p_varResponseStream
+		End If
+	End Property
+
 	Public Property Get Text()
-
+		Text = p_strResponseText
 	End Property
 
-	' Final URL location of Response.
 	Public Property Get URL()
-
+    		Set URL = p_objUrl
 	End Property
 
-	' iter_content(chunk_size=10240, decode_unicode=False)
-	' Iterates over the response data. This avoids reading the content at once into memory
-	' for large responses. The chunk size is the number of bytes it should read into memory.
-	' This is not necessarily the length of each item returned as decoding can take place.
-
-	' iter_lines(chunk_size=10240, decode_unicode=None)
-	' Iterates over the response data, one line at a time. This avoids reading the content at
-	' once into memory for large responses.
-
-	' raise_for_status(allow_redirects=True)
-	' Raises stored HTTPError or URLError, if one occurred.
+	Public Property Get XML()
+		' Need to check that the response type is XML and then return an object
+	End Property
 
 	Private Sub Class_Terminate()
-
+		Set p_objHttpHeaders = Nothing
+		Set p_objCookies = Nothing
+		Set p_objUrl = Nothing
 	End Sub
 End Class
 
 If WScript.ScriptName = "base_HTTP_Response.vbs" Then
-	Dim httpResp
-	Set httpResp = New base_HTTP_Response
+
 End If

@@ -1,7 +1,5 @@
 Option Explicit
 
-' See the Http Client in the Zend Framework 2 library
-
 Class base_HTTP_Client
 	Private Sub Class_Initialize()
 
