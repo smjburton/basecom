@@ -3,6 +3,8 @@ Option Explicit
 Include "base_URI"
 
 Class base_HTTP_Cookie
+	Private p_objDomainRegex
+
 	Private p_strName, _
 		p_strValue, _
 		p_intPort, _
@@ -16,9 +18,9 @@ Class base_HTTP_Cookie
 		p_blnDiscard, _
 		p_intVersion
 
-	Private p_objDomainRegex
-
 	Private Sub Class_Initialize()
+		Set p_objDomainRegex = New RegExp
+
 		p_strName = ""
 		p_strValue = ""
 		p_intPort = 0
@@ -31,8 +33,6 @@ Class base_HTTP_Cookie
 		p_blnHttpOnly = False
 		p_blnDiscard = False
 		p_intVersion = 1
-
-		Set p_objDomainRegex = New RegExp
 	End Sub
 
 
@@ -148,40 +148,7 @@ Class base_HTTP_Cookie
 
 
 	Public Function Match(strURL)
-		Dim cookieSub, cookieDomain		
 
-		Dim URL, domainMatches, m
-		Set URL = New clsURL
-
-		URL.FromString(strURL)
-
-		With p_strDomainRegex
-			.Pattern = "(?:([a-z0-9\.\-]*)\.)?((?!com)[a-z0-9\-]{3,}(?=\.[a-z\.]{2,}))\.(?:([a-z\.]{2,})$)"
-			Set domainMatches = .Execute(p_strDomain)
-		End With
-
-		cookieSub = domainMatches.Item(0).Submatches.Item(0)
-		cookieDomain = domainMatches.Item(0).Submatches.Item(1) & "." & domainMatches.Item(0).Submatches.Item(2)
-
-		If cookieDomain = URL.Domain & "." & URL.TLD Then
-			If cookieSub <> "" Then
-				If Left(cookieSub, 1) = "." Then
-					cookieSub = Right(cookieSub, Len(cookieSub) - 1)
-					' WScript.Echo cookieSub
-					' WScript.Echo URL.Subdomain
-				End If
-
-				If cookieSub = URL.Subdomain Then
-					WScript.Echo "Cookie is valid!"
-				ElseIf cookieSub = Right(URL.Subdomain, Len(cookieSub)) And Right(Left(URL.Subdomain, Len(URL.Subdomain) - Len(cookieSub)), 1) = "." Then
-					WScript.Echo "Cookie is valid!"
-				Else
-					WScript.Echo "Cookie is invalid..."
-				End If
-			End If
-		End If 
-
-		Match = True
 	End Function
 
 	Public Function ToString()
@@ -213,7 +180,7 @@ Class base_HTTP_Cookie
 	End Function
 
 	Private Sub Class_Terminate()
-		Set p_strDomainRegex = Nothing
+		Set p_objDomainRegex = Nothing
 	End Sub
 End Class
 

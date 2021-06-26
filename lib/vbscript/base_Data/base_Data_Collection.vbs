@@ -1,3 +1,5 @@
+Option Explicit
+
 Include "base_Data_Array_Util"
 
 Class base_Data_Collection
@@ -66,7 +68,7 @@ Class base_Data_Collection
 			Dim objCollection, _
 				i
 
-			Set objCollection = New v_Data_Collection
+			Set objCollection = New base_Data_Collection
 
 			For i = 0 To UBound(p_Collection)
   				Do
@@ -84,7 +86,21 @@ Class base_Data_Collection
 		End If
 	End Sub
 
+	Public Sub FromArray( _
+		ByVal arrInput _
+		)
+
+		If IsArray(arrInput) Then
+			If IsArrayAllocated(p_Collection) Then Me.Clear
+			p_Collection = arrInput
+		End If
+	End Sub
+
+	Public Function ToArray()
+		If IsArrayAllocated(p_Collection) Then ToArray = p_Collection		
+	End Function
 	
+
 	' Helper Methods
 
 
@@ -98,7 +114,7 @@ Class base_Data_Collection
 	End Sub
 	
 	Private Sub Class_Terminate()
-
+		Me.Clear()
 	End Sub
 End Class
 

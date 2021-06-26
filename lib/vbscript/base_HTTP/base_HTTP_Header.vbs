@@ -5,7 +5,8 @@ Class base_HTTP_Header
         	p_strValue
 
 	Private Sub Class_Initialize()
-
+		p_strName = ""
+        	p_strValue = ""
 	End Sub
 
 
@@ -39,7 +40,7 @@ Class base_HTTP_Header
 
 	' Helper Functions
 
-
+	
 	Private Function ExtractHeaderName( _
 		ByVal strHeader _
 		)

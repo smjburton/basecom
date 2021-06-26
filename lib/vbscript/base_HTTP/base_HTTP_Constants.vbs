@@ -128,11 +128,11 @@ Public Const WinHttpRequestOption_SelectCertificate = 5
 ' Sets or retrieves a VARIANT that indicates which server certificate errors should be ignored.
 ' This can be a combination of one or more of the following flags.
 
-' Error:                                Value:
+' Error:                                			Value:
 ' Unknown certification authority (CA) or untrusted root        0x0100
-' Wrong usage                               0x0200
-' Invalid common name (CN)                      0x1000
-' Invalid date or certificate expired                   0x2000
+' Wrong usage                               			0x0200
+' Invalid common name (CN)                      		0x1000
+' Invalid date or certificate expired                   	0x2000
  
 ' The default value of this option in Version 5.1 of WinHTTP is zero, which results in no errors
 ' being ignored. In earlier versions of WinHTTP, the default setting was 0x3300, which resulted in

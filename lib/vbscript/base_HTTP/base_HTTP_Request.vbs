@@ -48,7 +48,7 @@ Class base_HTTP_Request
 	' Public Event OnResponseFinished()
 
 	Private Sub Class_Initialize()
-		Set p_objHttpReq = CreateObject("WinHttp.WinHttpRequest")
+		Set p_objHttpReq = CreateObject("WinHttp.WinHttpRequest.5.1")
 		Set p_objHttpResp = New base_HTTP_Response
 		Set p_objHttpHeaders = New base_HTTP_Headers
 		Set p_objCookies = New base_HTTP_CookieJar
@@ -102,23 +102,23 @@ Class base_HTTP_Request
 
 
 	Public Property Get Method()
-		Method = pMethod
+		Method = p_strMethod
 	End Property
 
 	Public Property Let Method(strMethod)
-		pMethod = strMethod
+		p_strMethod = strMethod
 	End Property
 
 	Public Property Get URL()
-		URL = pURL.ToString()
+		URL = p_objUrl.ToString()
 	End Property
 
 	Public Property Let URL(strURL)
-		Set pURL = pURL.FromString(strURL)
+		Set p_objUrl = p_objUrl.FromString(strURL)
 	End Property
 
 	Public Property Set URL(objURL)
-		Set pURL = objURL
+		Set p_objUrl = objURL
 	End Property
 
 	Public Property Get UserAgent()
@@ -133,19 +133,19 @@ Class base_HTTP_Request
 	End Property
 
 	Public Property Get Username()
-		Username = pUsername
+		Username = p_strUsername
 	End Property
 
 	Public Property Let Username(strUsername)
-		pUsername = strUsername
+		p_strUsername = strUsername
 	End Property
 
 	Public Property Get Password()
-		Password = pPassword
+		Password = p_strPassword
 	End Property
 
 	Public Property Let Password(strPassword)
-		pPassword = strPassword
+		p_strPassword = strPassword
 	End Property
 
 	Public Property Get ProxyUsername()
@@ -153,7 +153,7 @@ Class base_HTTP_Request
 	End Property
 
 	Public Property Let ProxyUsername( _
-		ByVal strProxyUsername As String _
+		ByVal strProxyUsername _
 		)
     
 		p_strProxyUsername = strProxyUsername
@@ -225,7 +225,7 @@ Class base_HTTP_Request
 
 
 	Public Property Get HttpVersion()
-		If pHttpReq.Option(WinHttpRequestOption_EnableHttp1_1) Then
+		If p_objHttpReq.Option(WinHttpRequestOption_EnableHttp1_1) Then
 			HttpVersion = "1.1"
 		Else
 			HttpVersion = "1.0"
@@ -234,50 +234,50 @@ Class base_HTTP_Request
 
 	Public Property Let HttpVersion(strVersion)
 		If strVersion = "1.1" Then
-			pHttpReq.Option(WinHttpRequestOption_EnableHttp1_1) = True
+			p_objHttpReq.Option(WinHttpRequestOption_EnableHttp1_1) = True
 		ElseIf strVersion = "1.0" Then
-			pHttpReq.Option(WinHttpRequestOption_EnableHttp1_1) = False
+			p_objHttpReq.Option(WinHttpRequestOption_EnableHttp1_1) = False
 		End If
 	End Property
 
 	Public Property Get Async()
-		Async = pAsync
+		Async = p_blnAsync
 	End Property
 
 	Public Property Let Async(blnAsync)
-		pAsync = blnAsync
+		p_blnAsync = blnAsync
 	End Property
 
 	Public Property Let AutoAuth(blnAuto)
 		If blnAuto Then
-			pHttpReq.SetAutoLogonPolicy(AutoLogonPolicy_Always)
+			p_objHttpReq.SetAutoLogonPolicy(AutoLogonPolicy_Always)
 		ElseIf Not blnAuto Then
-			pHttpReq.SetAutoLogonPolicy(AutoLogonPolicy_Never)
+			p_objHttpReq.SetAutoLogonPolicy(AutoLogonPolicy_Never)
 		End If
 	End Property
 
 	Public Property Let AutoAuthBypassProxy(blnAuto)
 		If blnAuto Then
-			pHttpReq.SetAutoLogonPolicy(AutoLogonPolicy_OnlyIfBypassProxy)
+			p_objHttpReq.SetAutoLogonPolicy(AutoLogonPolicy_OnlyIfBypassProxy)
 		ElseIf Not blnAuto Then
-			pHttpReq.SetAutoLogonPolicy(AutoLogonPolicy_Never)
+			p_objHttpReq.SetAutoLogonPolicy(AutoLogonPolicy_Never)
 		End If
 	End Property
 
 	Public Property Get PassportAuth()
-		PassportAuth = pHttpReq.Option(WinHttpRequestOption_EnablePassportAuthentication)
+		PassportAuth = p_objHttpReq.Option(WinHttpRequestOption_EnablePassportAuthentication)
 	End Property
 
 	Public Property Let PassportAuth(blnPassport)
-		pHttpReq.Option(WinHttpRequestOption_EnablePassportAuthentication) = blnPassport
+		p_objHttpReq.Option(WinHttpRequestOption_EnablePassportAuthentication) = blnPassport
 	End Property
 
 	Public Sub ClientCertification(strCert)
-		pHttpReq.SetClientCertificate(strCert)
+		p_objHttpReq.SetClientCertificate(strCert)
 	End Sub
 
 	Public Property Get ImpersonateSecureClientAuth()
-		If pHttpReq.Option(WinHttpRequestOption_RevertImpersonationOverSsl) Then
+		If p_objHttpReq.Option(WinHttpRequestOption_RevertImpersonationOverSsl) Then
 			ImpersonateSecureClientAuth = False
 		Else
 			ImpersonateSecureClientAuth = True
@@ -286,33 +286,37 @@ Class base_HTTP_Request
 
 	Public Property Let ImpersonateSecureClientAuth(blnImpersonate)
 		If blnImpersonate Then
-			pHttpReq.Option(WinHttpRequestOption_RevertImpersonationOverSsl) = False
+			p_objHttpReq.Option(WinHttpRequestOption_RevertImpersonationOverSsl) = False
 		Else
-			pHttpReq.Option(WinHttpRequestOption_RevertImpersonationOverSsl) = True
+			p_objHttpReq.Option(WinHttpRequestOption_RevertImpersonationOverSsl) = True
 		End If
 	End Property
 
 	Public Property Get VerifyServerCert()
-		VerifyServerCert = pHttpReq.Option(WinHttpRequestOption_EnableCertificateRevocationCheck)
+		VerifyServerCert = p_objHttpReq.Option(WinHttpRequestOption_EnableCertificateRevocationCheck)
 	End Property
 
 	Public Property Let VerifyServerCert(blnVerify)
-		pHttpReq.Option(WinHttpRequestOption_EnableCertificateRevocationCheck) = blnVerify
+		p_objHttpReq.Option(WinHttpRequestOption_EnableCertificateRevocationCheck) = blnVerify
 	End Property
 
 	Public Property Let SecureProtocols(intProtocols) 
-		pHttpReq.Option(WinHttpRequestOption_SecureProtocols) = intProtocols
+		p_objHttpReq.Option(WinHttpRequestOption_SecureProtocols) = intProtocols
 	End Property
 
 	Public Property Get Secure()
-		Secure = blnSecure
+		If p_objHttpReq.Option(WinHttpRequestOption_SecureProtocols) = SecureProtocol_ALL Then
+			Secure = True
+		Else
+			Secure = False
+		End If
 	End Property
 
 	Public Property Let Secure(blnSecure)
 		If blnSecure Then
-			pHttpReq.Option(WinHttpRequestOption_SecureProtocols) = SecureProtocol_ALL
+			p_objHttpReq.Option(WinHttpRequestOption_SecureProtocols) = SecureProtocol_ALL
 		Else
-			pHttpReq.Option(WinHttpRequestOption_SecureProtocols) = SecureProtocol_NONE
+			p_objHttpReq.Option(WinHttpRequestOption_SecureProtocols) = SecureProtocol_NONE
 		End If
 	End Property
 
@@ -321,79 +325,79 @@ Class base_HTTP_Request
 	End Property
 
 	Public Property Let IgnoreSSLErrors(lngIgnore)
-		pHttpReq.Option(WinHttpRequestOption_SslErrorIgnoreFlags) = lngIgnore
+		p_objHttpReq.Option(WinHttpRequestOption_SslErrorIgnoreFlags) = lngIgnore
 	End Property
 
 	Public Property Get AllowRedirects()
-		AllowRedirects = pHttpReq.Option(WinHttpRequestOption_EnableRedirects)
+		AllowRedirects = p_objHttpReq.Option(WinHttpRequestOption_EnableRedirects)
 	End Property
 
 	Public Property Let AllowRedirects(blnRedirect)
-		pHttpReq.Option(WinHttpRequestOption_EnableRedirects) = blnRedirect
+		p_objHttpReq.Option(WinHttpRequestOption_EnableRedirects) = blnRedirect
 	End Property
 
 	Public Property Get OnlySecureRedirects()
-		OnlySecureRedirects = pHttpReq.Option(WinHttpRequestOption_EnableHttpsToHttpRedirects)
+		OnlySecureRedirects = p_objHttpReq.Option(WinHttpRequestOption_EnableHttpsToHttpRedirects)
 	End Property
 
 	Public Property Let OnlySecureRedirects(blnSecureOnly)
-		pHttpReq.Option(WinHttpRequestOption_EnableHttpsToHttpRedirects) = blnSecureOnly
+		p_objHttpReq.Option(WinHttpRequestOption_EnableHttpsToHttpRedirects) = blnSecureOnly
 	End Property
 
 	Public Property Get MaxRedirects()
-		MaxRedirects = pHttpReq.Option(WinHttpRequestOption_MaxAutomaticRedirects)
+		MaxRedirects = p_objHttpReq.Option(WinHttpRequestOption_MaxAutomaticRedirects)
 	End Property
 
 	Public Property Let MaxRedirects(intRedirects)
-		pHttpReq.Option(WinHttpRequestOption_MaxAutomaticRedirects) = intRedirects
+		p_objHttpReq.Option(WinHttpRequestOption_MaxAutomaticRedirects) = intRedirects
 	End Property
 
 	Public Property Get MaxRetries()
-		MaxRetries = pMaxRetries
+		MaxRetries = p_intMaxRetries
 	End Property
 
 	Public Property Let MaxRetries(intRetries)
-		pMaxRetries = intRetries
+		p_intMaxRetries = intRetries
 	End Property
 
 	Public Property Get KeepAlive()
-		KeepAlive = pKeepAlive
+		KeepAlive = p_blnKeepAlive
 	End Property
 
 	Public Property Let KeepAlive(blnKeepAlive)
-		pKeepAlive = blnKeepAlive
+		p_blnKeepAlive = blnKeepAlive
 	End Property
 
 	Public Property Get MaxResponseHeader()
-		MaxResponseHeader = pHttpReq.Option(WinHttpRequestOption_MaxResponseHeaderSize)
+		MaxResponseHeader = p_objHttpReq.Option(WinHttpRequestOption_MaxResponseHeaderSize)
 	End Property
 
 	Public Property Let MaxResponseHeader(lngSize)
-		pHttpReq.Option(WinHttpRequestOption_MaxResponseHeaderSize) = lngSize
+		p_objHttpReq.Option(WinHttpRequestOption_MaxResponseHeaderSize) = lngSize
 	End Property
 
 	Public Property Get MaxResponseBody()
-		MaxResponseBody = pHttpReq.Option(WinHttpRequestOption_MaxResponseDrainSize)
+		MaxResponseBody = p_objHttpReq.Option(WinHttpRequestOption_MaxResponseDrainSize)
 	End Property
 
 	Public Property Let MaxResponseBody(lngSize)
-		pHttpReq.Option(WinHttpRequestOption_MaxResponseDrainSize) = lngSize
+		p_objHttpReq.Option(WinHttpRequestOption_MaxResponseDrainSize) = lngSize
 	End Property
 
 	Public Property Get StoreCookies()
-		StoreCookies = pStoreCookies
+		StoreCookies = p_blnStoreCookies
 	End Property
 
 	Public Property Let StoreCookies(blnStoreCookies)
-		pStoreCookies = blnStoreCookies
+		p_blnStoreCookies = blnStoreCookies
 	End Property
 
 	Public Property Get StoreResponse()
-		StoreResponse = pStoreResponse
+		StoreResponse = p_blnStoreResponse
 	End Property
 
 	Public Property Let StoreResponse(blnStoreResp)
-		pStoreResponse = blnStoreResp
+		p_blnStoreResponse = blnStoreResp
 	End Property
 
 	Public Property Get EncodeUrl()
@@ -419,11 +423,11 @@ Class base_HTTP_Request
 	End Property
 
 	Public Property Get EncodeCookies()
-		EncodeCookies = pEncodeCookies
+		EncodeCookies = p_blnEncodeCookies
 	End Property
 
 	Public Property Let EncodeCookies(blnEncodeCookies)
-		pEncodeCookies = blnEncodeCookies
+		p_blnEncodeCookies = blnEncodeCookies
 	End Property
 
 	Public Property Get UrlCharacterEncoding()
@@ -507,30 +511,6 @@ Class base_HTTP_Request
 		p_lngAsyncTimeout = lngTime
 	End Property
 
-	Public Property Get StrictMode()
-		StrictMode = pStrictMode
-	End Property
-
-	Public Property Let StrictMode(blnStrictMode)
-		pStrictMode = blnStrictMode
-	End Property
-
-	Public Property Get SafeMode()
-		SafeMode = pSafeMode
-	End Property
-
-	Public Property Let SafeMode(blnSafeMode)
-		pSafeMode = blnSafeMode
-	End Property
-
-	Public Property Get DangerMode()
-		DangerMode = pDangerMode
-	End Property
-
-	Public Property Let DangerMode(blnDangerMode)
-		pDangerMode = blnDangerMode
-	End Property	
-
 	Public Property Get DefaultHeader()
 
 	End Property 
@@ -551,11 +531,11 @@ Class base_HTTP_Request
 	End Property
 
 	Public Property Get Tracing()
-		Tracing = pHttpReq.Option(WinHttpRequestOption_EnableTracing)
+		Tracing = p_objHttpReq.Option(WinHttpRequestOption_EnableTracing)
 	End Property
 
 	Public Property Let Tracing(blnTrace)
-		pHttpReq.Option(WinHttpRequestOption_EnableTracing) = blnTrace
+		p_objHttpReq.Option(WinHttpRequestOption_EnableTracing) = blnTrace
 	End Property
 
 
@@ -563,31 +543,23 @@ Class base_HTTP_Request
 
 
 	Public Property Get Status()
-		Status = pHttpReq.Status & ": " & pHttpReq.StatusText
+		Status = p_objHttpReq.Status & ": " & p_objHttpReq.StatusText
 	End Property
 
 	Public Property Get StatusCode()
-		StatusCode = pHttpReq.Status
+		StatusCode = p_objHttpReq.Status
 	End Property
 
 	Public Property Get StatusText()
-		StatusText = pHttpReq.StatusText
-	End Property
-
-	Public Property Get Redirected()
-		Redirected = pRedirected
-	End Property
-
-	Public Property Get Sent()
-		Sent = pSent
+		StatusText = p_objHttpReq.StatusText
 	End Property
 
 	Public Property Get Redirected()
 		Redirected = p_blnRedirected
 	End Property
 
-	Public Property Get Response()
-		Response = pHttpResp
+	Public Property Get Sent()
+		Sent = p_blnSent
 	End Property
 
 
@@ -684,9 +656,9 @@ Class base_HTTP_Request
 		End Select
 	End Sub
 
-	Public Sub Headers(arrHeaders)
+	' Public Sub Headers(arrHeaders)
 
-	End Sub
+	' End Sub
 
 
 	' Methods
@@ -736,7 +708,7 @@ Class base_HTTP_Request
 
 			For intHeaderIndex = 1 To p_objHttpHeaders.Count
 				.SetRequestHeader p_objHttpHeaders.Item(intHeaderIndex).Name, _
-				p_objHttpHeaders.Item(intHeaderIndex).Value
+							p_objHttpHeaders.Item(intHeaderIndex).Value
 			Next
 
 			If Not IsNull(p_varData) Then
@@ -753,10 +725,12 @@ Class base_HTTP_Request
 				End If
 			End If
 
-			Set objFinalUrl = New vba_URI
-			objFinalUrl.FromString .Option(WinHttpRequestOption_URL)
+			' Set objFinalUrl = New base_URI
+			' objFinalUrl.FromString .Option(WinHttpRequestOption_URL)
 
-			If Not p_objUrl.Equals(objFinalUrl) Then p_blnRedirected = True
+			' If Not p_objUrl.Equals(objFinalUrl) Then p_blnRedirected = True
+
+			' *** Add this back in: objFinalUrl.ToString(), _
 
 			p_objHttpResp.Make .GetAllResponseHeaders(), _
 						.ResponseBody, _
@@ -764,15 +738,15 @@ Class base_HTTP_Request
 						.ResponseText, _
 						.Status, _
 						.StatusText, _
-						objFinalUrl.ToString(), _
+						strUrl, _ 
 						p_blnRedirected
 
 			If p_objHttpResp.IsOk() Then p_blnSent = True
-			If p_blnStoreCookies Then p_objCookies.FromResponseHeaders .GetAllResponseHeaders()
+			' If p_blnStoreCookies Then p_objCookies.FromResponseHeaders .GetAllResponseHeaders()
 		End With
     
 		Set Request = p_objHttpResp
-		Set objFinalUrl = Nothing
+		' Set objFinalUrl = Nothing
 	End Function
 
 	Public Function Send()
@@ -849,10 +823,11 @@ Class base_HTTP_Request
 	End Sub
 
 	Private Sub Class_Terminate()
-		Set pHttpReq = Nothing
-		Set pHttpResp = Nothing
-		Set pCookies = Nothing
-		Set pURL = Nothing
+		Set p_objHttpReq = Nothing
+		Set p_objHttpResp = Nothing
+		Set p_objHttpHeaders = Nothing
+		Set p_objCookies = Nothing
+		Set p_objUrl = Nothing
 	End Sub
 End Class
 

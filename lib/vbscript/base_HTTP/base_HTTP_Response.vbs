@@ -2,7 +2,7 @@ Option Explicit
 
 Include "base_HTTP_Headers"
 Include "base_HTTP_CookieJar"
-Include "base_HTTP_URI"
+Include "base_URI"
 Include "base_JSON"
 
 Class base_HTTP_Response
@@ -116,41 +116,41 @@ Class base_HTTP_Response
 
 	Public Property Get IsInformational()
 		If p_lngStatusCode >= 100 And p_lngStatusCode < 200 Then
-			IsSuccess = True
+			IsInformational = True
 		Else
-			IsSuccess = False
+			IsInformational = False
 		End If
 	End Property
 
 	Public Property Get IsClientError()
 		If p_lngStatusCode >= 400 And p_lngStatusCode < 500 Then
-			IsSuccess = True
+			IsClientError = True
 		Else
-			IsSuccess = False
+			IsClientError = False
 		End If
 	End Property
 
 	Public Property Get IsServerError()
 		If p_lngStatusCode >= 500 And p_lngStatusCode < 600 Then
-			IsSuccess = True
+			IsServerError = True
 		Else
-			IsSuccess = False
+			IsServerError = False
 		End If
 	End Property
 
 	Public Property Get IsNotFound()
 		If p_lngStatusCode = HTTP_Not_Found Then
-			IsSuccess = True
+			IsNotFound = True
 		Else
-			IsSuccess = False
+			IsNotFound = False
 		End If
 	End Property
 
 	Public Property Get IsForbidden()
 		If p_lngStatusCode = HTTP_Forbidden Then
-			IsSuccess = True
+			IsForbidden = True
 		Else
-			IsSuccess = False
+			IsForbidden = False
 		End If
 	End Property
 
@@ -167,7 +167,7 @@ Class base_HTTP_Response
 	End Property
 
 	Public Property Get Status()
-
+		Status = p_lngStatusCode & ": " & p_strStatusReason
 	End Property
 
 	Public Property Get StatusCode()

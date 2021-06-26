@@ -115,19 +115,21 @@ Class base_HTTP_CookieJar
 	Public Function FromResponseHeaders( _
     		ByVal varResponseHeaders _
 		)
+
+		If TypeName(varResponseHeaders) = "String" Then
+			Dim arrCookie, _
+				strCookie, _
+				i
     
-		Dim arrCookie As Variant, _
-			strCookie As String, _
-			i
+			arrCookie = Split(varResponseHeaders, vbCrLf)
     
-		arrCookie = Split(strCookies, vbCrLf)
-    
-		For i = 0 To UBound(arrCookie) - 2
-			If Split(arrCookie(i), ": ")(0) = "Set-Cookie" Then
-				strCookie = Split(Split(arrCookie(i), ": ")(1), "; ")(0)
-				Me.Add strCookie
-			End If
-    		Next
+			For i = 0 To UBound(arrCookie) - 2
+				If Split(arrCookie(i), ": ")(0) = "Set-Cookie" Then
+					strCookie = Split(Split(arrCookie(i), ": ")(1), "; ")(0)
+					Me.Add strCookie
+				End If
+    			Next
+		End If
 	End Function
 
 	Private Sub Class_Terminate()

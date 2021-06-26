@@ -23,25 +23,14 @@ exit /b
 		If InStr(strFile, "_") > 0 Then
 			Dim arrLibrary
 			arrLibrary = Split(strFile, "_")
-			
-			' "base_Data_Array"
 
 			strBasecomDirectory = Mid(WScript.ScriptFullName, 1, InStrRev(WScript.ScriptFullName, "\"))
     			strFilePath = strBasecomDirectory & "lib\vbscript\" & arrLibrary(0) & "_" & arrLibrary(1)		
-			' strFile = strFile & ".vbs"
-
-			' WScript.Echo "basecom Directory: " & strBasecomDirectory 
-			' WScript.Echo "File path: " & strFilePath 
-			' WScript.Echo "File: " & strFile 
 
 			ExecuteGlobal CreateObject("Scripting.FileSystemObject").OpenTextFile(strFilePath & "\" & strFile & ".vbs", 1).ReadAll()
 		Else
 			Err.Raise 1111, "Include(..)", "Unable to load basecom library file: " & strFile, "", ""
-			' Else
-			'	strFilePath = objFSO.GetAbsolutePathName(".")
  		End If   
-
-    		' ExecuteGlobal CreateObject("Scripting.FileSystemObject").OpenTextFile(strFilePath & "\" & strFile & ".vbs", 1).ReadAll()
 
     		If Err.Number <> 0 Then
 			' Library has already been included (Error 1041: Name Redefined)
