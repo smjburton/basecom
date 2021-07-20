@@ -4,58 +4,58 @@ Include "base_Sys_Util"
 Include "base_Sys_Script"
 
 Class base_URI
-	Private pScheme, _
-		pSchemeName, _
-		pHostname, _
-		pSubdomain, _
-		pDomain, _
-		pTLD, _
-		pUsername, _
-		pPassword, _
-		pUserinfo, _
-		pAuthority, _
-		pPort, _
-		pPath, _
-		pDirectory, _
-		pFilename, _
-		pSuffix, _
-		pQuery, _
-		pFragment
+	Private p_objUriRegex, _
+		p_objUriParserHost, _
+		p_objUriParser, _
+		p_objUriCoder
 
-	Private pUriRegex, _
-		pUriParserHost, _
-		pUriParser, _
-		pUriCoder
+	Private p_strScheme, _
+		p_strSchemeName, _
+		p_strHostname, _
+		p_strSubdomain, _
+		p_strDomain, _
+		p_strTLD, _
+		p_strUsername, _
+		p_strPassword, _
+		p_strUserinfo, _
+		p_strAuthority, _
+		p_intPort, _
+		p_strPath, _
+		p_strDirectory, _
+		p_strFilename, _
+		p_strSuffix, _
+		p_strQuery, _
+		p_strFragment
 
 	Private Sub Class_Initialize()
-		pScheme = ""
-		pSchemeName = ""
-		pHostname = ""
-		pSubdomain = ""
-		pDomain = ""
-		pTLD = ""
-		pUsername = ""
-		pPassword = ""
-		pUserinfo = ""
-		pAuthority = ""
-		pPort = ""
-		pPath = ""
-		pDirectory = ""
-		pFilename = ""
-		pSuffix = ""
-		pQuery = ""
-		pFragment = ""
+		Set p_objUriRegex = New RegExp
+		Set p_objUriParserHost = CreateObject("HTMLFile")
+		Set p_objUriParser = p_objUriParserHost.createElement("a")
+		Set p_objUriCoder = New base_Sys_Script
 
-		Set pUriRegex = New RegExp
-		Set pUriParserHost = CreateObject("HTMLFile")
-		Set pUriParser = pUriParserHost.createElement("a")
-		Set pUriCoder = New base_Sys_Script
-
-		With pUriCoder
+		With p_objUriCoder
 			.Language = "JScript"
 			.AddCode "function encode(uri) { return encodeURIComponent(uri); }"
 			.AddCode "function decode(uri) { return decodeURIComponent(uri); }"
 		End With
+
+		p_strScheme = ""
+		p_strSchemeName = ""
+		p_strHostname = ""
+		p_strSubdomain = ""
+		p_strDomain = ""
+		p_strTLD = ""
+		p_strUsername = ""
+		p_strPassword = ""
+		p_strUserinfo = ""
+		p_strAuthority = ""
+		p_intPort = ""
+		p_strPath = ""
+		p_strDirectory = ""
+		p_strFilename = ""
+		p_strSuffix = ""
+		p_strQuery = ""
+		p_strFragment = ""
 	End Sub
 
 
@@ -63,7 +63,7 @@ Class base_URI
 
 
 	Public Property Get Scheme()
-		Scheme = pScheme
+		Scheme = p_strScheme
 	End Property
 
 	Public Property Let Scheme(strScheme)
@@ -71,11 +71,11 @@ Class base_URI
 	End Property
 
 	Public Property Get SchemeName()
-		SchemeName = pSchemeName
+		SchemeName = p_strSchemeName
 	End Property	
 
 	Public Property Get Protocol()
-		Protocol = pScheme
+		Protocol = p_strScheme
 	End Property
 
 	Public Property Let Protocol(strProtocol)
@@ -83,11 +83,11 @@ Class base_URI
 	End Property
 
 	Public Property Get ProtocolName()
-		ProtocolName = pSchemeName
+		ProtocolName = p_strSchemeName
 	End Property
 
 	Public Property Get Host()
-		Host = pHostname
+		Host = p_strHostname
 	End Property
 
 	Public Property Let Host(strHost)
@@ -95,7 +95,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Hostname()
-		Hostname = pHostname
+		Hostname = p_strHostname
 	End Property
 
 	Public Property Let Hostname(strHostname)
@@ -103,7 +103,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Subdomain()
-		Subdomain = pSubdomain
+		Subdomain = p_strSubdomain
 	End Property
 
 	Public Property Let Subdomain(strSubdomain)
@@ -111,7 +111,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Domain()
-		Domain = pDomain
+		Domain = p_strDomain
 	End Property
 
 	Public Property Let Domain(strDomain)
@@ -119,7 +119,7 @@ Class base_URI
 	End Property
 
 	Public Property Get TLD()
-		TLD = pTLD
+		TLD = p_strTLD
 	End Property
 
 	Public Property Let TLD(strTLD)
@@ -127,7 +127,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Username()
-		Username = pUsername
+		Username = p_strUsername
 	End Property
 
 	Public Property Let Username(strUsername)
@@ -135,7 +135,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Password()
-		Password = pPassword
+		Password = p_strPassword
 	End Property
 
 	Public Property Let Password(strPassword)
@@ -143,7 +143,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Userinfo()
-		Userinfo = pUsername & ":" & pPassword
+		Userinfo = p_strUsername & ":" & p_strPassword
 	End Property
 
 	Public Property Let Userinfo(strUserinfo)
@@ -151,7 +151,7 @@ Class base_URI
 	End Property 
 
 	Public Property Get Authority()
-		Authority = pAuthority
+		Authority = p_strAuthority
 	End Property
 
 	Public Property Let Authority(strAuthority)
@@ -159,7 +159,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Origin()
-		Origin = pScheme & "://" & pAuthority
+		Origin = p_strScheme & "://" & p_strAuthority
 	End Property
 
 	Public Property Let Origin(strOrigin)
@@ -167,7 +167,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Port()
-		Port = pPort
+		Port = p_intPort
 	End Property
 
 	Public Property Let Port(strPort)
@@ -175,7 +175,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Path()
-		Path = pPath
+		Path = p_strPath
 	End Property
 
 	Public Property Let Path(strPath)
@@ -183,7 +183,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Directory()
-		Directory = pDirectory
+		Directory = p_strDirectory
 	End Property
 
 	Public Property Let Directory(strDirectory)
@@ -191,7 +191,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Filename()
-		Filename = pFilename
+		Filename = p_strFilename
 	End Property
 
 	Public Property Let Filename(strFilename)
@@ -199,7 +199,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Suffix()
-		Suffix = pSuffix
+		Suffix = p_strSuffix
 	End Property
 
 	Public Property Let Suffix(strSuffix)
@@ -208,7 +208,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Search()
-		Search = pQuery
+		Search = p_strQuery
 	End Property
 
 	Public Property Let Search(strSearch)
@@ -217,7 +217,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Query()
-		Query = pQuery
+		Query = p_strQuery
 	End Property
 
 	Public Property Let Query(strQuery)
@@ -226,7 +226,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Fragment()
-		Fragment = pFragment
+		Fragment = p_strFragment
 	End Property
 
 	Public Property Let Fragment(strFragment)
@@ -235,7 +235,7 @@ Class base_URI
 	End Property
 
 	Public Property Get Hash()
-		Hash = pFragment
+		Hash = p_strFragment
 	End Property
 
 	Public Property Let Hash(strHash)
@@ -244,9 +244,9 @@ Class base_URI
 	End Property
 
 	Public Property Get Resource()
-		Resource = pPath & _
-				IIf(pQuery <> "", "?" & pQuery, pQuery) & _
-				IIf(pFragment <> "", "#" & pFragment, pFragment) 
+		Resource = p_strPath & _
+				IIf(p_strQuery <> "", "?" & p_strQuery, p_strQuery) & _
+				IIf(p_strFragment <> "", "#" & p_strFragment, p_strFragment) 
 	End Property
 
 	Public Property Let Resource(strResource)
@@ -267,69 +267,71 @@ Class base_URI
 		Class_Initialize()
 
 		If TypeName(strURL) = "String" And strURL <> "" Then
-			pUriParser.href = strURL
+			p_objUriParser.href = strURL
 
-			pHostname = pUriParser.hostname
+			p_strHostname = p_objUriParser.hostname
 
-			With pUriRegex
+			With p_objUriRegex
 				.Pattern = "^(\w+:\/\/)?((.*?)(:(.*?)|)@)"
+
 				If .Test(strURL) Then
 					Dim userpassMatches
 					Set userpassMatches = .Execute(strURL)
-					pUsername = userpassMatches.Item(0).Submatches.Item(2)
-					pPassword = userpassMatches.Item(0).Submatches.Item(4)
+					p_strUsername = userpassMatches.Item(0).Submatches.Item(2)
+					p_strPassword = userpassMatches.Item(0).Submatches.Item(4)
 					Set userpassMatches = Nothing
 				End If
 			End With
 
-			If pUsername <> "" And pPassword <> "" Then
-				pAuthority = pUsername & ":" & pPassword & "@" & pUriParser.host
+			If p_strUsername <> "" And p_strPassword <> "" Then
+				p_strAuthority = p_strUsername & ":" & p_strPassword & "@" & p_objUriParser.host
 			Else
-				pAuthority = pUriParser.host
+				p_strAuthority = p_objUriParser.host
 			End If
 
-			With pUriRegex
+			With p_objUriRegex
 				.Pattern = "(?:([a-z0-9\.\-]*)\.)?((?!com)[a-z0-9\-]{3,}(?=\.[a-z\.]{2,}))\.(?:([a-z\.]{2,})$)"
-				If .Test(pHostname) Then
+
+				If .Test(p_strHostname) Then
 					Dim domainMatches
-					Set domainMatches = .Execute(pHostname)
-					pSubdomain = domainMatches.Item(0).Submatches.Item(0)
-					pDomain = domainMatches.Item(0).Submatches.Item(1)
-					pTLD = domainMatches.Item(0).Submatches.Item(2)
+					Set domainMatches = .Execute(p_strHostname)
+					p_strSubdomain = domainMatches.Item(0).Submatches.Item(0)
+					p_strDomain = domainMatches.Item(0).Submatches.Item(1)
+					p_strTLD = domainMatches.Item(0).Submatches.Item(2)
 					Set domainMatches = Nothing
 				End If
 			End With
 
-			If pUriParser.protocol <> "" Then pScheme = Left(pUriParser.protocol, Len(pUriParser.protocol) - 1)
+			If p_objUriParser.protocol <> "" Then p_strScheme = Left(p_objUriParser.protocol, Len(p_objUriParser.protocol) - 1)
 
-			pSchemeName 	= pUriParser.protocolLong
-			pPort 		= pUriParser.port
-			pPath 		= "/"
+			p_strSchemeName = p_objUriParser.protocolLong
+			p_intPort = p_objUriParser.port
+			p_strPath = "/"
 
-			If pUriParser.pathname <> "" Then
-				pPath = pPath & pUriParser.pathname
+			If p_objUriParser.pathname <> "" Then
+				p_strPath = p_strPath & p_objUriParser.pathname
 
 				Dim arrPath
-				arrPath = Split(pPath, "/")
+				arrPath = Split(p_strPath, "/")
 
 				If InStr(arrPath(UBound(arrPath)), ".") > 0 Then
-					pFilename = arrPath(UBound(arrPath))
-					pSuffix = Split(pFilename, ".")(1)
+					p_strFilename = arrPath(UBound(arrPath))
+					p_strSuffix = Split(p_strFilename, ".")(1)
 					ReDim Preserve arrPath(UBound(arrPath) - 1)
 				End If
 
-				pDirectory = Join(arrPath, "/")
+				p_strDirectory = Join(arrPath, "/")
 			End If
 
-			If pUriParser.search <> "" Then pQuery = Right(pUriParser.search, Len(pUriParser.search) - 1)
-			If pUriParser.hash <> "" Then pFragment = Right(pUriParser.hash, Len(pUriParser.hash) - 1)
+			If p_objUriParser.search <> "" Then p_strQuery = Right(p_objUriParser.search, Len(p_objUriParser.search) - 1)
+			If p_objUriParser.hash <> "" Then p_strFragment = Right(p_objUriParser.hash, Len(p_objUriParser.hash) - 1)
 		End If
 	End Sub
 
 	Public Function ToString()
-		ToString = pScheme & "://" & pAuthority & pPath & _
-				IIf(pQuery <> "", "?" & pQuery, pQuery) & _
-				IIf(pFragment <> "", "#" & pFragment, pFragment) 
+		ToString = IIf(p_strScheme <> "", p_strScheme & "://", p_strScheme) & p_strAuthority & p_strPath & _
+				IIf(p_strQuery <> "", "?" & p_strQuery, p_strQuery) & _
+				IIf(p_strFragment <> "", "#" & p_strFragment, p_strFragment) 
 	End Function
 
 	Public Function ToArray()
@@ -409,10 +411,10 @@ Class base_URI
 	Public Function Segment()
 		Dim arrSegment
 
-		If Left(pPath, 1) = "/" Then
-			arrSegment = Split(Mid(pUriCoder.Run("decode", Array(pPath)), 2, Len(pPath)), "/")
+		If Left(p_strPath, 1) = "/" Then
+			arrSegment = Split(Mid(p_objUriCoder.Run("decode", Array(p_strPath)), 2, Len(p_strPath)), "/")
 		Else
-			arrSegment = Split(pUriCoder.Run("decode", Array(pPath)), "/")
+			arrSegment = Split(p_objUriCoder.Run("decode", Array(p_strPath)), "/")
 		End If
 
 		Segment = arrSegment
@@ -425,7 +427,7 @@ Class base_URI
 		arrSegment = Me.Segment()
 
 		For i = 0 To UBound(arrSegment)
-			arrSegment(i) = pUriCoder.Run("encode", Array(arrSegment(i)))
+			arrSegment(i) = p_objUriCoder.Run("encode", Array(arrSegment(i)))
 		Next
 
 		SegmentCoded = arrSegment
@@ -452,15 +454,15 @@ Class base_URI
 	End Sub
 	
 	Public Function Encode()
-		Encode = pUriCoder.Run("encode", Array(Me.ToString()))
+		Encode = p_objUriCoder.Run("encode", Array(Me.ToString()))
 	End Function
 
 	Public Function Decode()
-		Decode = pUriCoder.Run("decode", Array(Me.ToString()))
+		Decode = p_objUriCoder.Run("decode", Array(Me.ToString()))
 	End Function
 
 	Public Function Validate()
-		With pUriRegex
+		With p_objUriRegex
 			.Pattern = "^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)" & _
 					"(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})" & _
 					"(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})" & _
@@ -579,9 +581,9 @@ Class base_URI
 	End Function
 
 	Private Sub Class_Terminate()
-		Set pUriRegex = Nothing
-		Set pUriParserHost = Nothing
-		Set pUriParser = Nothing
+		Set p_objUriRegex = Nothing
+		Set p_objUriParserHost = Nothing
+		Set p_objUriParser = Nothing
 	End Sub
 End Class
 

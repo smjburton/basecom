@@ -1,14 +1,14 @@
 Option Explicit
 
 Class base_Sys_Script
-	Private p_ScriptHost, _
-		p_ScriptEngine, _
-		p_ScriptLanguage
+	Private p_objScriptHost, _
+		p_objScriptEngine, _
+		p_strScriptLanguage
 
 	Private Sub Class_Initialize()
-		Set p_ScriptHost = CreateObject("HTMLFile")
-		Set p_ScriptEngine = p_ScriptHost.parentWindow
-		p_ScriptLanguage = ""
+		Set p_objScriptHost = CreateObject("HTMLFile")
+		Set p_objScriptEngine = p_objScriptHost.parentWindow
+		p_strScriptLanguage = ""
 	End Sub
 
 
@@ -20,49 +20,49 @@ Class base_Sys_Script
 	End Property
 
 	Public Property Get Language()
-		Language = p_ScriptLanguage
+		Language = p_strScriptLanguage
 	End Property
 
 	Public Property Let Language(strLang)
-		If LCase(strLang) = "vbscript" Or LCase(strLang) = "jscript" Then p_ScriptLanguage = strLang
+		If LCase(strLang) = "vbscript" Or LCase(strLang) = "jscript" Then p_strScriptLanguage = strLang
 	End Property
 
 	Public Property Get Variable(strVar)
 		If Exists(strVar) Then
-			If TypeName(Eval("p_ScriptEngine." & strVar)) = "JScriptTypeInfo" Then
-				Set Variable = Eval("p_ScriptEngine." & strVar)
+			If TypeName(Eval("p_objScriptEngine." & strVar)) = "JScriptTypeInfo" Then
+				Set Variable = Eval("p_objScriptEngine." & strVar)
 			Else
-				Variable = Eval("p_ScriptEngine." & strVar)
+				Variable = Eval("p_objScriptEngine." & strVar)
 			End If
 		End If
 	End Property
 
 	Public Property Let Variable(strVar, strNewVal)
 		If Not Exists(strVar) Then	
-			If LCase(p_ScriptLanguage) = "jscript" Then
-				p_ScriptEngine.execScript "var " & strVar & ";", p_ScriptLanguage
-			ElseIf LCase(p_ScriptLanguage) = "vbscript" Then
-				p_ScriptEngine.execScript "Dim " & strVar, p_ScriptLanguage
+			If LCase(p_strScriptLanguage) = "jscript" Then
+				p_objScriptEngine.execScript "var " & strVar & ";", p_strScriptLanguage
+			ElseIf LCase(p_strScriptLanguage) = "vbscript" Then
+				p_objScriptEngine.execScript "Dim " & strVar, p_strScriptLanguage
 			End If
 		End If
 
 		If TypeName(strNewVal) = "String" And Left(strNewVal, 1) = "{" And Right(strNewVal, 1) = "}" Then
-			p_ScriptEngine.execScript strVar & " = " & strNewVal, p_ScriptLanguage
+			p_objScriptEngine.execScript strVar & " = " & strNewVal, p_strScriptLanguage
 		Else
-			Execute("p_ScriptEngine." & strVar & " = strNewVal")
+			Execute("p_objScriptEngine." & strVar & " = strNewVal")
 		End If
 	End Property
 
 	Public Property Set Variable(strVar, objNewObj)
 		If Not Exists(strVar) Then
-			If LCase(p_ScriptLanguage) = "jscript" Then
-				p_ScriptEngine.execScript "var " & strVar & ";", p_ScriptLanguage
-			ElseIf LCase(p_ScriptLanguage) = "vbscript" Then
-				p_ScriptEngine.execScript "Dim " & strVar, p_ScriptLanguage
+			If LCase(p_strScriptLanguage) = "jscript" Then
+				p_objScriptEngine.execScript "var " & strVar & ";", p_strScriptLanguage
+			ElseIf LCase(p_strScriptLanguage) = "vbscript" Then
+				p_objScriptEngine.execScript "Dim " & strVar, p_strScriptLanguage
 			End If
 		End If
 
-		Execute("Set p_ScriptEngine." & strVar & " = objNewObj")
+		Execute("Set p_objScriptEngine." & strVar & " = objNewObj")
 	End Property
 
 	Public Property Get VarType(strVar)
@@ -76,7 +76,7 @@ Class base_Sys_Script
 	Public Sub AddCode(strCode)
 		On Error Resume Next
 
-		If p_ScriptLanguage <> "" Then p_ScriptEngine.execScript strCode, p_ScriptLanguage
+		If p_strScriptLanguage <> "" Then p_objScriptEngine.execScript strCode, p_strScriptLanguage
 
 		If Err.Number <> 0 Then
 			WScript.Echo "Error occured in 'AddCode()'."
@@ -86,7 +86,7 @@ Class base_Sys_Script
 	Public Function Exists(strVar)
 		On Error Resume Next
 
-		Eval("p_ScriptEngine." & strVar)
+		Eval("p_objScriptEngine." & strVar)
 
 		If Err.Number <> 0 Then
 			Err.Clear
@@ -117,10 +117,10 @@ Class base_Sys_Script
 
 		strArgs = strArgs & ")"
 
-		If TypeName(Eval("p_ScriptEngine." & strProcedure & strArgs)) = "JScriptTypeInfo" Then
-			Set Run = Eval("p_ScriptEngine." & strProcedure & strArgs)
+		If TypeName(Eval("p_objScriptEngine." & strProcedure & strArgs)) = "JScriptTypeInfo" Then
+			Set Run = Eval("p_objScriptEngine." & strProcedure & strArgs)
 		Else
-			Run = Eval("p_ScriptEngine." & strProcedure & strArgs)
+			Run = Eval("p_objScriptEngine." & strProcedure & strArgs)
 		End If
 	End Function
 
@@ -129,8 +129,8 @@ Class base_Sys_Script
 	End Sub
 
 	Private Sub Class_Terminate()
-		Set p_ScriptHost = Nothing
-		Set p_ScriptEngine = Nothing
+		Set p_objScriptHost = Nothing
+		Set p_objScriptEngine = Nothing
 	End Sub
 End Class
 

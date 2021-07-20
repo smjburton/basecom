@@ -64,25 +64,25 @@ Class base_HTTP_Request
 		With p_objHttpReq
 			.Option(WinHttpRequestOption_EnableHttp1_1) = True
 			p_blnAsync = False
-			.SetAutoLogonPolicy AutoLogonPolicy_Never
-			.Option(WinHttpRequestOption_EnablePassportAuthentication) = False
-			.Option(WinHttpRequestOption_EnableCertificateRevocationCheck) = True
-			.Option(WinHttpRequestOption_SecureProtocols) = SecureProtocol_ALL
-			.Option(WinHttpRequestOption_SslErrorIgnoreFlags) = SslErrorFlag_Ignore_None
+			' .SetAutoLogonPolicy AutoLogonPolicy_Never
+			' .Option(WinHttpRequestOption_EnablePassportAuthentication) = False
+			' .Option(WinHttpRequestOption_EnableCertificateRevocationCheck) = True
+			' .Option(WinHttpRequestOption_SecureProtocols) = SecureProtocol_ALL
+			' .Option(WinHttpRequestOption_SslErrorIgnoreFlags) = SslErrorFlag_Ignore_None
 			.Option(WinHttpRequestOption_EnableRedirects) = False
 			.Option(WinHttpRequestOption_EnableHttpsToHttpRedirects) = False
 			.Option(WinHttpRequestOption_MaxAutomaticRedirects) = 10
 			p_intMaxRetries = 5
 			p_blnKeepAlive = False
-			.Option(WinHttpRequestOption_MaxResponseHeaderSize) = 64000
-			.Option(WinHttpRequestOption_MaxResponseDrainSize) = 1000000
+			' .Option(WinHttpRequestOption_MaxResponseHeaderSize) = 64000
+			' .Option(WinHttpRequestOption_MaxResponseDrainSize) = 1000000
 			p_blnStoreCookies = True
 			p_blnStoreResponse = True
 			p_blnEncodeCookies = False
-			.Option(WinHttpRequestOption_URLCodePage) = UTF_8
-			.Option(WinHttpRequestOption_EscapePercentInURL) = True
-			.Option(WinHttpRequestOption_UrlEscapeDisable) = True
-			.Option(WinHttpRequestOption_UrlEscapeDisableQuery) = True
+			' .Option(WinHttpRequestOption_URLCodePage) = UTF_8
+			' .Option(WinHttpRequestOption_EscapePercentInURL) = True
+			' .Option(WinHttpRequestOption_UrlEscapeDisable) = True
+			' .Option(WinHttpRequestOption_UrlEscapeDisableQuery) = True
 			p_lngResolveTimeout = 0
 			p_lngConnectTimeout = 0
 			p_lngSendTimeout = 0
@@ -90,7 +90,7 @@ Class base_HTTP_Request
 			p_lngAsyncTimeout = 0
 			.SetTimeouts p_lngResolveTimeout, p_lngConnectTimeout, p_lngSendTimeout, p_lngReceiveTimeout
 			Set p_objLogger = New base_Sys_Logger
-			.Option(WinHttpRequestOption_EnableTracing) = False
+			' .Option(WinHttpRequestOption_EnableTracing) = False
 		End With
 
 		p_blnSent = False
@@ -213,11 +213,11 @@ Class base_HTTP_Request
 	End Property
 
 	Public Property Get Cookies()
-		Cookies = p_objCookies
+		Set Cookies = p_objCookies
 	End Property
 
 	Public Property Get Response()
-		Response = p_objHttpResp
+		Set Response = p_objHttpResp
 	End Property
 
 
@@ -670,14 +670,14 @@ Class base_HTTP_Request
 		ByVal varData _
 		)
   
-		' On Error GoTo Catch
+		On Error Resume Next
 
 		Dim objFinalUrl, _
 			intHeaderIndex
 
 		p_strMethod = strMethod
 		p_objUrl.FromString strUrl
-		p_varData = varData
+		p_varData = varData	
 
 		With p_objHttpReq
 			.Open strMethod, _
@@ -698,10 +698,10 @@ Class base_HTTP_Request
 			If p_strProxyUsername <> "" And p_strProxyPassword <> "" Then
 				.SetCredentials p_strProxyUsername, _
 						p_strProxyPassword, _
-						WinHttpRequest_SetCredentials_For_Proxy
-				.SetProxy WinHttpRequest_ProxySetting_Proxy, _
-						p_strProxyServer, _
-						p_strProxyBypassList
+			 			WinHttpRequest_SetCredentials_For_Proxy
+			 	.SetProxy WinHttpRequest_ProxySetting_Proxy, _
+			 			p_strProxyServer, _
+			 			p_strProxyBypassList
 			End If
 
 			If p_blnKeepAlive Then p_objHttpHeaders.AddHeaderString "Connection: Keep-Alive"
@@ -711,7 +711,7 @@ Class base_HTTP_Request
 							p_objHttpHeaders.Item(intHeaderIndex).Value
 			Next
 
-			If Not IsNull(p_varData) Then
+			If Not IsNull(p_varData) And Not IsEmpty(p_varData) Then
 				.Send p_varData
 			Else
 				.Send
@@ -733,20 +733,22 @@ Class base_HTTP_Request
 			' *** Add this back in: objFinalUrl.ToString(), _
 
 			p_objHttpResp.Make .GetAllResponseHeaders(), _
-						.ResponseBody, _
-						.ResponseStream, _
-						.ResponseText, _
-						.Status, _
-						.StatusText, _
-						strUrl, _ 
-						p_blnRedirected
+			 			.ResponseBody, _
+			 			.ResponseStream, _
+			 			.ResponseText, _
+			 			.Status, _
+			 			.StatusText, _
+			 			strUrl, _ 
+			 			p_blnRedirected
 
 			If p_objHttpResp.IsOk() Then p_blnSent = True
-			' If p_blnStoreCookies Then p_objCookies.FromResponseHeaders .GetAllResponseHeaders()
+			If p_blnStoreCookies Then p_objCookies.FromResponseHeaders .GetAllResponseHeaders()
 		End With
-    
+
 		Set Request = p_objHttpResp
 		' Set objFinalUrl = Nothing
+
+		' If Err Then PrintLn Err.Number & ": " & Err.Description & " (" & Err.Source & ")"
 	End Function
 
 	Public Function Send()

@@ -40,7 +40,7 @@ Class base_HTTP_Response
 		)
 
 		p_objHttpHeaders.FromString strResponseHeaders
-		p_objCookies.FromResponseHeaders strResponseHeaders
+		' p_objCookies.FromResponseHeaders strResponseHeaders
 		p_varResponseBody = varResponseBody
 		p_varResponseStream = varResponseStream
 		p_strResponseText = strResponseText

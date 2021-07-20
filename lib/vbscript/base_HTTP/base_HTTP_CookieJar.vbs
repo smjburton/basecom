@@ -14,8 +14,11 @@ Class base_HTTP_CookieJar
 	' Properties
 
 
-	Public Default Property Get Cookie(name)
-		Set Cookie = p_objCookies(name)
+	Public Default Property Get Cookie( _
+		ByVal strName _
+		)
+
+		Set Cookie = p_objCookies(strName)
 	End Property
 
 	Public Property Get Cookies()
@@ -30,8 +33,12 @@ Class base_HTTP_CookieJar
 
 	End Property
 
+
+	' Methods
+
+
 	Public Sub Add( _
-		varHttpCookie _
+		ByVal varHttpCookie _
 		)
 
 		Dim objCookie
@@ -84,7 +91,7 @@ Class base_HTTP_CookieJar
 	End Sub
 
 	Public Sub Clear()
-
+		p_objCookies.RemoveAll
 	End Sub
 
 	Public Sub ClearTemporary()
@@ -101,9 +108,9 @@ Class base_HTTP_CookieJar
     
 		strCookie = ""
     
-		If p_objCookieDict.Count > 0 Then
-			For Each varKey In p_objCookieDict.Keys()
-				strCookie = strCookie & varKey & "=" & p_objCookieDict(varKey) & "; "
+		If p_objCookies.Count > 0 Then
+			For Each varKey In p_objCookies.Keys()
+				strCookie = strCookie & varKey & "=" & p_objCookies(varKey) & "; "
 			Next
         
 			strCookie = Left(strCookie, Len(strCookie) - 2)
@@ -119,14 +126,16 @@ Class base_HTTP_CookieJar
 		If TypeName(varResponseHeaders) = "String" Then
 			Dim arrCookie, _
 				strCookie, _
-				i
+				intIndex
     
 			arrCookie = Split(varResponseHeaders, vbCrLf)
-    
-			For i = 0 To UBound(arrCookie) - 2
-				If Split(arrCookie(i), ": ")(0) = "Set-Cookie" Then
-					strCookie = Split(Split(arrCookie(i), ": ")(1), "; ")(0)
-					Me.Add strCookie
+
+			For intIndex = 0 To UBound(arrCookie)
+				If arrCookie(intIndex) <> "" Then
+					If Split(arrCookie(intIndex), ": ")(0) = "Set-Cookie" Then
+						strCookie = Split(Split(arrCookie(intIndex), ": ")(1), "; ")(0)
+						Me.Add strCookie
+					End If
 				End If
     			Next
 		End If

@@ -7,12 +7,12 @@ Option Explicit
 Include "base_Sys_Script"
 
 Class base_JSON
-	Private p_Script
+	Private p_objScript
 
 	Private Sub Class_Initialize()
-		Set p_Script = New base_Sys_Script
+		Set p_objScript = New base_Sys_Script
 
-		With p_Script
+		With p_objScript
 			.Language = "JScript"
 			.AddCode("var json = {};")
 			.AddCode("function getKeys() { var keys = []; for (var k in json) { keys.push(k); } return keys; }")
@@ -48,23 +48,23 @@ Class base_JSON
 
 
 	Public Default Property Get Item(strKey)
-		If p_Script.Run("getItemType", Array(strKey)) = "object" Then
-			Set Item = Deserialize(p_Script.Run("getItemValue", Array(strKey)))
+		If p_objScript.Run("getItemType", Array(strKey)) = "object" Then
+			Set Item = Deserialize(p_objScript.Run("getItemValue", Array(strKey)))
 		Else
-			Item = Deserialize(p_Script.Run("getItemValue", Array(strKey)))
+			Item = Deserialize(p_objScript.Run("getItemValue", Array(strKey)))
 		End If
 	End Property
 
 	Public Property Get Items()
-		Items = Deserialize(p_Script.Run("getItems", Array()))
+		Items = Deserialize(p_objScript.Run("getItems", Array()))
 	End Property
 
 	Public Property Get Keys()
-		Keys = Deserialize(p_Script.Run("getKeys", Array()))
+		Keys = Deserialize(p_objScript.Run("getKeys", Array()))
 	End Property
 
 	Public Property Get Count()
-		Count = p_Script.Run("getCount", Array())
+		Count = p_objScript.Run("getCount", Array())
 	End Property
 
 	
@@ -72,47 +72,47 @@ Class base_JSON
 
 
 	Public Sub Clear()
-		p_Script.Run "clear", Array()
+		p_objScript.Run "clear", Array()
 	End Sub
 
 	Public Function Exists(strKey, varValue, blnDeep)
-		Exists = p_Script.Run("exists", Array(strKey, varValue, blnDeep))
+		Exists = p_objScript.Run("exists", Array(strKey, varValue, blnDeep))
 	End Function
 
 	Public Function KeyExists(strKey, blnDeep)
-		KeyExists = p_Script.Run("keyExists", Array(strKey, blnDeep))
+		KeyExists = p_objScript.Run("keyExists", Array(strKey, blnDeep))
 	End Function
 
 	Public Function ValueExists(varValue, blnDeep)
-		ValueExists = p_Script.Run("valueExists", Array(varValue, blnDeep))
+		ValueExists = p_objScript.Run("valueExists", Array(varValue, blnDeep))
 	End Function
 
 	Public Function Find(strKey, varValue)
-		Set Find = Deserialize(p_Script.Run("find", Array(strKey, varValue)))
+		Set Find = Deserialize(p_objScript.Run("find", Array(strKey, varValue)))
 	End Function
 
 	Public Function FindKey(strKey)
-		Set FindKey = Deserialize(p_Script.Run("findKey", Array(strKey)))
+		Set FindKey = Deserialize(p_objScript.Run("findKey", Array(strKey)))
 	End Function
 
 	Public Function FindValue(varValue)
-		If p_Script.Run("getType", Array(p_Script.Run("findValue", Array(varValue)))) = "object" Then
-			Set FindValue = Deserialize(p_Script.Run("findValue", Array(varValue)))
+		If p_objScript.Run("getType", Array(p_objScript.Run("findValue", Array(varValue)))) = "object" Then
+			Set FindValue = Deserialize(p_objScript.Run("findValue", Array(varValue)))
 		Else
-			FindValue = Deserialize(p_Script.Run("findValue", Array(varValue)))
+			FindValue = Deserialize(p_objScript.Run("findValue", Array(varValue)))
 		End If
 	End Function
 
 	Public Function FindAll(strKey, varValue)
-		FindAll = Deserialize(p_Script.Run("findAll", Array(strKey, varValue)))
+		FindAll = Deserialize(p_objScript.Run("findAll", Array(strKey, varValue)))
 	End Function
 
 	Public Function FindAllKeys(strKey)
-		FindAllKeys = Deserialize(p_Script.Run("findAllKeys", Array(strKey)))
+		FindAllKeys = Deserialize(p_objScript.Run("findAllKeys", Array(strKey)))
 	End Function
 
 	Public Function FindAllValues(varValue)
-		FindAllValues = Deserialize(p_Script.Run("findAllValues", Array(varValue)))
+		FindAllValues = Deserialize(p_objScript.Run("findAllValues", Array(varValue)))
 	End Function
 
 	Public Sub Load(strFile)
@@ -144,11 +144,11 @@ Class base_JSON
 	End Sub
 
 	Public Sub FromString(strJSON)
-		If TypeName(strJSON) = "String" Then p_Script.Variable("json") = strJSON
+		If TypeName(strJSON) = "String" Then p_objScript.Variable("json") = strJSON
 	End Sub
 
 	Public Function ToString()
-		ToString = p_Script.Run("stringify", Array(p_Script.Variable("json")))
+		ToString = p_objScript.Run("stringify", Array(p_objScript.Variable("json")))
 	End Function
 
 	
@@ -156,7 +156,7 @@ Class base_JSON
 
 
 	Private Function Deserialize(varItem)
-		Select Case p_Script.Run("getType", Array(varItem))
+		Select Case p_objScript.Run("getType", Array(varItem))
 			Case "object":
 				Set Deserialize = JSONObject(varItem)
 			Case "array":
@@ -171,7 +171,7 @@ Class base_JSON
 	Private Function JSONObject(objJSON)
 		Dim objJsonObj
 		Set objJsonObj = New vbs_JSON
-		objJsonObj.FromString p_Script.Run("stringify", Array(objJSON))
+		objJsonObj.FromString p_objScript.Run("stringify", Array(objJSON))
 		Set JSONObject = objJsonObj
 	End Function
 
@@ -179,18 +179,18 @@ Class base_JSON
 		Dim arrArray(), _
 			i
 
-		ReDim arrArray(p_Script.Run("getArrayLength", Array(objJSONArr)) - 1)
+		ReDim arrArray(p_objScript.Run("getArrayLength", Array(objJSONArr)) - 1)
 
 		For i = 0 To UBound(arrArray)
-			Select Case p_Script.Run("getArrayItemType", Array(objJSONArr, i))
+			Select Case p_objScript.Run("getArrayItemType", Array(objJSONArr, i))
 				Case "object":
-					Set arrArray(i) = JSONObject(p_Script.Run("getArrayItem", Array(objJSONArr, i)))
+					Set arrArray(i) = JSONObject(p_objScript.Run("getArrayItem", Array(objJSONArr, i)))
 				Case "array":
-					arrArray(i) = JSONArray(p_Script.Run("getArrayItem", Array(objJSONArr, i)))
+					arrArray(i) = JSONArray(p_objScript.Run("getArrayItem", Array(objJSONArr, i)))
 				Case "null":
 					arrArray(i) = Null
 				Case "string", "number", "boolean":
-					arrArray(i) = p_Script.Run("getArrayItem", Array(objJSONArr, i))
+					arrArray(i) = p_objScript.Run("getArrayItem", Array(objJSONArr, i))
 			End Select
 		Next
 
@@ -198,7 +198,7 @@ Class base_JSON
 	End Function
 
 	Private Sub Class_Terminate()
-		Set p_Script = Nothing
+		Set p_objScript = Nothing
 	End Sub 
 End Class
 

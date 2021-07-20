@@ -139,7 +139,7 @@ Class base_HTML_Parser
 			i, _
 			j
 
-		Set objResultSet = New v_Data_Array
+		Set objResultSet = New base_Data_Array
 
 		For i = 0 to pSelection.Length - 1
 			Set objChildElements = pSelection(i).getElementsByTagName("*") 		
@@ -501,7 +501,7 @@ Class base_HTML_Parser
 		Dim objArray, _
 			i
 
-		Set objArray = New v_Data_Array
+		Set objArray = New base_Data_Array
 
 		If TypeName(varCondition) = "String" Then
 			Dim objStyleSheet
@@ -541,7 +541,7 @@ Class base_HTML_Parser
 			i, _
 			j
 
-		Set objResultSet = New v_Data_Array
+		Set objResultSet = New base_Data_Array
 
 		For i = 0 To pSelection.Length - 1
 			Set objNameElements = pSelection(i).getElementsByTagName("*")
@@ -562,7 +562,7 @@ Class base_HTML_Parser
 			i, _
 			j
 
-		Set objResultSet = New v_Data_Array
+		Set objResultSet = New base_Data_Array
 
 		For i = 0 To pSelection.Length - 1
 			Set objTagElements = pSelection(i).getElementsByTagName(strTagName)
@@ -581,7 +581,7 @@ Class base_HTML_Parser
 			i, _
 			j
 
-		Set objResultSet = New v_Data_Array
+		Set objResultSet = New base_Data_Array
 
 		For i = 0 To pSelection.Length - 1
 			Set objClassElements = pSelection(i).getElementsByTagName("*")
@@ -602,7 +602,7 @@ Class base_HTML_Parser
 			i, _
 			j
 
-		Set objResultSet = New v_Data_Array
+		Set objResultSet = New base_Data_Array
 
 		For i = 0 To pSelection.Length - 1
 			Set objAttrElements = pSelection(i).getElementsByTagName("*")
@@ -625,7 +625,7 @@ Class base_HTML_Parser
 			i, _
 			j
 
-		Set objResultSet = New v_Data_Array
+		Set objResultSet = New base_Data_Array
 
 		For i = 0 To pSelection.Length - 1
 			Set objAttrElements = pSelection(i).getElementsByTagName("*")
@@ -700,7 +700,7 @@ Class base_HTML_Parser
 			k
 
 		Set objStyleSheet = pHtmlParser.createStyleSheet()
-		Set objResultSet = New v_Data_Array
+		Set objResultSet = New base_Data_Array
 
 		strSelectors = Split(strSelectors, ",")
 
@@ -806,7 +806,7 @@ Class base_HTML_Parser
 			k
 
 		Set objRegex = New RegExp
-		Set objResultSet = New v_Data_Array
+		Set objResultSet = New base_Data_Array
 
 		With objRegex
 			.IgnoreCase = blnIgnoreCase
@@ -1310,10 +1310,10 @@ Class base_HTML_Parser
 			objArr, _
 			i
 
-		Set objParser = New v_HTML_Parser
-		Set objArr = New v_Data_Array
+		Set objParser = New base_HTML_Parser
+		Set objArr = New base_Data_Array
 
-		If TypeName(varHTML) = "v_Data_Array" Then
+		If TypeName(varHTML) = "base_Data_Array" Then
 			Set objArr = varHTML
 		ElseIf TypeName(varHTML) = "DispHTMLElementCollection" Then
 			For i = 0 To varHTML.length - 1
@@ -1362,7 +1362,7 @@ Class base_HTML_Parser
 		If TypeName(objHtmlParser) = "HTMLDocument" Then
 			If objHtmlParser.nodeType = 9 Then Set pHtmlParser = objHtmlParser
 		End If
-		If TypeName(objArr) = "v_Data_Array" Then Set pSelection = objArr
+		If TypeName(objArr) = "base_Data_Array" Then Set pSelection = objArr
 	End Function
 
 	Public Sub Clear()

@@ -34,10 +34,8 @@ Class base_Sys_ErrorHandler
 		On Error Resume Next
 
 		If p_objHandlerDict.Exists(strMethodCaller) Then
-			PrintLn "Here."
 			strErrorMsg = "Error " & objError.Number & ": " & objError.Description & " (Source: " & objError.Source & ") (Procedure: " & strMethodCaller & ")"
 			PrintLn strErrorMsg
-			PrintLn "Now here."
 			Set Handle = p_objHandlerDict(strMethodCaller)
 		Else
 			strErrorMsg = "Unhandled Error " & objError.Number & ": " & objError.Description & " (Source: " & objError.Source & ") (Procedure: " & strMethodCaller & ")"

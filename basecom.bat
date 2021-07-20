@@ -20,7 +20,7 @@ exit /b
 
     		Set objFSO = CreateObject("Scripting.FileSystemObject")
 
-		If InStr(strFile, "_") > 0 Then
+		If InStr(strFile, "base_") > 0 Then
 			Dim arrLibrary
 			arrLibrary = Split(strFile, "_")
 
@@ -29,7 +29,8 @@ exit /b
 
 			ExecuteGlobal CreateObject("Scripting.FileSystemObject").OpenTextFile(strFilePath & "\" & strFile & ".vbs", 1).ReadAll()
 		Else
-			Err.Raise 1111, "Include(..)", "Unable to load basecom library file: " & strFile, "", ""
+			ExecuteGlobal CreateObject("Scripting.FileSystemObject").OpenTextFile(strFile & ".vbs", 1).ReadAll()
+			' Err.Raise 1111, "Include(..)", "Unable to load basecom library file: " & strFile, "", ""
  		End If   
 
     		If Err.Number <> 0 Then
@@ -47,7 +48,7 @@ exit /b
     	Include "base_Sys_Util"
 
 	Sub RunDbShell()
-		Include "base_Database.base_Database_Connection"
+		Include "base_Database_Connection"
 
 		Dim objStdInput, _
              	strPrompt, _

@@ -30,29 +30,33 @@ Sub Print( _
 End Sub
 
 Sub PrintLn( _
-    ByVal strText _
-    )
+	ByVal strText _
+	)
 
-    Dim objFso, _
-        objStdOut
+	Dim objFso, _
+		objStdOut
 
-    Set objFso = CreateObject("Scripting.FileSystemObject")
-    Set objStdOut = objFso.GetStandardStream(STD_OUT)
+	Set objFso = CreateObject("Scripting.FileSystemObject")
+	Set objStdOut = objFso.GetStandardStream(STD_OUT)
 
-    With objStdOut
-        .WriteLine strText
-        .Close
-    End With
+	With objStdOut
+		.WriteLine strText
+		.Close
+	End With
 End Sub
 
 Sub Run( _
-    ByVal strScript _
-    )
-    On Error Resume Next
+	ByVal strScript _
+	)
+	On Error Resume Next
 
-    ExecuteGlobal strScript
+	If InStr(strScript, " ") > 0 Then
+		ExecuteGlobal strScript
+	Else
+		PrintLn CStr(Eval(strScript))
+	End If
 
-    If Err Then Call ErrorHandler()
+	If Err Then Call ErrorHandler("base_Sys.Run")
 End Sub
 
 Sub Sleep( _
