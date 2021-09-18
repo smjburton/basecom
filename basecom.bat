@@ -25,7 +25,7 @@ exit /b
 			arrLibrary = Split(strFile, "_")
 
 			strBasecomDirectory = Mid(WScript.ScriptFullName, 1, InStrRev(WScript.ScriptFullName, "\"))
-    			strFilePath = strBasecomDirectory & "lib\vbscript\" & arrLibrary(0) & "_" & arrLibrary(1)		
+    			strFilePath = strBasecomDirectory & "lib\vbscript\" & arrLibrary(0) & "_" & arrLibrary(1)
 
 			ExecuteGlobal CreateObject("Scripting.FileSystemObject").OpenTextFile(strFilePath & "\" & strFile & ".vbs", 1).ReadAll()
 		Else
@@ -38,7 +38,9 @@ exit /b
         		If Err.Number = 1041 Then
 				Err.Clear
 			Else
+				WScript.Echo "Could not open file: " & strFile
             			WScript.Echo "Error " & Err.Number & ": " & Err.Description & " (Source: " & Err.Source & ")"
+				Err.Clear
             			' WScript.Quit 1
 			End If
     		End If
@@ -46,6 +48,9 @@ exit /b
 
     	Include "base_Sys"
     	Include "base_Sys_Util"
+
+	Dim Sys
+	Set Sys = New base_Sys
 
 	Sub RunDbShell()
 		Include "base_Database_Connection"
@@ -61,7 +66,7 @@ exit /b
 		Set objStdInput = WScript.StdIn
 		strPrompt = "dbshell> "
 
-		Print strPrompt
+		Sys.Write strPrompt
 
 		' Commands:
 		' .open
@@ -84,23 +89,27 @@ exit /b
                     		LCase(strInput) = "quit()" Then
 					Exit Do
 			Else
-				Run strInput
-				Print strPrompt
+				With Sys
+					.Run strInput
+					.Print strPrompt
+				End With
 			End If
 		Loop
 	End Sub
 
 	Sub RunInteractiveInterpreter()
 		Dim objStdInput, _
-             	strPrompt, _
-             	strInput
+             		strPrompt, _
+             		strInput
 
 		Set objStdInput = WScript.StdIn
 		strPrompt = ">> "
 
-		PrintLn "basecom 0.1 (v0.1; January 23, 2021)"
-		PrintLn "Type ""help"", ""copyright"", ""credits"", ""license"" for more information."
-		Print strPrompt
+		With Sys
+		 	.WriteLn "basecom 0.1 (v0.1; January 23, 2021)"
+		 	.WriteLn "Type ""help"", ""copyright"", ""credits"", ""license"" for more information."
+		 	.Write strPrompt
+		End With
 
 		Do Until objStdInput.AtEndOfStream
 			strInput = objStdInput.ReadLine()
@@ -111,18 +120,21 @@ exit /b
                     		LCase(strInput) = "quit()" Then
 					Exit Do
 			Else
-				Run strInput
-				Print strPrompt
+				With Sys
+					.Run strInput
+					.Write strPrompt
+				End With
 			End If
 		Loop
 	End Sub
 
 	If WScript.Arguments.Count > 0 Then
-		If LCase(WScript.Arguments(0)) = "dbshell" Then
-			RunDbShell
-		Else
-			Include WScript.Arguments(0)
-		End If
+		Select Case LCase(WScript.Arguments(0))
+			Case "dbshell":
+				RunDbShell
+			Case Else:
+				Include WScript.Arguments(0)
+		End Select
 	Else
 		RunInteractiveInterpreter
 	End If

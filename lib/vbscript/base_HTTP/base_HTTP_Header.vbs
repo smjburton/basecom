@@ -52,10 +52,6 @@ Class base_HTTP_Header
 		ByVal strHeader _
 		)
 
-		ExtractHeaderValue = Split(Split(strHeader, ": ")(1), "; ")(0)
+		ExtractHeaderValue = Split(strHeader, ": ")(1)
 	End Function
 End Class
-
-If WScript.ScriptName = "base_HTTP_Header.vbs" Then
-
-End If

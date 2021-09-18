@@ -14,7 +14,7 @@ CONST xlToLeft = -4159
 CONST xlFilterValues = 7
 CONST xlCenter = -4108
 
-Class base_Excel
+Class base_App_Excel
 	Private p_Excel
 
 
@@ -1520,9 +1520,9 @@ Class base_Excel
 	End Sub
 End Class
 
-If WScript.ScriptName = "base_Excel.vbs" Then
+If WScript.ScriptName = "base_App_Excel.vbs" Then
 	Dim excel
-	Set excel = New base_Excel
+	Set excel = New base_App_Excel
 
 	WScript.Echo TypeName(excel.Workbooks)
 

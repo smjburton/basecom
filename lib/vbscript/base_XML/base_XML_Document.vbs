@@ -1,10 +1,10 @@
 Option Explicit
 
 Class base_XML_Document
-	Private p_XmlDocument
+	Private p_objXmlDocument
 
 	Private Sub Class_Initialize()
-		Set p_XmlDocument = CreateObject("MSXML2.DOMDocument")
+		Set p_objXmlDocument = CreateObject("MSXML2.DOMDocument")
 	End Sub
 
 	
@@ -12,259 +12,259 @@ Class base_XML_Document
 
 
 	Public Property Get Async()
-		Async = p_XmlDocument.Async
+		Async = p_objXmlDocument.Async
 	End Property
 
 	Public Property Let Async(blnAsync)
-		p_XmlDocument.Async = blnAsync
+		p_objXmlDocument.Async = blnAsync
 	End Property
 
 	Public Property Get Attributes() 
-		Set Attributes = p_XmlDocument.Attributes
+		Set Attributes = p_objXmlDocument.Attributes
 	End Property
 
 	Public Property Get BaseName()  
-		BaseName = p_XmlDocument.BaseName
+		BaseName = p_objXmlDocument.BaseName
 	End Property
  
 	Public Property Get ChildNodes()
-		Set ChildNodes = p_XmlDocument.ChildNodes
+		Set ChildNodes = p_objXmlDocument.ChildNodes
 	End Property
  
 	Public Property Get DataType()
-		If IsObject(p_XmlDocument.DataType) Then
-			Set DataType = p_XmlDocument.DataType
+		If IsObject(p_objXmlDocument.DataType) Then
+			Set DataType = p_objXmlDocument.DataType
 		Else
-			DataType = p_XmlDocument.DataType
+			DataType = p_objXmlDocument.DataType
 		End If
 	End Property
 
 	Public Property Let DataType(varDataType)
-		p_XmlDocument.DataType = varDataType
+		p_objXmlDocument.DataType = varDataType
 	End Property
 
 	Public Property Set DataType(varDataType)
-		Set p_XmlDocument.DataType = varDataType
+		Set p_objXmlDocument.DataType = varDataType
 	End Property
  
 	Public Property Get Definition()
-		Set Definition = p_XmlDocument.Definition
+		Set Definition = p_objXmlDocument.Definition
 	End Property
 
 	Public Property Get DocType()
-		Set DocType = p_XmlDocument.DocType
+		Set DocType = p_objXmlDocument.DocType
 	End Property
  
 	Public Property Get DocumentElement() 
-		Set DocumentElement = p_XmlDocument.DocumentElement
+		Set DocumentElement = p_objXmlDocument.DocumentElement
 	End Property
 
 	Public Property Set DocumentElement(objIXMLDOMElement)
-		Set p_XmlDocument.DocumentElement = objIXMLDOMElement
+		Set p_objXmlDocument.DocumentElement = objIXMLDOMElement
 	End Property
 
 	Public Property Get FirstChild() 
-		Set FirstChild = p_XmlDocument.FirstChild
+		Set FirstChild = p_objXmlDocument.FirstChild
 	End Property
 
 	Public Property Get Implementation()
-		Set Implementation = p_XmlDocument.Implementation
+		Set Implementation = p_objXmlDocument.Implementation
 	End Property
 
 	Public Property Get LastChild()
-		Set LastChild = p_XmlDocument.LastChild
+		Set LastChild = p_objXmlDocument.LastChild
 	End Property
 
 	Public Property Get Namespaces()
-		Set Namespaces = p_XmlDocument.Namespaces
+		Set Namespaces = p_objXmlDocument.Namespaces
 	End Property
 
 	Public Property Get NamespaceURI() 
-		Namespaces = p_XmlDocument.Namespaces
+		Namespaces = p_objXmlDocument.Namespaces
 	End Property
 
 	Public Property Get NextSibling() 
-		Set NextSibling = p_XmlDocument.NextSibling
+		Set NextSibling = p_objXmlDocument.NextSibling
 	End Property
 
 	Public Property Get NodeName()
-		NodeName = p_XmlDocument.NodeName
+		NodeName = p_objXmlDocument.NodeName
 	End Property
 
 	Public Property Get NodeType()
-		Set NodeType = p_XmlDocument.NodeType
+		Set NodeType = p_objXmlDocument.NodeType
 	End Property
 
 	Public Property Get NodeTypedValue()
-		If IsObject(p_XmlDocument.NodeTypedValue) Then
-			Set NodeTypedValue = p_XmlDocument.NodeTypedValue
+		If IsObject(p_objXmlDocument.NodeTypedValue) Then
+			Set NodeTypedValue = p_objXmlDocument.NodeTypedValue
 		Else
-			NodeTypedValue = p_XmlDocument.NodeTypedValue
+			NodeTypedValue = p_objXmlDocument.NodeTypedValue
 		End If
 	End Property
 
 	Public Property Let NodeTypedValue(varNodeTypedValue)
-		p_XmlDocument.NodeTypedValue = varNodeTypedValue
+		p_objXmlDocument.NodeTypedValue = varNodeTypedValue
 	End Property
 
 	Public Property Set NodeTypedValue(varNodeTypedValue)
-		Set p_XmlDocument.NodeTypedValue = varNodeTypedValue
+		Set p_objXmlDocument.NodeTypedValue = varNodeTypedValue
 	End Property
  
 	Public Property Get NodeTypeString()
-		NodeTypedValue = p_XmlDocument.NodeTypedValue
+		NodeTypeString = p_objXmlDocument.NodeTypeString
 	End Property
 
 	Public Property Get NodeValue()
-		If IsObject(p_XmlDocument.NodeValue) Then
-			Set NodeValue = p_XmlDocument.NodeValue
+		If IsObject(p_objXmlDocument.NodeValue) Then
+			Set NodeValue = p_objXmlDocument.NodeValue
 		Else
-			NodeValue = p_XmlDocument.NodeValue
+			NodeValue = p_objXmlDocument.NodeValue
 		End If
 	End Property
 
 	Public Property Let NodeValue(varNodeValue)
-		p_XmlDocument.NodeValue = varNodeValue
+		p_objXmlDocument.NodeValue = varNodeValue
 	End Property
 
 	Public Property Set NodeValue(varNodeValue)
-		Set p_XmlDocument.NodeValue = varNodeValue
+		Set p_objXmlDocument.NodeValue = varNodeValue
 	End Property
 
 	Public Property Get OnDataAvailable() 
-		If IsObject(p_XmlDocument.OnDataAvailable) Then
-			Set OnDataAvailable = p_XmlDocument.OnDataAvailable
+		If IsObject(p_objXmlDocument.OnDataAvailable) Then
+			Set OnDataAvailable = p_objXmlDocument.OnDataAvailable
 		Else
-			OnDataAvailable = p_XmlDocument.OnDataAvailable
+			OnDataAvailable = p_objXmlDocument.OnDataAvailable
 		End If
 	End Property
 
 	Public Property Let OnDataAvailable(varOnDataAvailable) 
-		p_XmlDocument.OnDataAvailable = varOnDataAvailable
+		p_objXmlDocument.OnDataAvailable = varOnDataAvailable
 	End Property
 
 	Public Property Set OnDataAvailable(varOnDataAvailable)
-		Set p_XmlDocument.OnDataAvailable = varOnDataAvailable
+		Set p_objXmlDocument.OnDataAvailable = varOnDataAvailable
 	End Property
  
 	Public Property Get OnReadyStateChange() 
-		If IsObject(p_XmlDocument.OnReadyStateChange) Then
-			Set OnReadyStateChange = p_XmlDocument.OnReadyStateChange
+		If IsObject(p_objXmlDocument.OnReadyStateChange) Then
+			Set OnReadyStateChange = p_objXmlDocument.OnReadyStateChange
 		Else
-			OnReadyStateChange = p_XmlDocument.OnReadyStateChange
+			OnReadyStateChange = p_objXmlDocument.OnReadyStateChange
 		End If
 	End Property
 
 	Public Property Let OnReadyStateChange(varOnReadyStateChange)
-		p_XmlDocument.OnReadyStateChange = varOnReadyStateChange
+		p_objXmlDocument.OnReadyStateChange = varOnReadyStateChange
 	End Property
 
 	Public Property Set OnReadyStateChange(varOnReadyStateChange)
-		Set p_XmlDocument.OnReadyStateChange = varOnReadyStateChange
+		Set p_objXmlDocument.OnReadyStateChange = varOnReadyStateChange
 	End Property
 
 	Public Property Get OnTransformNode() 
-		If IsObject(p_XmlDocument.OnTransformNode) Then
-			Set OnTransformNode = p_XmlDocument.OnTransformNode
+		If IsObject(p_objXmlDocument.OnTransformNode) Then
+			Set OnTransformNode = p_objXmlDocument.OnTransformNode
 		Else
-			OnTransformNode = p_XmlDocument.OnTransformNode
+			OnTransformNode = p_objXmlDocument.OnTransformNode
 		End If
 	End Property
 
 	Public Property Let OnTransformNode(varOnTransformNode)
-		p_XmlDocument.OnTransformNode = varOnTransformNode
+		p_objXmlDocument.OnTransformNode = varOnTransformNode
 	End Property
 
 	Public Property Set OnTransformNode(varOnTransformNode)
-		Set p_XmlDocument.OnTransformNode = varOnTransformNode
+		Set p_objXmlDocument.OnTransformNode = varOnTransformNode
 	End Property
 
 	Public Property Get OwnerDocument()
-		Set OwnerDocument = p_XmlDocument.OwnerDocument
+		Set OwnerDocument = p_objXmlDocument.OwnerDocument
 	End Property
 
 	Public Property Get ParentNode()
-		Set ParentNode = p_XmlDocument.ParentNode
+		Set ParentNode = p_objXmlDocument.ParentNode
 	End Property
 
 	Public Property Get Parsed()
-		Parsed = p_XmlDocument.Parsed
+		Parsed = p_objXmlDocument.Parsed
 	End Property
 
 	Public Property Get ParseError()
-		Set ParseError = p_XmlDocument.ParseError
+		Set ParseError = p_objXmlDocument.ParseError
 	End Property
 
 	Public Property Get Prefix()
-		Prefix = p_XmlDocument.Prefix
+		Prefix = p_objXmlDocument.Prefix
 	End Property
 
 	Public Property Get PreserveWhiteSpace() 
-		PreserveWhiteSpace = p_XmlDocument.PreserveWhiteSpace
+		PreserveWhiteSpace = p_objXmlDocument.PreserveWhiteSpace
 	End Property
 
 	Public Property Let PreserveWhiteSpace(blnPreserveWhiteSpace)
-		p_XmlDocument.PreserveWhiteSpace = blnPreserveWhiteSpace
+		p_objXmlDocument.PreserveWhiteSpace = blnPreserveWhiteSpace
 	End Property
 
 	Public Property Get PreviousSibling()
-		Set PreviousSibling = p_XmlDocument.PreviousSibling
+		Set PreviousSibling = p_objXmlDocument.PreviousSibling
 	End Property
 
 	Public Property Get ReadyState() 
-		PreviousSibling = p_XmlDocument.PreviousSibling
+		ReadyState = p_objXmlDocument.ReadyState
 	End Property
 
 	Public Property Get ResolveExternals()
-		ResolveExternals = p_XmlDocument.ResolveExternals
+		ResolveExternals = p_objXmlDocument.ResolveExternals
 	End Property
 
 	Public Property Let ResolveExternals(blnResolveExternals)
-		p_XmlDocument.ResolveExternals = blnResolveExternals
+		p_objXmlDocument.ResolveExternals = blnResolveExternals
 	End Property
  
 	Public Property Get Schemas()
-		If IsObject(p_XmlDocument.Schemas) Then
-			Set Schemas = p_XmlDocument.Schemas
+		If IsObject(p_objXmlDocument.Schemas) Then
+			Set Schemas = p_objXmlDocument.Schemas
 		Else
-			Schemas = p_XmlDocument.Schemas
+			Schemas = p_objXmlDocument.Schemas
 		End If
 	End Property
 
 	Public Property Let Schemas(varSchemas)
-		p_XmlDocument.Schemas = varSchemas
+		p_objXmlDocument.Schemas = varSchemas
 	End Property
 
 	Public Property Set Schemas(varSchemas)
-		Set p_XmlDocument.Schemas = varSchemas
+		Set p_objXmlDocument.Schemas = varSchemas
 	End Property
 
 	Public Property Get Specified()
-		Specified = p_XmlDocument.Specified
+		Specified = p_objXmlDocument.Specified
 	End Property
 
 	Public Property Get Text() 
-		Text = p_XmlDocument.Text
+		Text = p_objXmlDocument.Text
 	End Property
 
 	Public Property Let Text(strText)
-		p_XmlDocument.Text = strText
+		p_objXmlDocument.Text = strText
 	End Property
 
 	Public Property Get URL() 
-		URL = p_XmlDocument.URL
+		URL = p_objXmlDocument.URL
 	End Property
 
 	Public Property Get ValidateOnParse()
-		ValidateOnParse = p_XmlDocument.ValidateOnParse
+		ValidateOnParse = p_objXmlDocument.ValidateOnParse
 	End Property
 
 	Public Property Let ValidateOnParse(blnValidateOnParse)
-		p_XmlDocument.ValidateOnParse = blnValidateOnParse
+		p_objXmlDocument.ValidateOnParse = blnValidateOnParse
 	End Property
 
 	Public Property Get XML()
-		XML = p_XmlDocument.XML
+		XML = p_objXmlDocument.XML
 	End Property
 
 
@@ -272,127 +272,127 @@ Class base_XML_Document
 
 
 	Public Sub Abort()
-		p_XmlDocument.Abort
+		p_objXmlDocument.Abort
 	End Sub
 
 	Public Function AppendChild(objNewChild)
-		Set AppendChild = p_XmlDocument.AppendChild(objNewChild)
+		Set AppendChild = p_objXmlDocument.AppendChild(objNewChild)
 	End Function
 
 	Public Function CloneNode(blnDeep)
-		Set CloneNode = p_XmlDocument.CloneNode(blnDeep)
+		Set CloneNode = p_objXmlDocument.CloneNode(blnDeep)
 	End Function
 
 	Public Function CreateAttribute(strName) 
-		Set CreateAttribute = p_XmlDocument.CreateAttribute(strName) 
+		Set CreateAttribute = p_objXmlDocument.CreateAttribute(strName) 
 	End Function
 
 	Public Function CreateCDATASection(strData)
-		Set CreateCDATASection = p_XmlDocument.CreateCDATASection(strData)
+		Set CreateCDATASection = p_objXmlDocument.CreateCDATASection(strData)
 	End Function
    
 	Public Function CreateComment(strData) 
-		Set CreateComment = p_XmlDocument.CreateComment(strData) 
+		Set CreateComment = p_objXmlDocument.CreateComment(strData) 
 	End Function
 
 	Public Function CreateDocumentFragment() 
-		Set CreateDocumentFragment = p_XmlDocument.CreateDocumentFragment()
+		Set CreateDocumentFragment = p_objXmlDocument.CreateDocumentFragment()
 	End Function
 
 	Public Function CreateElement(strTagName)
-		Set CreateElement = p_XmlDocument.CreateElement(strTagName)
+		Set CreateElement = p_objXmlDocument.CreateElement(strTagName)
 	End Function
  
 	Public Function CreateEntityReference(strName)
-		Set CreateEntityReference = p_XmlDocument.CreateEntityReference(strName)
+		Set CreateEntityReference = p_objXmlDocument.CreateEntityReference(strName)
 	End Function
  
 	Public Function CreateNode(varType, strName, strNamespaceUri)
-		Set CreateNode = p_XmlDocument.CreateNode(varType, strName, strNamespaceUri)
+		Set CreateNode = p_objXmlDocument.CreateNode(varType, strName, strNamespaceUri)
 	End Function
  
 	Public Function CreateProcessingInstruction(strTarget, strData)
-		Set CreateProcessingInstruction = p_XmlDocument.CreateProcessingInstruction(strTarget, strData)
+		Set CreateProcessingInstruction = p_objXmlDocument.CreateProcessingInstruction(strTarget, strData)
 	End Function
 
 	Public Function CreateTextNode(strData)
-		Set CreateTextNode = p_XmlDocument.CreateTextNode(strData)
+		Set CreateTextNode = p_objXmlDocument.CreateTextNode(strData)
 	End Function
 
 	Public Function GetElementsByTagName(strTagName)
-		Set GetElementsByTagName = p_XmlDocument.GetElementsByTagName(strTagName)
+		Set GetElementsByTagName = p_objXmlDocument.GetElementsByTagName(strTagName)
 	End Function
 
 	Public Function GetProperty(strName) 
-		GetProperty = p_XmlDocument.GetProperty(strName)
+		GetProperty = p_objXmlDocument.GetProperty(strName)
 	End Function
 
 	Public Function HasChildNodes()
-		HasChildNodes = p_XmlDocument.HasChildNodes()
+		HasChildNodes = p_objXmlDocument.HasChildNodes()
 	End Function
 
 	Public Function ImportNode(objNode, blnDeep)
-		Set ImportNode = p_XmlDocument.ImportNode(objNode, blnDeep)
+		Set ImportNode = p_objXmlDocument.ImportNode(objNode, blnDeep)
 	End Function
 
 	Public Function InsertBefore(objNewChild, varRefChild) 
-		Set InsertBefore = p_XmlDocument.InsertBefore(objNewChild, varRefChild)
+		Set InsertBefore = p_objXmlDocument.InsertBefore(objNewChild, varRefChild)
 	End Function
 
 	Public Function Load(strXmlSource) 
-		Load = p_XmlDocument.Load(strXmlSource) 
+		Load = p_objXmlDocument.Load(strXmlSource) 
 	End Function
 
 	Public Function LoadXML(strXml) 
-		LoadXML = p_XmlDocument.LoadXML(strXml) 
+		LoadXML = p_objXmlDocument.LoadXML(strXml) 
 	End Function
 
 	Public Function NodeFromID(strId)
-		Set NodeFromID = p_XmlDocument.NodeFromID(strId)
+		Set NodeFromID = p_objXmlDocument.NodeFromID(strId)
 	End Function
 
 	Public Function RemoveChild(objChildNode) 
-		Set RemoveChild = p_XmlDocument.RemoveChild(objChildNode) 
+		Set RemoveChild = p_objXmlDocument.RemoveChild(objChildNode) 
 	End Function
 
 	Public Function ReplaceChild(objNewChild, objOldChild)
-		Set ReplaceChild = p_XmlDocument.ReplaceChild(objNewChild, objOldChild)
+		Set ReplaceChild = p_objXmlDocument.ReplaceChild(objNewChild, objOldChild)
 	End Function
  
 	Public Sub Save(varDestination) 
-		p_XmlDocument.Save varDestination
+		p_objXmlDocument.Save varDestination
 	End Sub
 
 	Public Function SelectNodes(strQuery)
-		Set SelectNodes = p_XmlDocument.SelectNodes(strQuery)
+		Set SelectNodes = p_objXmlDocument.SelectNodes(strQuery)
 	End Function
 
 	Public Function SelectSingleNode(strQuery) 
-		Set SelectSingleNode = p_XmlDocument.SelectSingleNode(strQuery)
+		Set SelectSingleNode = p_objXmlDocument.SelectSingleNode(strQuery)
 	End Function
 
 	Public Sub SetProperty(strName, varValue) 
-		p_XmlDocument.SetProperty strName, varValue
+		p_objXmlDocument.SetProperty strName, varValue
 	End Sub
 
 	Public Function TransformNode(objStyleSheet)
-		TransformNode = p_XmlDocument.TransformNode(objStyleSheet)
+		TransformNode = p_objXmlDocument.TransformNode(objStyleSheet)
 	End Function
 
 	Public Sub TransformNodeToObject(objStyleSheet, varOutputObject)
-		p_XmlDocument.TransformNodeToObject objStyleSheet, varOutputObject
+		p_objXmlDocument.TransformNodeToObject objStyleSheet, varOutputObject
 	End Sub
  
 	Public Function Validate()
-		Set Validate = p_XmlDocument.Validate
+		Set Validate = p_objXmlDocument.Validate
 	End Function
 
 	Public Function ValidateNode(objNode)
-		Set ValidateNode = p_XmlDocument.ValidateNode(objNode)
+		Set ValidateNode = p_objXmlDocument.ValidateNode(objNode)
 	End Function
 
 	Private Sub Class_Terminate()
-		Set p_XmlDocument = Nothing
+		Set p_objXmlDocument = Nothing
 	End Sub
 End Class
 

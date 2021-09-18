@@ -76,7 +76,7 @@ Class base_HTTP_Request
 			p_blnKeepAlive = False
 			' .Option(WinHttpRequestOption_MaxResponseHeaderSize) = 64000
 			' .Option(WinHttpRequestOption_MaxResponseDrainSize) = 1000000
-			p_blnStoreCookies = True
+			p_blnStoreCookies = False
 			p_blnStoreResponse = True
 			p_blnEncodeCookies = False
 			' .Option(WinHttpRequestOption_URLCodePage) = UTF_8
@@ -705,8 +705,9 @@ Class base_HTTP_Request
 			End If
 
 			If p_blnKeepAlive Then p_objHttpHeaders.AddHeaderString "Connection: Keep-Alive"
+			If p_objCookies.Count > 0 Then p_objHttpHeaders.AddHeaderString p_objCookies.GetMatchingCookiesString(p_objUrl.ToString())
 
-			For intHeaderIndex = 1 To p_objHttpHeaders.Count
+			For intHeaderIndex = 0 To p_objHttpHeaders.Count - 1			
 				.SetRequestHeader p_objHttpHeaders.Item(intHeaderIndex).Name, _
 							p_objHttpHeaders.Item(intHeaderIndex).Value
 			Next
@@ -742,13 +743,13 @@ Class base_HTTP_Request
 			 			p_blnRedirected
 
 			If p_objHttpResp.IsOk() Then p_blnSent = True
-			If p_blnStoreCookies Then p_objCookies.FromResponseHeaders .GetAllResponseHeaders()
+			If p_blnStoreCookies Then p_objCookies.AddFromResponseHeaders .GetAllResponseHeaders()
 		End With
 
 		Set Request = p_objHttpResp
 		' Set objFinalUrl = Nothing
 
-		' If Err Then PrintLn Err.Number & ": " & Err.Description & " (" & Err.Source & ")"
+		' If Err Then Sys.WriteLn Err.Number & ": " & Err.Description & " (" & Err.Source & ")"
 	End Function
 
 	Public Function Send()

@@ -1,6 +1,6 @@
 Option Explicit
 
-Include "base_Data_Array_Util"
+Include "base_Data_Array"
 
 Class base_Data_Collection
 	Private p_Collection

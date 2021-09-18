@@ -1,6 +1,6 @@
 Option Explicit
 
-Class base_HTTP_Client
+Class base_XML_MxXmlWriter
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class base_HTTP_Client
 	End Sub
 End Class
 
-If WScript.ScriptName = "base_HTTP_Client.vbs" Then
+If WScript.ScriptName = "base_XML_MxXmlWriter.vbs" Then
 
 End If

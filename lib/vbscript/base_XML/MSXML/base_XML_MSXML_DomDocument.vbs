@@ -1,6 +1,6 @@
 Option Explicit
 
-Class base_Text
+Class base_XML_MSXML_DomDocument
 	Private Sub Class_Initialize()
 
 	End Sub
@@ -10,6 +10,6 @@ Class base_Text
 	End Sub
 End Class
 
-If WScript.ScriptName = "base_Text.vbs" Then
+If WScript.ScriptName = "base_XML_MSXML_DomDocument.vbs" Then
 
 End If

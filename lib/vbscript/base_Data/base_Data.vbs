@@ -1,8 +1,0 @@
-Include "base_Data_Array"
-Include "base_Data_ArrayList"
-Include "base_Data_Collection"
-Include "base_Data_Dictionary"
-Include "base_Data_HashTable"
-Include "base_Data_List"
-Include "base_Data_Queue"
-Include "base_Data_Stack"

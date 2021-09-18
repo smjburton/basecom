@@ -1,6 +1,6 @@
 Option Explicit
 
-Class base_InternetExplorer
+Class base_HTTP_Browser
 	Private p_InternetExplorer
 
 	Private Sub Class_Initialize()

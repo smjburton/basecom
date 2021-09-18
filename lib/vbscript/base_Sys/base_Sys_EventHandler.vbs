@@ -10,36 +10,40 @@ Class base_Sys_EventHandler
 		Set p_objEventHandlerDict = New base_Data_Dictionary
 	End Sub
 
+
+	' Methods
+
+
 	Public Sub Register( _
 		objEvent, _
 		objEventHandler _
 		)
 
-		PrintLn "Registering event..."
+		Sys.WriteLn "Registering event..."
 
-		If p_objEventHandlerDict.Exists(objEvent) Then
-			Dim arrEventHandlerArray
-			arrEventHandlerArray = p_objEventHandlerDict(objEvent)
-			ReDim Preserve arrEventHandlerArray(UBound(arrEventHandlerArray) + 1)
-			Set arrEventHandlerArray(UBound(arrEventHandlerArray)) = objEventHandler
-			p_objEventHandlerDict(objEvent) = arrEventHandlerArray
-		Else
-			p_objEventHandlerDict.Add objEvent, Array(objEventHandler) 
-		End If
+		' If p_objEventHandlerDict.Exists(objEvent) Then
+		' 	Dim arrEventHandlerArray
+		' 	arrEventHandlerArray = p_objEventHandlerDict(objEvent)
+		' 	ReDim Preserve arrEventHandlerArray(UBound(arrEventHandlerArray) + 1)
+		' 	Set arrEventHandlerArray(UBound(arrEventHandlerArray)) = objEventHandler
+		' 	p_objEventHandlerDict(objEvent) = arrEventHandlerArray
+		' Else
+		' 	p_objEventHandlerDict.Add objEvent, Array(objEventHandler) 
+		' End If
 	End Sub
 
 	Public Default Function Handle( _
 		objEvent _
 		)
 
-		PrintLn "Handling event..."
+		Sys.WriteLn "Handling event..."
 
 		If p_objEventHandlerDict.Exists(objEvent) Then
-			Dim objEventHandler
-
-			For Each objEventHandler In p_objEventHandlerDict(objEvent)
-				objEventHandler()
-			Next
+		 	Dim objEventHandler
+		 
+		 	For Each objEventHandler In p_objEventHandlerDict(objEvent)
+		 		objEventHandler()
+		 	Next
 		End If
 	End Function
 
@@ -60,7 +64,3 @@ Class base_Sys_EventHandler
 		Set p_objEventHandlerDict = Nothing
 	End Sub
 End Class
-
-If WScript.ScriptName = "base_Sys_EventHandler.vbs" Then
-
-End If

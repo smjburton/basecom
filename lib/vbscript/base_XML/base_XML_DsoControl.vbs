@@ -1,15 +1,15 @@
 Option Explicit
 
-Class base_Sys_Event
+Class base_XML_MxHtmlWriter
 	Private Sub Class_Initialize()
 
 	End Sub
-
-	Public Default Function Fire()
-
-	End Function
 
 	Private Sub Class_Terminate()
 
 	End Sub
 End Class
+
+If WScript.ScriptName = "base_XML_MxHtmlWriter.vbs" Then
+
+End If

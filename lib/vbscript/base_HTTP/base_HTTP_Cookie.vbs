@@ -197,7 +197,7 @@ Class base_HTTP_Cookie
 			Match = False
 			Exit Function
 		End If
-	
+
 		If DomainMatch(objUrl.Hostname) And PathMatch(objUrl.Path) Then
 			Match = True
 		Else
@@ -206,6 +206,10 @@ Class base_HTTP_Cookie
 
 		Set objUrl = Nothing
 	End Function
+
+	Public Sub FromResponse()
+
+	End Sub
 
 	Public Function ToString()
 		Dim strCookie
@@ -235,6 +239,8 @@ Class base_HTTP_Cookie
 
 		Dim arrCookie, _
 			intIndex
+
+		If InStr(strCookie, "Set-Cookie: ") > 0 Then strCookie = Replace(strCookie, "Set-Cookie: ", "")
 
 		arrCookie = Split(strCookie, ";")
 

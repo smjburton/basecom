@@ -21,6 +21,20 @@ Function IIf( _
 	End If
 End Function
 
+' Function FunctionExists( func_name )'
+'     FunctionExists = False 
+' 
+'     On Error Resume Next
+' 
+'     Dim f : Set f = GetRef(func_name)
+' 
+'     If Err.number = 0 Then
+'         FunctionExists = True
+'     End If  
+'     On Error GoTo 0
+' 
+' End Function
+
 If WScript.ScriptName = "base_Sys_Util.vbs" Then
 
 End If

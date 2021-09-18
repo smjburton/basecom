@@ -1,11 +1,11 @@
 Option Explicit
 
 Class base_Sys_Error
-	Private p_Number, _
-		p_Source, _
-		p_Description, _
-		p_HelpFile, _
-		p_HelpContext
+	Private p_intNumber, _
+		p_strSource, _
+		p_strDescription, _
+		p_strHelpFile, _
+		p_strHelpContext
 
 	Private Sub Class_Initialize()
 		' Err.Number
@@ -16,23 +16,23 @@ Class base_Sys_Error
 	End Sub
 
 	Public Property Get Number()
-		Number = p_Number
+		Number = p_intNumber
 	End Property 
 
 	Public Property Get Source()
-		Source = p_Source
+		Source = p_strSource
 	End Property 
 
 	Public Property Get Description()
-		Description = p_Description
+		Description = p_strDescription
 	End Property 
 
 	Public Property Get HelpFile()
-		HelpFile = p_HelpFile
+		HelpFile = p_strHelpFile
 	End Property 
 
 	Public Property Get HelpContext()
-		HelpContext = p_HelpContext
+		HelpContext = p_strHelpContext
 	End Property 
 
 	Public Default Function Init( _
@@ -43,11 +43,11 @@ Class base_Sys_Error
 		strErrorHelpContext _
 		)
 
-		p_Number = intErrorNumber
-		p_Source = strErrorSource
-		p_Description = strErrorDescription
-		p_HelpFile = strErrorHelpFile
-		p_HelpContext = strErrorHelpContext
+		p_intNumber = intErrorNumber
+		p_strSource = strErrorSource
+		p_strDescription = strErrorDescription
+		p_strHelpFile = strErrorHelpFile
+		p_strHelpContext = strErrorHelpContext
 
 		Set Init = Me
 	End Function

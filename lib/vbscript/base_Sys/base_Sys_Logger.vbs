@@ -13,7 +13,3 @@ Class base_Sys_Logger
 		Set p_objLogger = Nothing
 	End Sub
 End Class
-
-If WScript.ScriptName = "base_Sys_Logger.vbs" Then
-
-End If

@@ -24,6 +24,14 @@ Class base_IO_TextStream
 		Column = p_TextStream.Column
 	End Property
 
+	Public Property Get IsOpen()
+		If Not p_TextStream Is Nothing Then
+			IsOpen = True
+		Else
+			IsOpen = False
+		End If
+	End Property
+
 	Public Property Get Line()
 		Line = p_TextStream.Line
 	End Property

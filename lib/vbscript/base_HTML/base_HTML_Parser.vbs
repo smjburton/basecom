@@ -3,15 +3,14 @@ Option Explicit
 Include "base_Data_Array"
 
 Class base_HTML_Parser
-	Private pSanitize
-
 	Private pHtmlParser, _
-		pSelection
+		pSelection, _
+		pSanitize
 
 	Private Sub Class_Initialize()
-		pSanitize = True
 		Set pHtmlParser = CreateObject("HTMLFile")
 		Set pSelection = New base_Data_Array
+		pSanitize = True
 	End Sub
 
 
